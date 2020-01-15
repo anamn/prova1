@@ -23,7 +23,7 @@ public class TesteJUnit {
 		System.out.println(num);
 	
 	}
-
+ 
 	@Test(expected = AssertionError.class)
 	public void asserts() {
 		int x = 0;

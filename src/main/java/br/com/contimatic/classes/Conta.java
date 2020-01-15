@@ -1,12 +1,9 @@
 package br.com.contimatic.classes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.contimatic.erros.ContaDuplicadaError;
 import br.com.contimatic.erros.SaldoInsuficiente;
 
-public class Conta {
+public abstract class Conta {
 	Cliente cliente;
 	private double saldo;
 	private double limite;
@@ -66,7 +63,7 @@ public class Conta {
 
 	@Override
 	public int hashCode() {
-		final int prime = 3;
+		final int prime = 60;
 		int result = 1;
 		result = prime * result + ((cliente.getCpf() == null) ? 0 : cliente.getCpf().hashCode());
 		return result;
