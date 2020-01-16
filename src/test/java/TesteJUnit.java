@@ -34,27 +34,4 @@ public class TesteJUnit {
 		System.out.println("Segundo teste");
 	}
 	
-	@Ignore
-	@Test
-	public void testeErro() {
-		System.out.println("inicio do main");
-		metodo1();
-		System.out.println("fim do main");
-	}
-
-	static void metodo1() {
-		System.out.println("inicio do metodo2");
-		SomaDoisInteiros cc = new SomaDoisInteiros();
-		try {
-			for (int i = 0; i <= 15; i++) {
-				cc.soma(3, 4);
-				if (i == 5) {
-					cc = null;
-				}
-			}
-		} catch (NullPointerException e) {
-			System.out.println("erro "+ e);
-		}
-
-	}
-}
+	

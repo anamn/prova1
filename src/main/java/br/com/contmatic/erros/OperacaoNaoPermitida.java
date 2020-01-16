@@ -1,4 +1,4 @@
-package br.com.contimatic.erros;
+package br.com.contmatic.erros;
 
 public class OperacaoNaoPermitida extends RuntimeException {
 	
