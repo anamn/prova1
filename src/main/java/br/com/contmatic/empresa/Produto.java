@@ -1,5 +1,8 @@
 package br.com.contmatic.empresa;
 
+import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.ValorNegativo;
+
 public class Produto {
 
 	private String tipo;
@@ -9,8 +12,8 @@ public class Produto {
 	public Produto(String tipo, double preco, String codigo) {
 		super();
 		this.tipo = tipo;
-		this.preco = preco;
-		this.codigo = codigo;
+		this.setPreco(preco);
+		this.setCodigo(codigo);
 	}
 	
 	public Produto() {
@@ -60,7 +63,10 @@ public class Produto {
 	}
 
 	public void setPreco(double preco) {
+		if(preco > 0)
 		this.preco = preco;
+		else 
+			throw new ValorNegativo("Preço invalido");
 	}
 
 	public String getCodigo() {
@@ -68,7 +74,11 @@ public class Produto {
 	}
 
 	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+		if(codigo.matches("[\\d]+"))
+		 this.codigo = codigo;
+		else 
+			throw new CaracteresError("Codigo invalido");
+		 
 	}
 
 }
