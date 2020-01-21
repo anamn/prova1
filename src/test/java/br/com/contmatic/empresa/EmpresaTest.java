@@ -20,11 +20,12 @@ import br.com.contmatic.empresa.Funcionarios;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.erros.CaracteresError;
 import br.com.contmatic.erros.Inexistente;
+import br.com.contmatic.erros.VendaIndisponivel;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
 	
-	Empresa a = new Empresa();
+	Empresa empresa = new Empresa();
 	Endereco n = new Endereco("Rua alves", "165a", "1234542");
 	Produto p = new Produto("Blusa", 5, "13");
 	Produto p2 = new Produto("Calça", 10, "15");
@@ -50,40 +51,39 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_o_nome_da_empresa() {
-		a.setNome("Onix");
-		assertTrue(a.getNome().matches("Onix"));
+		empresa.setNome("Onix");
+		assertTrue(empresa.getNome().matches("Onix"));
 
 	}
 
 	@Test(expected = CaracteresError.class)
 	public void nao_deve_aceitar_letras_no_cnpj() {
-		a.setCnpj("123456789aa345");
-		assertThat(a.getCnpj(), Matchers.is("12345678912345"));
+		empresa.setCnpj("1234567tt66345");
 	}
 
 	@Test(expected = CaracteresError.class)
 	public void nao_deve_aceitar_menos_de_quartorze_digitos() {
-		a.setCnpj("12725783");
-		assertThat(a.getCnpj(), Matchers.is("12725783"));
+		empresa.setCnpj("12725783");
+		assertThat(empresa.getCnpj(), Matchers.is("12725783"));
 	}
 
 	@Test(expected = CaracteresError.class)
 	public void nao_deve_aceitar_cnpj_com_mais_de_quartorze_digitos() {
-		a.setCnpj("283929873972994033");
-		assertTrue(a.getCnpj() == "283929873972994033");
+		empresa.setCnpj("283929873972994033");
+		assertTrue(empresa.getCnpj() == "283929873972994033");
 	}
 
 	@Test
 	public void deve_aceitar_cnpj_com_quartorze_digitos_e_numeros() {
-		a.setCnpj("12982787988786");
-		assertTrue(a.getCnpj() == "12982787988786");
+		empresa.setCnpj("12982787988786");
+		assertTrue(empresa.getCnpj() == "12982787988786");
 	}
 
 	@Ignore
 	@Test
 	public void deve_verificar_o_lucro_da_empresa() {
-		a.setLucros(545.54);
-		assertTrue(a.getLucros() == 545.54);
+		empresa.setLucros(545.54);
+		assertTrue(empresa.getLucros() == 545.54);
 
 	}
 
@@ -100,80 +100,95 @@ public class EmpresaTest {
 
 	@Before
 	public void inicializa() {
-		a.addFuncionario(fun0);
-		a.addFuncionario(fun1);
-		a.addFuncionario(fun2);
-		a.addFuncionario(fun3);
-		a.addFuncionario(fun4);
+		empresa.addFuncionario(fun0);
+		empresa.addFuncionario(fun1);
+		empresa.addFuncionario(fun2);
+		empresa.addFuncionario(fun3);
+		empresa.addFuncionario(fun4);
 	}
 	
 	@After
 	public void finaliza() {
-		a.removeFuncionario(fun0);
-		a.removeFuncionario(fun1);
-		a.removeFuncionario(fun2);
-		a.removeFuncionario(fun3);
-		a.removeFuncionario(fun4);
+		empresa.removeFuncionario(fun0);
+		empresa.removeFuncionario(fun1);
+		empresa.removeFuncionario(fun2);
+		empresa.removeFuncionario(fun3);
+		empresa.removeFuncionario(fun4);
 	}
 	
 	@Before
 	public void deve_adicionar_cliente_a_lista() {
-		a.addCliente(cli1);
-		a.addCliente(cli2);
-		a.addCliente(cli3);
-		a.addCliente(cli4);
+		empresa.addCliente(cli1);
+		empresa.addCliente(cli2);
+		empresa.addCliente(cli3);
+		empresa.addCliente(cli4);
 	}
 	
 	@Test
 	public void deve_validar_cliente() {
-		a.validaCliente("12546975554");
+		empresa.validaCliente("12546975554");
 		
 	}
 	
-	@Test(expected = Inexistente.class)
+	@Test
 	public void nao_deve_encontrar_cliente() {
-		a.validaCliente("10192827262");
+		empresa.validaCliente("10192827262");
 	}
 
 	@Test(timeout = 10)
 	public void deve_validar_funcionario() {
-		a.validaFuncionario("12121212121");
+		empresa.validaFuncionario("12121212121");
 		
 	}
 	
-	@Test(expected = Inexistente.class)
-	public void nao_deve_validar_funcionario() {
-		a.validaFuncionario("17282727283");
-	}
-	
 	@Test
-	public void deve_remover_funcionario() {
-		a.removeFuncionario(fun4);
+	public void nao_deve_validar_funcionario() {
+		empresa.validaFuncionario("17282727283");
 	}
+
 	
 	@Before
 	public void deve_adicionar_produto() {
-		a.addProduto(p);
-		a.addProduto(p2);
+		empresa.addProduto(p);
+		empresa.addProduto(p2);
 	}
 	
 	@Test(timeout = 10)
 	public void deve_validar_produto() {
-		a.validaProduto("15");
+		empresa.validaProduto("15");
 	}
 	
 	@Test(expected = Inexistente.class)
 	public void nao_deve_validar_produto() {
-		a.validaProduto("14");
+		empresa.validaProduto("14");
 	}
 	
-	@Test(timeout = 10)
+	@Test(expected = AssertionError.class)
 	public void deve_validar_venda() {
-		a.validaVenda("12154748447", "56487521975", "13", p);
+		empresa.validaVenda("12154748447", "56487521975", "13", p);
+		assertTrue(empresa.getListaCodigoProduto().contains("13"));
+		assertTrue(empresa.getListaProdutos().contains(p));
 	}
 	
 	@Test(expected = Inexistente.class)
-	public void nao_deve_validar_venda() {
-		a.validaVenda("13241514267", "1425162738", "14", p);
+	public void nao_deve_validar_venda_pelo_funcionario() {
+		empresa.validaVenda("13241514267", "56487521975", "13", p);
 	}
+	
+	@Test(expected = Inexistente.class)
+	public void nao_deve_validar_venda_pelo_cliente() {
+		empresa.validaVenda("12154748447", "45754654854", "13", p);
+	}
+	
+	@Test(expected = Inexistente.class)
+	public void nao_deve_validar_venda_pelo_produto() {
+		empresa.validaVenda("12154748447", "56487521975", "14", p);
+	}
+	
+	@Test(expected = VendaIndisponivel.class)
+	public void nao_deve_validar_produto_nao_corresponde_ao_codigo() {
+		empresa.validaVenda("12154748447", "56487521975", "15", p);
+			
+	}
+	
 }

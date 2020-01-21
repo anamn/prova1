@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.contmatic.erros.CaracteresError;
 import br.com.contmatic.erros.Inexistente;
+import br.com.contmatic.erros.VendaIndisponivel;
 
 public class Empresa {
 
@@ -12,16 +13,16 @@ public class Empresa {
 	private String cnpj;
 	private double lucros;
 	private String tel;
-	Endereco endereco;
-	Funcionarios funcionarios;
-	Produto produto;
-	Cliente cliente;
-	List<Cliente> clienteLista = new ArrayList<Cliente>();
-	List<String> cpfLista = new ArrayList<String>();
-	List<Funcionarios> listaFuncio = new ArrayList<Funcionarios>();
-	List<String> listaPis = new ArrayList<String>();
-	List<Produto> listaProdutos = new ArrayList<Produto>();
-	List<String> listaCodigoProduto = new ArrayList<String>();
+	private Endereco endereco;
+	private Funcionarios funcionarios;
+	private Produto produto;
+	private Cliente cliente;
+	private List<Cliente> clienteLista = new ArrayList<Cliente>();
+	private List<String> cpfLista = new ArrayList<String>();
+	private List<Funcionarios> listaFuncio = new ArrayList<Funcionarios>();
+	private List<String> listaPis = new ArrayList<String>();
+	private List<Produto> listaProdutos = new ArrayList<Produto>();
+	private List<String> listaCodigoProduto = new ArrayList<String>();
 
 	public Empresa(String nome, String cnpj, String tel, double lucros, Endereco e) {
 		super();
@@ -38,37 +39,44 @@ public class Empresa {
 	}
 
 	public void addCliente(Cliente cliente) {
+		if (this.validaCliente(cliente.getCpf())) {
+			System.out.println("Cliente já existe");
+		}
 		clienteLista.add(cliente);
 		cpfLista.add(cliente.getCpf());
 	}
 
 	public boolean validaCliente(String cpf2) {
-		if (this.getCpfLista().contains(cpf2)) {
-			System.out.println("Cliente encontrado!");
-		return true;	
-		}
-		else
-			throw new Inexistente("Cliente não encontrado");
+		if (this.getCpfLista().contains(cpf2)) 
+			return true;
+		 else
+			return false;
 	}
 
-	public void addFuncionario(Funcionarios funcionarios) {
-		listaFuncio.add(funcionarios);
-		listaPis.add(funcionarios.getPis());
+	public void addFuncionario(Funcionarios funcionario) {
+		if (this.validaFuncionario(funcionario.getPis())) {
+			System.out.println("Funcionario já existe");
+		}
+		listaFuncio.add(funcionario);
+		listaPis.add(funcionario.getPis());
 
 	}
 
 	public void removeFuncionario(Funcionarios funcionario) {
+		if (this.validaFuncionario(funcionario.getPis())) {
 		listaFuncio.remove(funcionario);
 		listaPis.remove(funcionario.getPis());
+		}
+		else 
+			throw new Inexistente(null);
 
 	}
 
 	public boolean validaFuncionario(String pis2) {
-		if (this.getListaPis().contains(pis2)) {
-			System.out.println("Funcionario encontrado!");
-		return true;
-	}else 
-			throw new Inexistente("Funcionario não encontrado");
+		if (this.getListaPis().contains(pis2)) 
+			return true;
+		 else
+			return false;
 	}
 
 	public void addProduto(Produto produto) {
@@ -77,26 +85,38 @@ public class Empresa {
 	}
 
 	public boolean validaProduto(String codigo) {
-		if (this.getListaCodigoProduto().contains(codigo)) {
-			System.out.println("Produto encontrado!");
-		return true;	
-		}
-		else
+		if (this.getListaCodigoProduto().contains(codigo)) 
+			return true;
+		 else
 			throw new Inexistente("Produto não disponivel");
 
 	}
 
 	public void validaVenda(String pis, String cpf, String codigo, Produto p) {
-		if (this.validaFuncionario(pis) &&
-				this.validaCliente(cpf) &&
-					this.validaProduto(codigo)) {
-			System.out.println("Pronto pra venda! "+ p);
+		if (this.validaFuncionario(pis) && this.validaCliente(cpf) &&
+				this.validaProduto(codigo) && p.getCodigo().equals(codigo)) {
+			System.out.println("Pronto pra venda! " + p);
 			listaProdutos.remove(p);
 			listaCodigoProduto.remove(codigo);
-		}else 
-				System.out.println("Venda não disponivel");
-			
 		}
+		else if (!this.validaFuncionario(pis) && this.validaCliente(cpf) && 
+				this.validaProduto(codigo) && p.getCodigo().equals(codigo))
+			throw new Inexistente("Funcionario não encontrado!");
+		
+		else if(this.validaFuncionario(pis) && !this.validaCliente(cpf) &&
+				this.validaProduto(codigo) && p.getCodigo().equals(codigo))
+			throw new Inexistente("Favor cadastrar cliente");
+		
+		else if(this.validaFuncionario(pis) && this.validaCliente(cpf) && !this.validaProduto(codigo)
+				&& p.getCodigo().equals(codigo))
+			throw new Inexistente("Produto indisponivel");
+		
+		else if (this.validaFuncionario(pis) && this.validaCliente(cpf)
+				&& this.validaProduto(codigo) && !p.getCodigo().equals(codigo))
+			throw new VendaIndisponivel("Codigo não corresponde ao produto");
+		else
+			throw new VendaIndisponivel("");
+	}
 
 	@Override
 	public String toString() {
@@ -213,7 +233,6 @@ public class Empresa {
 		return clienteLista;
 	}
 
-	
 	public List<String> getCpfLista() {
 		return cpfLista;
 	}
@@ -225,7 +244,5 @@ public class Empresa {
 	public List<Produto> getListaProdutos() {
 		return listaProdutos;
 	}
-	
-	
 
 }

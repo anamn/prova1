@@ -7,7 +7,7 @@ public class Pessoa {
 	private String nome;
 	private String cpf;
 	private String telefone;
-	Endereco endereco;
+	private Endereco endereco;
 	
 	public Pessoa(String nome, String cpf, String tel,Endereco endereco) {
 		super();
