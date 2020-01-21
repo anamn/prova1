@@ -1,7 +1,5 @@
 package br.com.contmatic.empresa;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +8,7 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -24,7 +23,7 @@ import br.com.contmatic.erros.Inexistente;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
-
+	
 	Empresa a = new Empresa();
 	Endereco n = new Endereco("Rua alves", "165a", "1234542");
 	Produto p = new Produto("Blusa", 5, "13");
@@ -38,7 +37,17 @@ public class EmpresaTest {
 	Cliente cli2=new Cliente("Igor", "56487521975", "954261544", new Endereco());
 	Cliente cli3=new Cliente("Isadora", "54621345132", "986545251", new Endereco());
 	Cliente cli4=new Cliente("Fernanda", "14575623154", "984858755", new Endereco());
-
+	
+	@BeforeClass
+	public static void indica_comeco_do_teste() {
+		System.out.println("Começando teste");
+	}
+	
+	@AfterClass
+	public static void deve_printar_o_fim_do_teste() {
+		System.out.println("Teste Finalizado!");
+	}
+	
 	@Test
 	public void deve_verificar_o_nome_da_empresa() {
 		a.setNome("Onix");
@@ -70,6 +79,7 @@ public class EmpresaTest {
 		assertTrue(a.getCnpj() == "12982787988786");
 	}
 
+	@Ignore
 	@Test
 	public void deve_verificar_o_lucro_da_empresa() {
 		a.setLucros(545.54);
@@ -82,7 +92,8 @@ public class EmpresaTest {
 		Empresa em = new Empresa("Tele", "12356272839283","989754875", 520000, n);
 		assertEquals("Tele", em.getNome());
 		assertEquals("12356272839283", em.getCnpj());
-		assertThat(em.getLucros(), Matchers.is(520000.0));
+		assertEquals("989754875", em.getTel());
+		assertTrue(em.getLucros() == 520000.0);
 		assertEquals(n, em.getEndereco());
 
 	}
@@ -131,7 +142,7 @@ public class EmpresaTest {
 	}
 	
 	@Test(expected = Inexistente.class)
-	public void nao_deve_encontrar_funcionario() {
+	public void nao_deve_validar_funcionario() {
 		a.validaFuncionario("17282727283");
 	}
 	
@@ -146,7 +157,7 @@ public class EmpresaTest {
 		a.addProduto(p2);
 	}
 	
-	@Test
+	@Test(timeout = 10)
 	public void deve_validar_produto() {
 		a.validaProduto("15");
 	}
@@ -156,7 +167,7 @@ public class EmpresaTest {
 		a.validaProduto("14");
 	}
 	
-	@Test
+	@Test(timeout = 10)
 	public void deve_validar_venda() {
 		a.validaVenda("12154748447", "56487521975", "13", p);
 	}

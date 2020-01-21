@@ -30,7 +30,7 @@ public class Empresa {
 		this.setCnpj(cnpj);
 		this.lucros = lucros;
 		this.endereco = e;
-		this.produto = produto;
+
 	}
 
 	public Empresa() {
