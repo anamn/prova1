@@ -39,7 +39,8 @@ public class Empresa {
 	}
 
 	public void addCliente(Cliente cliente) {
-		if (this.validaCliente(cliente.getCpf())) {
+		if (this.validaCliente(cliente.getCpf()) 
+				&& this.getClienteLista().contains(cliente)) {
 			System.out.println("Cliente já existe");
 		}
 		clienteLista.add(cliente);
@@ -54,7 +55,8 @@ public class Empresa {
 	}
 
 	public void addFuncionario(Funcionarios funcionario) {
-		if (this.validaFuncionario(funcionario.getPis())) {
+		if (this.validaFuncionario(funcionario.getPis()) 
+				&& this.getListaFuncio().contains(funcionario)) {
 			System.out.println("Funcionario já existe");
 		}
 		listaFuncio.add(funcionario);
@@ -63,7 +65,8 @@ public class Empresa {
 	}
 
 	public void removeFuncionario(Funcionarios funcionario) {
-		if (this.validaFuncionario(funcionario.getPis())) {
+		if (this.validaFuncionario(funcionario.getPis())
+				&& this.getListaFuncio().contains(funcionario)) {
 		listaFuncio.remove(funcionario);
 		listaPis.remove(funcionario.getPis());
 		}
@@ -85,9 +88,9 @@ public class Empresa {
 	}
 
 	public boolean validaProduto(String codigo) {
-		if (this.getListaCodigoProduto().contains(codigo)) 
+		if (this.getListaCodigoProduto().contains(codigo))  
 			return true;
-		 else
+		else
 			throw new Inexistente("Produto não disponivel");
 
 	}
