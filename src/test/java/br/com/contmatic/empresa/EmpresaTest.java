@@ -16,11 +16,10 @@ import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.empresa.Funcionarios;
+import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.erros.CaracteresError;
 import br.com.contmatic.erros.Inexistente;
-import br.com.contmatic.erros.VendaIndisponivel;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
@@ -29,11 +28,11 @@ public class EmpresaTest {
 	Endereco n = new Endereco("Rua alves", "165a", "1234542");
 	Produto p = new Produto("Blusa", 5, "13");
 	Produto p2 = new Produto("Calça", 10, "15");
-	Funcionarios fun0 = new Funcionarios("Luiz", "18171121310","987545213", n, 9182, "12154748447");
-	Funcionarios fun1 = new Funcionarios("Maria", "18171121310","945421542", n, 9182, "45695123415");
-	Funcionarios fun2 = new Funcionarios("Paula", "18171121310","987541236", n, 9182, "14563158201");
-	Funcionarios fun3 = new Funcionarios("Lais", "18171121310","975421562", n, 9182, "74951682164");
-	Funcionarios fun4 = new Funcionarios("Fernada", "18171121301","945754824", n, 9182, "12121212121");
+	Funcionario fun0 = new Funcionario("Luiz", "18171121310","987545213", n, 9182, "12154748447");
+	Funcionario fun1 = new Funcionario("Maria", "18171121310","945421542", n, 9182, "45695123415");
+	Funcionario fun2 = new Funcionario("Paula", "18171121310","987541236", n, 9182, "14563158201");
+	Funcionario fun3 = new Funcionario("Lais", "18171121310","975421562", n, 9182, "74951682164");
+	Funcionario fun4 = new Funcionario("Fernada", "18171121301","945754824", n, 9182, "12121212121");
 	Cliente cli1=new Cliente("Felipe", "12546975554", "987546211", new Endereco());
 	Cliente cli2=new Cliente("Igor", "56487521975", "954261544", new Endereco());
 	Cliente cli3=new Cliente("Isadora", "54621345132", "986545251", new Endereco());

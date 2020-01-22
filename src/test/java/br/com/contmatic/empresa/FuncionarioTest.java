@@ -8,14 +8,14 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.empresa.Funcionarios;
+import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.erros.CaracteresError;
 import br.com.contmatic.erros.ValorNegativo;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FuncionarioTest {
 
-	Funcionarios f = new Funcionarios();
+	Funcionario f = new Funcionario();
 	Endereco e = new Endereco("rua tijuco", "56", "1232345");
 
 	@Test(expected = ValorNegativo.class)
@@ -60,7 +60,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_retornar_os_valores_do_construtor() {
-		Funcionarios f2 = new Funcionarios("Julia", "12131213131","987546123", e, 1200, "12121212125");
+		Funcionario f2 = new Funcionario("Julia", "12131213131","987546123", e, 1200, "12121212125");
 		assertTrue(f2.getEndereco() == e);
 		assertTrue(f2.getCpf() == "12131213131");
 		assertTrue(f2.getNome() == "Julia");

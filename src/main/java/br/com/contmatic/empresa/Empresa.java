@@ -14,12 +14,12 @@ public class Empresa {
 	private double lucros;
 	private String tel;
 	private Endereco endereco;
-	private Funcionarios funcionarios;
+	private Funcionario funcionarios;
 	private Produto produto;
 	private Cliente cliente;
 	private List<Cliente> clienteLista = new ArrayList<Cliente>();
 	private List<String> cpfLista = new ArrayList<String>();
-	private List<Funcionarios> listaFuncio = new ArrayList<Funcionarios>();
+	private List<Funcionario> listaFuncio = new ArrayList<Funcionario>();
 	private List<String> listaPis = new ArrayList<String>();
 	private List<Produto> listaProdutos = new ArrayList<Produto>();
 	private List<String> listaCodigoProduto = new ArrayList<String>();
@@ -54,7 +54,7 @@ public class Empresa {
 			return false;
 	}
 
-	public void addFuncionario(Funcionarios funcionario) {
+	public void addFuncionario(Funcionario funcionario) {
 		if (this.validaFuncionario(funcionario.getPis()) 
 				&& this.getListaFuncio().contains(funcionario)) {
 			System.out.println("Funcionario já existe");
@@ -64,7 +64,7 @@ public class Empresa {
 
 	}
 
-	public void removeFuncionario(Funcionarios funcionario) {
+	public void removeFuncionario(Funcionario funcionario) {
 		if (this.validaFuncionario(funcionario.getPis())
 				&& this.getListaFuncio().contains(funcionario)) {
 		listaFuncio.remove(funcionario);
@@ -189,11 +189,11 @@ public class Empresa {
 		this.endereco = endereco;
 	}
 
-	public Funcionarios getFuncionarios() {
+	public Funcionario getFuncionarios() {
 		return funcionarios;
 	}
 
-	public void setFuncionarios(Funcionarios funcionarios) {
+	public void setFuncionarios(Funcionario funcionarios) {
 		this.funcionarios = funcionarios;
 	}
 
@@ -213,7 +213,7 @@ public class Empresa {
 		this.cliente = cliente;
 	}
 
-	public List<Funcionarios> getListaFuncio() {
+	public List<Funcionario> getListaFuncio() {
 		return listaFuncio;
 	}
 

@@ -3,18 +3,18 @@ package br.com.contmatic.empresa;
 import br.com.contmatic.erros.CaracteresError;
 import br.com.contmatic.erros.ValorNegativo;
 
-public class Funcionarios extends Pessoa {
+public class Funcionario extends Pessoa {
 
 	private double salario;
 	private String pis;
 
-	public Funcionarios(String nome, String cpf, String tel, Endereco endereco, double salario, String pis) {
+	public Funcionario(String nome, String cpf, String tel, Endereco endereco, double salario, String pis) {
 		super(nome,cpf, tel, endereco);
 		this.salario = salario;
 		this.setPis(pis);
 	}
 
-	public Funcionarios() {
+	public Funcionario() {
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class Funcionarios extends Pessoa {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionarios other = (Funcionarios) obj;
+		Funcionario other = (Funcionario) obj;
 		if (pis == null) {
 			if (other.pis != null)
 				return false;
