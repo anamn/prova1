@@ -3,8 +3,11 @@ package br.com.contmatic.empresa;
 import br.com.contmatic.erros.CaracteresError;
 
 public class Endereco {
+
 	private String endereco;
+
 	private String numero;
+
 	private String cep;
 
 	public Endereco(String endereco, String numero, String cep) {
@@ -20,7 +23,7 @@ public class Endereco {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int prime = 30;
 		int result = 1;
 		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		return result;
@@ -72,9 +75,9 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		if (cep.length() == 7 && cep.matches("[\\d]+")){
+		if (cep.length() == 8 && cep.matches("[\\d]+")) {
 			this.cep = cep;
-		}else
+		} else
 			throw new CaracteresError("CEP INVALIDO!");
 	}
 

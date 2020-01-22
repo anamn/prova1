@@ -1,28 +1,35 @@
 package br.com.contmatic.empresa;
 
 import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.ValorNegativo;
 
-public class Cliente{
-	
+public class Funcionario {
+
+	private double salario;
+
+	private String pis;
 
 	private String nome;
-	
+
 	private String cpf;
-	
+
 	private String telefone;
-	
+
 	private Endereco endereco;
-	
-	public Cliente(String nome, String cpf, String telefone,Endereco endereco) {
+
+	public Funcionario(String nome, String cpf, String pis, String telefone, double salario, Endereco endereco) {
 		super();
-		this.setTelefone(telefone);
-		this.setCpf(cpf);
+		this.setSalario(salario);
+		this.setPis(pis);
 		this.setNome(nome);
+		this.setCpf(cpf);
+		this.setTelefone(telefone);
 		this.endereco = endereco;
 	}
 
-	public Cliente() {}
-	
+	public Funcionario() {
+	}
+
 	public void setNome(String nome) {
 		if (nome.matches("[^\\d]+"))
 			this.nome = nome;
@@ -33,18 +40,18 @@ public class Cliente{
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setCpf(String cpf) {
-		if (cpf.length() == 11 && cpf.matches("[\\d]+")){
+		if (cpf.length() == 11 && cpf.matches("[\\d]+")) {
 			this.cpf = cpf;
-		}else
+		} else
 			throw new CaracteresError("CPF INVALIDO!");
 	}
 
 	public String getCpf() {
 		return cpf;
 	}
-	
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -52,29 +59,50 @@ public class Cliente{
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
-
-	public String getTel() {
-		return telefone;
-	}
 
 	public void setTelefone(String tel) {
 		if (tel.matches("[\\d]+") && tel.length() == 9)
-			this.telefone=tel;
+			this.telefone = tel;
 		else
 			throw new CaracteresError("Telefone invalido");
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(double salario) {
+		if (salario > 0)
+			this.salario = salario;
+		else
+			throw new ValorNegativo("Salario negativo!");
+	}
+
+	public void setPis(String pis) {
+		if (pis.matches("[\\d]+") && pis.length() == 11)
+			this.pis = pis;
+		else
+			throw new CaracteresError("PIS invalido!");
+	}
+
+	public String getPis() {
+		return pis;
+	}
+
 	@Override
 	public String toString() {
-		return " Nome:" + nome +" "+ ", CPF:" + cpf;
+		return "Funcionario:" + "Nome:" + nome + ", CPF:" + cpf + ", nº: " + pis;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 30;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((pis == null) ? 0 : pis.hashCode());
 		return result;
 	}
 
@@ -86,14 +114,13 @@ public class Cliente{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
+		Funcionario other = (Funcionario) obj;
+		if (pis == null) {
+			if (other.pis != null)
 				return false;
-		} else if (!cpf.equals(other.cpf))
+		} else if (!pis.equals(other.pis))
 			return false;
 		return true;
 	}
-	
 
 }
