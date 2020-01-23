@@ -6,18 +6,51 @@ import br.com.contmatic.erros.ValorNegativo;
 public class Produto {
 
 	private String tipo;
+
 	private double preco;
+
 	private String codigo;
-	
+
 	public Produto(String tipo, double preco, String codigo) {
 		super();
 		this.tipo = tipo;
 		this.setPreco(preco);
 		this.setCodigo(codigo);
 	}
-	
+
 	public Produto() {
 		super();
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		if (preco > 0)
+			this.preco = preco;
+		else
+			throw new ValorNegativo("Preço invalido");
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		if (codigo.matches("[\\d]+"))
+			this.codigo = codigo;
+		else
+			throw new CaracteresError("Codigo invalido");
+
 	}
 
 	@Override
@@ -27,7 +60,7 @@ public class Produto {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int prime = 30;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
@@ -48,37 +81,6 @@ public class Produto {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		if(preco > 0)
-		this.preco = preco;
-		else 
-			throw new ValorNegativo("Preço invalido");
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		if(codigo.matches("[\\d]+"))
-		 this.codigo = codigo;
-		else 
-			throw new CaracteresError("Codigo invalido");
-		 
 	}
 
 }
