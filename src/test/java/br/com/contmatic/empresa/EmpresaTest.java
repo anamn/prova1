@@ -3,6 +3,7 @@ package br.com.contmatic.empresa;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
+
 
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
@@ -23,7 +24,7 @@ import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.exceptions.CaracteresException;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@FixMethodOrder(NAME_ASCENDING)
 public class EmpresaTest {
 
 	private Empresa empresa = new Empresa();
@@ -153,6 +154,7 @@ public class EmpresaTest {
 	@Test
 	public void deve_aceitar_email() {
 		empresa.setEmail("empresa@gmail.com");
+		assertThat(empresa.getEmail(), Matchers.is("empresa@gmail.com"));
 	}
 
 	@Test(expected = CaracteresException.class)

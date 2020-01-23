@@ -2,17 +2,17 @@ package br.com.contmatic.empresa;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import org.hamcrest.Matchers;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.exceptions.CaracteresException;
 import br.com.contmatic.exceptions.ValorNegativoException;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
 
 	private Produto produto = new Produto();
@@ -57,11 +57,10 @@ public class ProdutoTest {
 
 	@Test
 	public void deve_retornar_valores_do_construtor() {
-		assert (produto2.getTipo() == "Blusa");
+		assertTrue(produto2.getTipo().equals("Blusa"));
 		assertThat(produto2.getPreco(), Matchers.is(5.0));
-
-		assert (produto2.getCodigo() == "13");
-		System.out.println(produto2);
+		assertTrue(produto2.getCodigo().equals("13"));
+		
 	}
 
 	@Test

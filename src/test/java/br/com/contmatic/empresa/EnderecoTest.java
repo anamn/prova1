@@ -3,15 +3,16 @@ package br.com.contmatic.empresa;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import org.hamcrest.Matchers;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
+
 
 import br.com.contmatic.exceptions.CaracteresException;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@FixMethodOrder(NAME_ASCENDING)
 public class EnderecoTest {
 
 	private Endereco endereco = new Endereco();

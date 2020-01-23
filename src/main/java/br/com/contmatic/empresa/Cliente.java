@@ -2,26 +2,27 @@ package br.com.contmatic.empresa;
 
 import br.com.contmatic.exceptions.CaracteresException;
 
-public class Cliente{
+public class Cliente {
 
 	private String nome;
-	
+
 	private String cpf;
-	
+
 	private String telefone;
-	
+
 	private Endereco endereco;
-	
-	public Cliente(String nome, String cpf, String telefone,Endereco endereco) {
+
+	public Cliente(String nome, String cpf, String telefone, Endereco endereco) {
 		super();
-		this.setTelefone(telefone); 
+		this.setTelefone(telefone);
 		this.setCpf(cpf);
 		this.setNome(nome);
 		this.endereco = endereco;
 	}
 
-	public Cliente() {}
-	
+	public Cliente() {
+	}
+
 	public void setNome(String nome) {
 		if (nome.matches("[^\\d]+"))
 			this.nome = nome;
@@ -32,18 +33,18 @@ public class Cliente{
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setCpf(String cpf) {
-		if (cpf.length() == 11 && cpf.matches("[\\d]+")){
+		if (cpf.length() == 11 && cpf.matches("[\\d]+")) {
 			this.cpf = cpf;
-		}else 
+		} else
 			throw new CaracteresException("CPF INVALIDO!");
 	}
 
 	public String getCpf() {
 		return cpf;
 	}
-	
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -51,7 +52,6 @@ public class Cliente{
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
 
 	public String getTel() {
 		return telefone;
@@ -59,21 +59,21 @@ public class Cliente{
 
 	public void setTelefone(String tel) {
 		if (tel.matches("[\\d]+") && tel.length() == 9)
-			this.telefone=tel;
+			this.telefone = tel;
 		else
 			throw new CaracteresException("Telefone invalido");
 	}
 
 	@Override
 	public String toString() {
-		return " Nome:" + nome +" "+ ", CPF:" + cpf;
+		return " Nome:" + nome + " " + ", CPF:" + cpf;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 30;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode()); 
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		return result;
 	}
 
@@ -93,6 +93,5 @@ public class Cliente{
 			return false;
 		return true;
 	}
-	
 
 }
