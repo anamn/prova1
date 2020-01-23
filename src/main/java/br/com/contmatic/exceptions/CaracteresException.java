@@ -1,4 +1,4 @@
-package br.com.contmatic.erros;
+package br.com.contmatic.exceptions;
 
 public class CaracteresException extends RuntimeException {
 	

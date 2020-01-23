@@ -1,7 +1,7 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.erros.CaracteresException;
-import br.com.contmatic.erros.ValorNegativoException;
+import br.com.contmatic.exceptions.CaracteresException;
+import br.com.contmatic.exceptions.ValorNegativoException;
 
 public class Funcionario {
 

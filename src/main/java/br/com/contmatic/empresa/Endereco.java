@@ -1,6 +1,6 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.exceptions.CaracteresException;
 
 public class Endereco {
 
