@@ -228,6 +228,11 @@ public class EmpresaTest {
 
 	}
 
+	@Test
+	public void deve_testar_hashcode_para_cnpj_nulo() {
+		empresa.hashCode();
+	}
+
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_hashCode_diferentes_para_cnpj_diferentes() {
 		assertTrue(empresa1.hashCode() == empresa3.hashCode());

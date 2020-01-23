@@ -22,16 +22,16 @@ public class ProdutoTest {
 	Produto produto2 = new Produto("Blusa", 5, "13");
 
 	Produto produto3 = new Produto("Calça", 15, "15");
-	
+
 	Produto produto4 = new Produto();
-	
+
 	Endereco endereco = new Endereco("rua tijuco", "56", "12323450");
 
 	@Test
 	public void deve_aceitar_tipo_de_produto() {
 		produto.setTipo("Roupa");
 	}
-	
+
 	@Test(expected = ValorNegativo.class)
 	public void nao_deve_aceitar_preco_negativo() {
 		produto.setPreco(-5);
@@ -82,6 +82,11 @@ public class ProdutoTest {
 	}
 
 	@Test
+	public void deve_testar_hashcode_para_codigo_nulo() {
+		produto.hashCode();
+	}
+
+	@Test
 	public void deve_retornar_true_para_codigo_iguais() {
 		assertTrue(produto1.equals(produto2));
 	}
@@ -121,6 +126,7 @@ public class ProdutoTest {
 	public void deve_retornar_false_para_codigo_diferentes() {
 		assertTrue(produto1.equals(produto3));
 	}
+
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
 		System.out.println(produto1);

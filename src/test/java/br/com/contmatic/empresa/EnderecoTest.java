@@ -66,13 +66,13 @@ public class EnderecoTest {
 
 	@Test(expected = CaracteresError.class)
 	public void nao_deve_aceitar_cep_com_letras() {
-		endereco.setCep("182723a");
+		endereco.setCep("1827238a");
 
 	}
 
 	@Test(expected = CaracteresError.class)
 	public void nao_deve_aceitar_cep_com_caracteres_especiais() {
-		endereco.setCep("123232/");
+		endereco.setCep("1232320/");
 
 	}
 
@@ -94,6 +94,11 @@ public class EnderecoTest {
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_hashCode_diferentes_para_ceps_diferentes() {
 		assertTrue(endereco1.hashCode() == endereco3.hashCode());
+	}
+
+	@Test
+	public void deve_testar_hashcode_para_cep_nulo() {
+		endereco.hashCode();
 	}
 
 	@Test

@@ -16,7 +16,7 @@ import br.com.contmatic.erros.ValorNegativo;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FuncionarioTest {
 
-	Funcionario funcionario = new Funcionario();
+	Funcionario funcionario = new Funcionario(); 
 
 	Funcionario funcionario4 = new Funcionario();
 
@@ -30,7 +30,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_aceitar_nome_com_letras() {
-		funcionario.setNome("Jose"); 
+		funcionario.setNome("Jose");
 		;
 	}
 
@@ -78,9 +78,9 @@ public class FuncionarioTest {
 	public void nao_deve_aceitar_telefone_com_letras() {
 		funcionario.setTelefone("1921230aa");
 	}
-	
+
 	@Test
-	public void deve_retornar_o_endereco_passado(){
+	public void deve_retornar_o_endereco_passado() {
 		funcionario.setEndereco(endereco);
 		assertThat(funcionario.getEndereco(), Matchers.is(endereco));
 	}
@@ -148,6 +148,11 @@ public class FuncionarioTest {
 	}
 
 	@Test
+	public void deve_testar_hashcode_para_pis_nulo() {
+		funcionario.hashCode();
+	}
+
+	@Test
 	public void deve_retornar_true_para_pis_iguais() {
 		assertTrue(funcionario1.equals(funcionario2));
 	}
@@ -180,7 +185,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_retornar_true_para_pis_nulos() {
-		assertTrue(funcionario.equals(funcionario4)); 
+		assertTrue(funcionario.equals(funcionario4));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -191,6 +196,6 @@ public class FuncionarioTest {
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
 		System.out.println(funcionario1);
-	 }
+	}
 
 }

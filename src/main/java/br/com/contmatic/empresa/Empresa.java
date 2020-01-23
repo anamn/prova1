@@ -26,7 +26,7 @@ public class Empresa {
 
 	public Empresa(String nome, String cnpj, String telefone, String email, double lucros, Endereco e) {
 		super();
-		this.setTelefone(telefone); 
+		this.setTelefone(telefone);
 		this.setNome(nome);
 		this.setCnpj(cnpj);
 		this.setEmail(email);

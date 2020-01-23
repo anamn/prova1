@@ -15,7 +15,7 @@ public class Cliente{
 	
 	public Cliente(String nome, String cpf, String telefone,Endereco endereco) {
 		super();
-		this.setTelefone(telefone);
+		this.setTelefone(telefone); 
 		this.setCpf(cpf);
 		this.setNome(nome);
 		this.endereco = endereco;
@@ -74,7 +74,7 @@ public class Cliente{
 	public int hashCode() {
 		final int prime = 30;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode()); 
 		return result;
 	}
 
