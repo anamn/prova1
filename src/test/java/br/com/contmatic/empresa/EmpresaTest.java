@@ -21,7 +21,7 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produto;
-import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.exceptions.CaracteresException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {

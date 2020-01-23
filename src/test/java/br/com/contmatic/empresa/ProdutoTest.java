@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Produto;
-import br.com.contmatic.erros.CaracteresException;
-import br.com.contmatic.erros.ValorNegativoException;
+import br.com.contmatic.exceptions.CaracteresException;
+import br.com.contmatic.exceptions.ValorNegativoException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProdutoTest {

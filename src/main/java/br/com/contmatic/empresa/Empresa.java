@@ -2,7 +2,7 @@ package br.com.contmatic.empresa;
 
 import java.util.List;
 
-import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.exceptions.CaracteresException;
 
 public class Empresa {
 

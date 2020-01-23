@@ -10,7 +10,7 @@ import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.exceptions.CaracteresException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) 
 public class ClienteTest {
