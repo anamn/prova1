@@ -9,22 +9,20 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EnderecoTest {
 
-	Endereco endereco = new Endereco();
+	private Endereco endereco = new Endereco();
 
-	Endereco endereco1 = new Endereco("Rua tijuco", "452", "03564870");
+	private Endereco endereco1 = new Endereco("Rua tijuco", "452", "03564870");
 
-	Endereco endereco2 = new Endereco("Rua tijuco", "452", "03564870");
+	private Endereco endereco2 = new Endereco("Rua tijuco", "452", "03564870");
 
-	Endereco endereco3 = new Endereco("Rua tijuco", "452", "84574512");
+	private Endereco endereco3 = new Endereco("Rua tijuco", "452", "84574512");
 
-	Endereco endereco4 = new Endereco();
-
-	Cliente cliente = new Cliente("Geovana", "13299283373", "919283744", endereco);
+	private Endereco endereco4 = new Endereco();
 
 	@Test
 	public void deve_aceitar_endereco_com_letras_e_caracters() {
@@ -33,7 +31,7 @@ public class EnderecoTest {
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_numeros_no_endereco() {
 		endereco.setEndereco("Rua 4546");
 
@@ -52,25 +50,25 @@ public class EnderecoTest {
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cep_com_mais_de_oito_digitos() {
 		endereco.setCep("1918171722");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cep_com_menos_digitos() {
 		endereco.setCep("192838");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cep_com_letras() {
 		endereco.setCep("1827238a");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cep_com_caracteres_especiais() {
 		endereco.setCep("1232320/");
 
@@ -98,7 +96,7 @@ public class EnderecoTest {
 
 	@Test
 	public void deve_testar_hashcode_para_cep_nulo() {
-		endereco.hashCode();
+		assertThat(endereco.hashCode(), Matchers.is(30));
 	}
 
 	@Test
@@ -118,7 +116,7 @@ public class EnderecoTest {
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(endereco1.equals(cliente));
+		assertTrue(endereco1.equals(new Object()));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -146,7 +144,7 @@ public class EnderecoTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
-		System.out.println(endereco1);
+		assertThat(endereco1, Matchers.is(endereco1));
 	}
 
 }

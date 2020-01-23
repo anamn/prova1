@@ -1,9 +1,8 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 public class Cliente{
-	
 
 	private String nome;
 	
@@ -27,7 +26,7 @@ public class Cliente{
 		if (nome.matches("[^\\d]+"))
 			this.nome = nome;
 		else
-			throw new CaracteresError("O nome deve conter apenas letras.");
+			throw new CaracteresException("O nome deve conter apenas letras.");
 	}
 
 	public String getNome() {
@@ -37,8 +36,8 @@ public class Cliente{
 	public void setCpf(String cpf) {
 		if (cpf.length() == 11 && cpf.matches("[\\d]+")){
 			this.cpf = cpf;
-		}else
-			throw new CaracteresError("CPF INVALIDO!");
+		}else 
+			throw new CaracteresException("CPF INVALIDO!");
 	}
 
 	public String getCpf() {
@@ -62,7 +61,7 @@ public class Cliente{
 		if (tel.matches("[\\d]+") && tel.length() == 9)
 			this.telefone=tel;
 		else
-			throw new CaracteresError("Telefone invalido");
+			throw new CaracteresException("Telefone invalido");
 	}
 
 	@Override

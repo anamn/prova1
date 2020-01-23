@@ -2,7 +2,7 @@ package br.com.contmatic.empresa;
 
 import java.util.List;
 
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 public class Empresa {
 
@@ -43,7 +43,7 @@ public class Empresa {
 		if (nome.matches("[^\\d]+"))
 			this.nome = nome;
 		else
-			throw new CaracteresError("O nome deve conter apenas letras.");
+			throw new CaracteresException("O nome deve conter apenas letras.");
 	}
 
 	public String getNome() {
@@ -54,7 +54,7 @@ public class Empresa {
 		if (cnpj.length() == 14 && cnpj.matches("[\\d]+"))
 			this.cnpj = cnpj;
 		else
-			throw new CaracteresError("CNPJ INVALIDO!");
+			throw new CaracteresException("CNPJ INVALIDO!");
 	}
 
 	public String getCnpj() {
@@ -85,7 +85,7 @@ public class Empresa {
 		if (telefone.matches("[\\d]+") && telefone.length() <= 9 && telefone.length() >= 8)
 			this.telefone = telefone;
 		else
-			throw new CaracteresError("Telefone invalido");
+			throw new CaracteresException("Telefone invalido");
 	}
 
 	public String getEmail() {
@@ -96,7 +96,7 @@ public class Empresa {
 		if (email.matches(".+@.+\\.[a-z]+"))
 			this.email = email;
 		else
-			throw new CaracteresError("Email invalido");
+			throw new CaracteresException("Email invalido");
 	}
 
 	public List<Cliente> getClientes() {

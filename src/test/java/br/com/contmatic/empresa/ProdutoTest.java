@@ -9,30 +9,29 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Produto;
-import br.com.contmatic.erros.CaracteresError;
-import br.com.contmatic.erros.ValorNegativo;
+import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.erros.ValorNegativoException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ProdutoTest { 
+public class ProdutoTest {
 
-	Produto produto = new Produto();
+	private Produto produto = new Produto();
 
-	Produto produto1 = new Produto("Blusa", 5, "13");
+	private Produto produto1 = new Produto("Blusa", 5, "13");
 
-	Produto produto2 = new Produto("Blusa", 5, "13");
+	private Produto produto2 = new Produto("Blusa", 5, "13");
 
-	Produto produto3 = new Produto("Calça", 15, "15");
+	private Produto produto3 = new Produto("Calça", 15, "15");
 
-	Produto produto4 = new Produto();
-
-	Endereco endereco = new Endereco("rua tijuco", "56", "12323450");
+	private Produto produto4 = new Produto();
 
 	@Test
 	public void deve_aceitar_tipo_de_produto() {
 		produto.setTipo("Roupa");
+		assertTrue(produto.getTipo().equals("Roupa"));
 	}
 
-	@Test(expected = ValorNegativo.class)
+	@Test(expected = ValorNegativoException.class)
 	public void nao_deve_aceitar_preco_negativo() {
 		produto.setPreco(-5);
 
@@ -50,7 +49,7 @@ public class ProdutoTest {
 		assertThat(produto.getCodigo(), Matchers.is("989"));
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_letras_no_codigo() {
 		produto.setCodigo("089as");
 
@@ -66,11 +65,6 @@ public class ProdutoTest {
 	}
 
 	@Test
-	public void deve_testar_o_toString() {
-		System.out.println(produto);
-	}
-
-	@Test
 	public void deve_retornar_hashCode_iguais_para_codigo_iguais() {
 		assertTrue(produto1.hashCode() == produto2.hashCode());
 
@@ -83,7 +77,7 @@ public class ProdutoTest {
 
 	@Test
 	public void deve_testar_hashcode_para_codigo_nulo() {
-		produto.hashCode();
+		assertThat(produto.hashCode(), Matchers.is(30));
 	}
 
 	@Test
@@ -103,7 +97,7 @@ public class ProdutoTest {
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(produto1.equals(endereco));
+		assertTrue(produto1.equals(new Object()));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -129,6 +123,6 @@ public class ProdutoTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
-		System.out.println(produto1);
+		assertThat(produto1, Matchers.is(produto1));
 	}
 }

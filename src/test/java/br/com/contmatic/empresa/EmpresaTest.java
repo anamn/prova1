@@ -21,42 +21,42 @@ import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.empresa.Produto;
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmpresaTest {
 
-	Empresa empresa = new Empresa();
+	private Empresa empresa = new Empresa();
 
-	Empresa empresa4 = new Empresa();
+	private Empresa empresa4 = new Empresa();
 
-	Endereco endereco = new Endereco("Rua alves", "165a", "12345420");
+	private Endereco endereco = new Endereco("Rua alves", "165a", "12345420");
 
-	Empresa empresa1 = new Empresa("Pedra", "12356272839283", "989754875", "pedra@hotmail.com", 520000, endereco);
+	private Empresa empresa1 = new Empresa("Pedra", "12356272839283", "989754875", "pedra@hotmail.com", 520000, endereco);
 
-	Empresa empresa2 = new Empresa("Papel", "12356272839283", "989754875", "papel@hotmail.com", 520000, endereco);
+	private Empresa empresa2 = new Empresa("Papel", "12356272839283", "989754875", "papel@hotmail.com", 520000, endereco);
 
-	Empresa empresa3 = new Empresa("Tesoura", "18546284537546", "989757458", "tesoura@hotmail.com", 520000, endereco);
+	private Empresa empresa3 = new Empresa("Tesoura", "18546284537546", "989757458", "tesoura@hotmail.com", 520000, endereco);
 
-	Produto produto1 = new Produto("Blusa", 5, "13");
+	private Produto produto1 = new Produto("Blusa", 5, "13");
 
-	Produto produto2 = new Produto("Calça", 10, "15");
+	private Produto produto2 = new Produto("Calça", 10, "15");
 
-	Funcionario funcionario1 = new Funcionario("Maria", "18171121310", "45695123415", "945421542", 9182, endereco);
+	private Funcionario funcionario1 = new Funcionario("Maria", "18171121310", "45695123415", "945421542", 9182, endereco);
 
-	Funcionario funcionario2 = new Funcionario("Paula", "18171121310", "14563158201", "987541236", 9182, endereco);
+	private Funcionario funcionario2 = new Funcionario("Paula", "18171121310", "14563158201", "987541236", 9182, endereco);
 
-	Funcionario funcionario3 = new Funcionario("Lais", "18171121310", "74951682164", "975421562", 9182, endereco);
+	private Funcionario funcionario3 = new Funcionario("Lais", "18171121310", "74951682164", "975421562", 9182, endereco);
 
-	Funcionario funcionario4 = new Funcionario("Fernada", "18171121301", "12121212121", "945754824", 9182, endereco);
+	private Funcionario funcionario4 = new Funcionario("Fernada", "18171121301", "12121212121", "945754824", 9182, endereco);
 
-	Cliente cliente1 = new Cliente("Felipe", "12546975554", "987546211", new Endereco());
+	private Cliente cliente1 = new Cliente("Felipe", "12546975554", "987546211", new Endereco());
 
-	Cliente cliente2 = new Cliente("Igor", "56487521975", "954261544", new Endereco());
+	private Cliente cliente2 = new Cliente("Igor", "56487521975", "954261544", new Endereco());
 
-	Cliente cliente3 = new Cliente("Isadora", "54621345132", "986545251", new Endereco());
+	private Cliente cliente3 = new Cliente("Isadora", "54621345132", "986545251", new Endereco());
 
-	Cliente cliente4 = new Cliente("Fernanda", "14575623154", "984858755", new Endereco());
+	private Cliente cliente4 = new Cliente("Fernanda", "14575623154", "984858755", new Endereco());
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -87,23 +87,23 @@ public class EmpresaTest {
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_numeros_no_nome() {
 		empresa.setNome("1-0empresa");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_letras_no_cnpj() {
 		empresa.setCnpj("1234567tt66345");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_menos_de_quartorze_digitos_no_cnpj() {
 		empresa.setCnpj("12725783");
 		assertTrue(empresa.getCnpj().equals("12725783"));
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cnpj_com_mais_de_quartorze_digitos() {
 		empresa.setCnpj("283929873972994033");
 	}
@@ -118,32 +118,34 @@ public class EmpresaTest {
 	@Test
 	public void deve_verificar_o_lucro_da_empresa() {
 		empresa.setLucros(545.54);
-		assertTrue(empresa.getLucros() == 545.54);
+		assertThat(empresa.getLucros(), Matchers.is(545.54));
 
 	}
 
 	@Test
 	public void deve_aceitar_telefone_com_nove_digitos() {
 		empresa.setTelefone("987542611");
+		assertTrue(empresa.getTelefone().equals("987542611"));
 	}
 
 	@Test
 	public void deve_aceitar_telefone_com_oito_digitos() {
 		empresa.setTelefone("98754265");
+		assertTrue(empresa.getTelefone().equals("98754265"));
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_telefone_com_mais_de_nove_digitos() {
 		empresa.setTelefone("9875421647");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_telefone_com_menos_de_oito_digitos() {
 		empresa.setTelefone("1928933");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_telefone_contendo_letras() {
 		empresa.setTelefone("457548als");
 	}
@@ -153,24 +155,24 @@ public class EmpresaTest {
 		empresa.setEmail("empresa@gmail.com");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_email_invalido() {
 		empresa.setEmail("aksla");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_email_com() {
 		empresa.setEmail("empresa@gmail");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_dev_aceitar_email_sem_o_arroba() {
 		empresa.setEmail("empresahotmail.com");
 
 	}
 
-	@Before
+	@Test
 	public void deve_adicionar_os_funcionarios_e_verificar_o_armazenamento() {
 		List<Funcionario> funcionarios = new ArrayList<>();
 		funcionarios.add(funcionario1);
@@ -230,7 +232,7 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_testar_hashcode_para_cnpj_nulo() {
-		empresa.hashCode();
+		assertThat(empresa.hashCode(), Matchers.is(30));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -255,7 +257,7 @@ public class EmpresaTest {
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(empresa1.equals(endereco));
+		assertTrue(empresa1.equals(new Object()));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -281,7 +283,7 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
-		System.out.println(empresa1);
+		assertThat(empresa1, Matchers.is(empresa1));
 	}
 
 }

@@ -1,7 +1,7 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.erros.CaracteresError;
-import br.com.contmatic.erros.ValorNegativo;
+import br.com.contmatic.erros.CaracteresException;
+import br.com.contmatic.erros.ValorNegativoException;
 
 public class Produto {
 
@@ -38,7 +38,7 @@ public class Produto {
 		if (preco > 0)
 			this.preco = preco;
 		else
-			throw new ValorNegativo("Preço invalido");
+			throw new ValorNegativoException("Preço invalido");
 	}
 
 	public String getCodigo() {
@@ -49,7 +49,7 @@ public class Produto {
 		if (codigo.matches("[\\d]+"))
 			this.codigo = codigo;
 		else
-			throw new CaracteresError("Codigo invalido");
+			throw new CaracteresException("Codigo invalido");
 
 	}
 

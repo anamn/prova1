@@ -1,6 +1,6 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 public class Endereco {
 
@@ -29,7 +29,7 @@ public class Endereco {
 		if (endereco.matches("[^\\d]+"))
 			this.endereco = endereco;
 		else
-			throw new CaracteresError("Endereco invalido! Digite apenas letras.");
+			throw new CaracteresException("Endereco invalido! Digite apenas letras.");
 	}
 
 	public String getNumero() {
@@ -48,7 +48,7 @@ public class Endereco {
 		if (cep.length() == 8 && cep.matches("[\\d]+")) {
 			this.cep = cep;
 		} else
-			throw new CaracteresError("CEP INVALIDO!");
+			throw new CaracteresException("CEP INVALIDO!");
 	}
 
 	@Override

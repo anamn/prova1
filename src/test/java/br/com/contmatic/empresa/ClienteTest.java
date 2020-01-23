@@ -1,29 +1,31 @@
 package br.com.contmatic.empresa;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
+import org.hamcrest.Matchers;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.erros.CaracteresError;
+import br.com.contmatic.erros.CaracteresException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) 
 public class ClienteTest {
 
-	Cliente cliente = new Cliente();
+	private Cliente cliente = new Cliente();
 
-	Cliente cliente4 = new Cliente();
+	private Cliente cliente4 = new Cliente();
 
-	Endereco endereco = new Endereco("Rua pedra", "0", "91112120");
+	private Endereco endereco = new Endereco("Rua pedra", "0", "91112120");
 
-	Cliente cliente1 = new Cliente("Maria", "12898282726", "985985466", endereco);
+	private Cliente cliente1 = new Cliente("Maria", "12898282726", "985985466", endereco);
 
-	Cliente cliente2 = new Cliente("Maria", "12898282726", "985985875", endereco);
+	private Cliente cliente2 = new Cliente("Maria", "12898282726", "985985875", endereco);
 
-	Cliente cliente3 = new Cliente("Joao", "13213213214", "921216457", endereco);
+	private Cliente cliente3 = new Cliente("Joao", "13213213214", "921216457", endereco);
 
 	@Test
 	public void deve_retornar_o_endereco_passado() {
@@ -31,7 +33,7 @@ public class ClienteTest {
 		assertTrue(cliente.getEndereco().equals(endereco));
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_numeros() {
 		cliente.setNome("Joao 56");
 		assertTrue(cliente.getNome().equals("Joao 56"));
@@ -50,36 +52,36 @@ public class ClienteTest {
 		assertTrue(cliente.getCpf().equals("12312312323"));
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_letras() {
 		cliente.setCpf("123456789an");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_menos_de_onze_digitos() {
 		cliente.setCpf("12309897");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_mais_de_onze_digitos() {
 		cliente.setCpf("1027278278756");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_letras_no_telefone() {
 		cliente.setTelefone("11 92829ajbs");
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_telefone_com_menos_de_nove_digitos() {
 		cliente.setTelefone("152461");
 
 	}
 
-	@Test(expected = CaracteresError.class)
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_telefone_com_mais_de_nove_digitos() {
 		cliente.setTelefone("15246192828");
 
@@ -119,7 +121,7 @@ public class ClienteTest {
 
 	@Test
 	public void deve_testar_hashcode_para_cpf_nulo() {
-		cliente.hashCode();
+		assertThat(cliente.hashCode(), Matchers.is(30));
 	}
 
 	@Test
@@ -139,7 +141,7 @@ public class ClienteTest {
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(cliente1.equals(endereco));
+		assertTrue(cliente1.equals(new Object()));
 	}
 
 	@Test(expected = AssertionError.class)
@@ -165,7 +167,7 @@ public class ClienteTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
-		System.out.println(cliente1);
+		assertThat(cliente1, Matchers.is(cliente1));
 	}
 
 }
