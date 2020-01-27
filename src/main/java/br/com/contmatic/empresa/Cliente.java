@@ -24,7 +24,7 @@ public class Cliente {
 	}
 
 	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+") && nome.length() <= 50 && nome.length() > 2) {
+		if (nome.matches("[^\\d]+") && nome.length() <= 50 && nome.length() > 1) {
 			this.nome = nome;
 		} else {
 			throw new CaracteresException(
@@ -70,7 +70,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return new StringBuffer("Nome:").append(nome).append(", CPF:").append(cpf).toString();
+		return new StringBuilder("Nome:").append(nome).append(", CPF:").append(cpf).toString();
 	}
 
 	@Override

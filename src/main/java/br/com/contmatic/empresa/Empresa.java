@@ -129,7 +129,7 @@ public class Empresa {
 
 	@Override
 	public String toString() {
-		return new StringBuffer("Empresa:").append(nome).append(", CNPJ: ").append(cnpj).append(", Telefone: ")
+		return new StringBuilder("Empresa:").append(nome).append(", CNPJ: ").append(cnpj).append(", Telefone: ")
 				.append(telefone).toString();
 	}
 

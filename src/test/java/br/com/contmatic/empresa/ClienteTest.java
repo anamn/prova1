@@ -18,15 +18,15 @@ import br.com.contmatic.exceptions.CaracteresException;
 public class ClienteTest {
 
 	Cliente cliente = null;
-	
+
 	Cliente cliente1 = null;
-	
+
 	Cliente cliente2 = null;
-	
+
 	Cliente cliente3 = null;
-	
+
 	Cliente cliente4 = null;
-	
+
 	Endereco endereco = null;
 
 	@Before
@@ -37,16 +37,16 @@ public class ClienteTest {
 		this.cliente2 = new Cliente("Maria", "12898282726", "985985466", endereco);
 		this.cliente3 = new Cliente("Maria", "12898282726", "985985875", endereco);
 		this.cliente4 = new Cliente("Joao", "13213213214", "921216457", endereco);
-		
+
 	}
-	
+
 	@After
 	public void finaliza() {
-		this.cliente=null;
-		this.cliente1=null;
-		this.cliente2=null;
-		this.cliente3=null;
-		this.cliente4=null;
+		this.cliente = null;
+		this.cliente1 = null;
+		this.cliente2 = null;
+		this.cliente3 = null;
+		this.cliente4 = null;
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class ClienteTest {
 
 	@Test
 	public void deve_retornar_valores_do_construtor() {
-		
+
 		assertTrue(cliente4.getNome().equals("Joao"));
 		assertTrue(cliente4.getCpf().equals("13213213214"));
 		assertTrue(cliente4.getTel().equals("921216457"));

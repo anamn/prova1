@@ -78,7 +78,7 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return new StringBuffer("Produto:").append(tipo).append(", preço:").append(preco).append(", codigo:")
+		return new StringBuilder("Produto:").append(tipo).append(", preço:").append(preco).append(", codigo:")
 				.append(codigo).toString();
 	}
 

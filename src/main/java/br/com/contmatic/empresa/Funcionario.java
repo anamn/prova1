@@ -102,7 +102,7 @@ public class Funcionario {
 
 	@Override
 	public String toString() {
-		return new StringBuffer("Funcionario:").append("Nome:").append(nome).append(", CPF:").append(cpf)
+		return new StringBuilder("Funcionario:").append("Nome:").append(nome).append(", CPF:").append(cpf)
 				.append(", nº: ").append(pis).toString();
 	}
 
