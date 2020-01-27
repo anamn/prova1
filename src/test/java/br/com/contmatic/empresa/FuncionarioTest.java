@@ -90,7 +90,7 @@ public class FuncionarioTest {
 
 	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_cpf_com_mais_de_onze_digitos() {
-		funcionario.setCpf("123123484948");
+		funcionario.setCpf("123123484448");
 	}
 
 	@Test

@@ -56,8 +56,7 @@ public class Produto {
 	}
 
 	public void setPreco(BigDecimal preco) {
-		int d = preco.compareTo(new BigDecimal("0"));
-		if (d > 0) {
+		if (preco.compareTo(new BigDecimal("0")) > 0) {
 			this.preco = preco;
 		} else {
 			throw new ValorException("Valor invalido!");
@@ -79,7 +78,8 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "Produto:" + tipo + ", preço:" + preco + ", codigo:" + codigo;
+		return new StringBuilder("Produto:").append(tipo).append(", preço:").append(preco).append(", codigo:")
+				.append(codigo).toString();
 	}
 
 	@Override
