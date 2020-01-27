@@ -1,19 +1,24 @@
 package br.com.contmatic.empresa;
 
+import java.math.BigDecimal;
+
 import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorNegativoException;
+import br.com.contmatic.exceptions.ValorException;
 
 public class Produto {
 
 	private String tipo;
 
-	private double preco;
+	private BigDecimal preco;
+
+	private String descricao;
 
 	private String codigo;
 
-	public Produto(String tipo, double preco, String codigo) {
+	public Produto(String tipo, String descricao, BigDecimal preco, String codigo) {
 		super();
-		this.tipo = tipo;
+		this.setTipo(tipo);
+		this.setDescricao(descricao);
 		this.setPreco(preco);
 		this.setCodigo(codigo);
 	}
@@ -22,23 +27,42 @@ public class Produto {
 		super();
 	}
 
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		if (descricao.length() > 10 && descricao.length() <= 60) {
+			this.descricao = descricao;
+		} else {
+			throw new CaracteresException("O descrição do produto deve conter de onze a sessenta digitos");
+		}
+	}
+
 	public String getTipo() {
 		return tipo;
 	}
 
 	public void setTipo(String tipo) {
-		this.tipo = tipo;
+		if (tipo.length() > 0 && tipo.length() <= 50) {
+			this.tipo = tipo;
+		} else {
+			throw new CaracteresException("O tipo de produto deve conter de um a cinquenta caracteres");
+		}
 	}
 
-	public double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
-		if (preco > 0)
+	public void setPreco(BigDecimal preco) {
+		int d = preco.compareTo(new BigDecimal("0"));
+		if (d > 0) {
 			this.preco = preco;
-		else
-			throw new ValorNegativoException("Preço invalido");
+		} else {
+			throw new ValorException("Valor invalido!");
+		}
+
 	}
 
 	public String getCodigo() {
@@ -46,11 +70,11 @@ public class Produto {
 	}
 
 	public void setCodigo(String codigo) {
-		if (codigo.matches("[\\d]+"))
+		if (codigo.matches("[\\d]+") && codigo.length() <= 30 && codigo.length() > 5) {
 			this.codigo = codigo;
-		else
-			throw new CaracteresException("Codigo invalido");
-
+		} else {
+			throw new CaracteresException("Codigo deve conter de cinco a trinta digitos e apenas letras!");
+		}
 	}
 
 	@Override

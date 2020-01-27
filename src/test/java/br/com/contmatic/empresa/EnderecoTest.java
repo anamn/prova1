@@ -6,30 +6,59 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
 
 import br.com.contmatic.exceptions.CaracteresException;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class EnderecoTest {
 
-	private Endereco endereco = new Endereco();
+	Endereco endereco = null;
 
-	private Endereco endereco1 = new Endereco("Rua tijuco", "452", "03564870");
+	Endereco endereco1 = null;
 
-	private Endereco endereco2 = new Endereco("Rua tijuco", "452", "03564870");
+	Endereco endereco2 = null;
 
-	private Endereco endereco3 = new Endereco("Rua tijuco", "452", "84574512");
+	Endereco endereco3 = null;
 
-	private Endereco endereco4 = new Endereco();
+	Endereco endereco4 = null;
+
+	@Before
+	public void incializa() {
+		this.endereco = new Endereco();
+		this.endereco1 = new Endereco("Rua tijuco", "452", "03564870");
+		this.endereco2 = new Endereco("Rua tijuco", "452", "03564870");
+		this.endereco3 = new Endereco("Rua tijuco", "452", "84574512");
+		this.endereco4 = new Endereco();
+	}
+
+	@After
+	public void finaliza() {
+		this.endereco = null;
+		this.endereco1 = null;
+		this.endereco2 = null;
+		this.endereco3 = null;
+		this.endereco4 = null;
+	}
 
 	@Test
 	public void deve_aceitar_endereco_com_letras_e_caracters() {
 		endereco.setEndereco("Av jacaranda");
 		assertThat(endereco.getEndereco(), Matchers.is("Av jacaranda"));
 
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_endereco_com_menos_de_cinco_digitos() {
+		endereco.setEndereco("av. a");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_quarenta_digitos_no_endereco() {
+		endereco.setEndereco("avenida atuanhajaimalainatadlsksisnsohaja");
 	}
 
 	@Test(expected = CaracteresException.class)
@@ -42,6 +71,16 @@ public class EnderecoTest {
 	public void deve_retornar_o_valor_informado() {
 		endereco.setNumero("12");
 		assertTrue(endereco.getNumero().equals("12"));
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_menos_que_um_digito() {
+		endereco.setNumero("");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_vinte_digitos() {
+		endereco.setNumero("123456789123456789003");
 	}
 
 	@Test
@@ -77,6 +116,7 @@ public class EnderecoTest {
 
 	@Test
 	public void deve_retornar_os_valores_do_construtor() {
+
 		Endereco endereco3 = new Endereco("Av. ac", "187", "19263720");
 		assertThat(endereco3.getEndereco(), Matchers.is("Av. ac"));
 		assertThat(endereco3.getCep(), Matchers.is("19263720"));
@@ -145,6 +185,7 @@ public class EnderecoTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
+		System.out.println(endereco1);
 		assertThat(endereco1, Matchers.is(endereco1));
 	}
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="18" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0.001" errors="0" skipped="0">
+<testsuite tests="18" failures="0" name="br.com.contmatic.empresa.ProdutoTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2115682737818030501.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2532542611277334300.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\ana.nascimento\AppData\Local\Microsoft\WindowsApps;;C:\Users\ana.nascimento\Documents\sts-4.5.0.RELEASE;;."/>
@@ -78,7 +78,7 @@
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_para_codigo_iguais" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_para_codigo_nulos" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_true_para_o_mesmo_codigo" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_valores_do_construtor" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_retornar_valores_do_construtor" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="deve_testar_hashcode_para_codigo_nulo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_letras_no_codigo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.ProdutoTest" name="nao_deve_aceitar_preco_negativo" time="0"/>

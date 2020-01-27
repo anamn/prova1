@@ -4,30 +4,52 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
+import java.math.BigDecimal;
+
 import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
 
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
 import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorNegativoException;
+import br.com.contmatic.exceptions.ValorException;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class FuncionarioTest {
 
-	private Funcionario funcionario = new Funcionario(); 
+	Funcionario funcionario = null;
+	Funcionario funcionario1 = null;
+	Funcionario funcionario2 = null;
+	Funcionario funcionario3 = null;
+	Funcionario funcionario4 = null;
+	Endereco endereco = null;
 
-	private Funcionario funcionario4 = new Funcionario();
+	@Before
+	public void inicializacao() {
+		this.funcionario = new Funcionario();
+		this.funcionario4 = new Funcionario();
+		this.endereco = new Endereco("rua tijuco", "56", "12323450");
+		this.funcionario1 = new Funcionario("Julia", "12131213131", "14587526645", "987546123", new BigDecimal("5213"),
+				endereco);
+		this.funcionario2 = new Funcionario("Julia", "12131213131", "14587526645", "987546123", new BigDecimal("5213"),
+				endereco);
+		this.funcionario3 = new Funcionario("Juliana", "98675413154", "12121212125", "987548545",
+				new BigDecimal("5213"), endereco);
+	}
 
-	private Endereco endereco = new Endereco("rua tijuco", "56", "12323450");
+	@After
+	public void finalizacao() {
+		this.funcionario = null;
+		this.funcionario4 = null;
+		this.endereco = null;
+		this.funcionario1 = null;
+		this.funcionario2 = null;
+		this.funcionario3 = null;
 
-	private Funcionario funcionario1 = new Funcionario("Julia", "12131213131", "14587526645", "987546123", 1200, endereco);
-
-	private Funcionario funcionario2 = new Funcionario("Julia", "12131213131", "14587526645", "987546123", 1200, endereco);
-
-	private Funcionario funcionario3 = new Funcionario("Juliana", "98675413154", "12121212125", "987548545", 1500, endereco);
+	}
 
 	@Test
 	public void deve_aceitar_nome_com_letras() {
@@ -38,6 +60,16 @@ public class FuncionarioTest {
 	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_nome_com_numeros() {
 		funcionario.setNome("12na");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_menos_de_tres_caracteres_no_nome() {
+		funcionario.setNome("a");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_trinta_caracteres_no_nome() {
+		funcionario.setNome("jahskndsbncbuvqbwrjeowfbewkjnkljghhjhjsdlkowe");
 	}
 
 	@Test
@@ -88,20 +120,20 @@ public class FuncionarioTest {
 		assertThat(funcionario.getEndereco(), Matchers.is(endereco));
 	}
 
-	@Test(expected = ValorNegativoException.class)
+	@Test(expected = ValorException.class)
 	public void nao_deve_aceitar_salario_menor_que_zero() {
-		funcionario.setSalario(-98);
+		funcionario.setSalario(new BigDecimal("-540"));
 	}
 
-	@Test(expected = ValorNegativoException.class)
+	@Test(expected = ValorException.class)
 	public void nao_deve_aceitar_salario_igual_a_zero() {
-		funcionario.setSalario(0);
+		funcionario.setSalario(new BigDecimal("0"));
 	}
 
 	@Test
 	public void deve_aceitar_salario_positivo() {
-		funcionario.setSalario(570);
-		assertTrue(funcionario.getSalario() == 570);
+		funcionario.setSalario(new BigDecimal("5420"));
+		assertTrue(funcionario.getSalario().equals(new BigDecimal("5420")));
 	}
 
 	@Test
@@ -133,7 +165,7 @@ public class FuncionarioTest {
 		assertTrue(funcionario1.getEndereco().equals(endereco));
 		assertTrue(funcionario1.getCpf().equals("12131213131"));
 		assertTrue(funcionario1.getNome().equals("Julia"));
-		assertTrue(funcionario1.getSalario() == 1200);
+		assertTrue(funcionario1.getSalario().equals(new BigDecimal("5213")));
 		assertTrue(funcionario1.getPis().equals("14587526645"));
 		assertTrue(funcionario1.getTelefone().equals("987546123"));
 
@@ -198,6 +230,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
+		System.out.println(funcionario1);
 		assertThat(funcionario1, Matchers.is(funcionario1));
 	}
 

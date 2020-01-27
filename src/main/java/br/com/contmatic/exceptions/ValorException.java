@@ -1,13 +1,13 @@
 package br.com.contmatic.exceptions;
 
-public class ValorNegativoException extends RuntimeException {
+public class ValorException extends RuntimeException {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ValorNegativoException(String message) {
+	public ValorException(String message) {
 		super(message);
 	}
 

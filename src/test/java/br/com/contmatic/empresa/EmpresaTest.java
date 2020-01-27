@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 
-
 import br.com.contmatic.empresa.Empresa;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.empresa.Funcionario;
@@ -27,37 +27,39 @@ import br.com.contmatic.exceptions.CaracteresException;
 @FixMethodOrder(NAME_ASCENDING)
 public class EmpresaTest {
 
-	private Empresa empresa = new Empresa();
+	Empresa empresa = null;
 
-	private Empresa empresa4 = new Empresa();
+	Empresa empresa1 = null;
 
-	private Endereco endereco = new Endereco("Rua alves", "165a", "12345420");
+	Empresa empresa2 = null;
 
-	private Empresa empresa1 = new Empresa("Pedra", "12356272839283", "989754875", "pedra@hotmail.com", 520000, endereco);
+	Empresa empresa3 = null;
 
-	private Empresa empresa2 = new Empresa("Papel", "12356272839283", "989754875", "papel@hotmail.com", 520000, endereco);
+	Empresa empresa4 = null;
 
-	private Empresa empresa3 = new Empresa("Tesoura", "18546284537546", "989757458", "tesoura@hotmail.com", 520000, endereco);
+	Endereco endereco = null;
 
-	private Produto produto1 = new Produto("Blusa", 5, "13");
+	Produto produto1 = null;
 
-	private Produto produto2 = new Produto("Calça", 10, "15");
+	Produto produto2 = null;
 
-	private Funcionario funcionario1 = new Funcionario("Maria", "18171121310", "45695123415", "945421542", 9182, endereco);
+	Funcionario funcionario1 = null;
 
-	private Funcionario funcionario2 = new Funcionario("Paula", "18171121310", "14563158201", "987541236", 9182, endereco);
+	Funcionario funcionario2 = null;
 
-	private Funcionario funcionario3 = new Funcionario("Lais", "18171121310", "74951682164", "975421562", 9182, endereco);
+	Funcionario funcionario3 = null;
 
-	private Funcionario funcionario4 = new Funcionario("Fernada", "18171121301", "12121212121", "945754824", 9182, endereco);
+	Funcionario funcionario4 = null;
 
-	private Cliente cliente1 = new Cliente("Felipe", "12546975554", "987546211", new Endereco());
+	Cliente cliente1 = null;
 
-	private Cliente cliente2 = new Cliente("Igor", "56487521975", "954261544", new Endereco());
+	Cliente cliente2 = null;
 
-	private Cliente cliente3 = new Cliente("Isadora", "54621345132", "986545251", new Endereco());
+	Cliente cliente3 = null;
 
-	private Cliente cliente4 = new Cliente("Fernanda", "14575623154", "984858755", new Endereco());
+	Cliente cliente4 = null;
+
+	Lucro lucro = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -69,10 +71,83 @@ public class EmpresaTest {
 		System.out.println("Teste Finalizado!");
 	}
 
+	@Before
+	public void incializacao() {
+		this.empresa = new Empresa();
+		this.empresa4 = new Empresa();
+		this.endereco = new Endereco("Rua alves", "165a", "12345420");
+		this.empresa1 = new Empresa("Pedra", "12356272839283", "989754875", "pedra@hotmail.com", endereco);
+		this.empresa2 = new Empresa("Papel", "12356272839283", "989754875", "papel@hotmail.com", endereco);
+		this.empresa3 = new Empresa("Tesoura", "18546284537546", "989757458", "tesoura@hotmail.com", endereco);
+		this.produto1 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("15"), "1545483");
+		this.produto2 = new Produto("Calça", "Calça preta com botoes", new BigDecimal("50"), "1845755");
+		this.funcionario1 = new Funcionario("Maria", "18171121310", "45695123415", "945421542", new BigDecimal("1542"),
+				endereco);
+		this.funcionario2 = new Funcionario("Paula", "18171121310", "14563158201", "987541236", new BigDecimal("1542"),
+				endereco);
+		this.funcionario3 = new Funcionario("Lais", "18171121310", "74951682164", "975421562", new BigDecimal("1542"),
+				endereco);
+		this.cliente1 = new Cliente("Felipe", "12546975554", "987546211", new Endereco());
+		this.cliente2 = new Cliente("Igor", "56487521975", "954261544", new Endereco());
+		this.cliente3 = new Cliente("Isadora", "54621345132", "986545251", new Endereco());
+		this.cliente4 = new Cliente("Fernanda", "14575623154", "984858755", new Endereco());
+		this.lucro = new Lucro(new BigDecimal("50000"), new BigDecimal("55000"), "real");
+	}
+
+	@After
+	public void finalizacao() {
+		this.empresa = new Empresa();
+		this.empresa4 = null;
+		this.endereco = null;
+		this.empresa1 = null;
+		this.empresa2 = null;
+		this.empresa3 = null;
+		this.produto1 = null;
+		this.produto2 = null;
+		this.funcionario1 = null;
+		this.funcionario2 = null;
+		this.funcionario3 = null;
+		this.cliente1 = null;
+		this.cliente2 = null;
+		this.cliente3 = null;
+		this.cliente4 = null;
+		this.lucro = null;
+
+	}
+
+	@Before
+	public void deve_adicionar_os_clientes_e_verificar_o_armazenamento() {
+		List<Cliente> clientes = new ArrayList<>();
+		clientes.add(cliente1);
+		clientes.add(cliente2);
+		clientes.add(cliente3);
+		clientes.add(cliente4);
+		empresa.setClientes(clientes);
+		assertTrue(empresa.getClientes() == clientes);
+	}
+
+	@Before
+	public void deve_adicionar_os_produtos_e_verificar_o_armazenamento() {
+		List<Produto> produtos = new ArrayList<>();
+		produtos.add(produto1);
+		produtos.add(produto2);
+		empresa.setProdutos(produtos);
+		assertTrue(empresa.getProdutos() == produtos);
+
+	}
+
+	@After
+	public void finaliza_as_listas() {
+		empresa.setProdutos(null);
+		empresa.setClientes(null);
+		empresa.setFuncionarios(null);
+	}
+
 	@Test
-	public void deve_verificar_lucro_armazenado() {
-		empresa.setLucros(845);
-		assertTrue(empresa.getLucros() == 845.0);
+	public void deve_retornar_o_lucro() {
+		empresa.setLucro(lucro);
+		assertThat(empresa.getLucro(), Matchers.is(lucro));
+
 	}
 
 	@Test
@@ -86,6 +161,16 @@ public class EmpresaTest {
 		empresa.setNome("Onix");
 		assertTrue(empresa.getNome().equals("Onix"));
 
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nome_nao_deve_conter_menos_que_tres_caracteres() {
+		empresa.setNome("as");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_cinquenta_caracteres_no_nome() {
+		empresa.setNome("jsdbKDFIHEIHFUWEKAHJKhghgjkkjkjdddddddddddddddddddddddddddkkk");
 	}
 
 	@Test(expected = CaracteresException.class)
@@ -113,14 +198,6 @@ public class EmpresaTest {
 	public void deve_aceitar_cnpj_com_quartorze_digitos_e_numeros() {
 		empresa.setCnpj("12982787988786");
 		assertTrue(empresa.getCnpj().equals("12982787988786"));
-	}
-
-	@Ignore
-	@Test
-	public void deve_verificar_o_lucro_da_empresa() {
-		empresa.setLucros(545.54);
-		assertThat(empresa.getLucros(), Matchers.is(545.54));
-
 	}
 
 	@Test
@@ -163,6 +240,17 @@ public class EmpresaTest {
 	}
 
 	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_cinquenta_digitos_no_email() {
+		empresa.setEmail("ajshbsssssahuksdkjwheiojikwjfsfdsdijuihush@gmail.com.br");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_menos_de_oito_caracteres_no_email() {
+		empresa.setEmail("s@gmail.com.br");
+	}
+
+	@Ignore
+	@Test(expected = CaracteresException.class)
 	public void nao_deve_aceitar_email_com() {
 		empresa.setEmail("empresa@gmail");
 
@@ -186,34 +274,6 @@ public class EmpresaTest {
 
 	}
 
-	@Before
-	public void deve_adicionar_os_clientes_e_verificar_o_armazenamento() {
-		List<Cliente> clientes = new ArrayList<>();
-		clientes.add(cliente1);
-		clientes.add(cliente2);
-		clientes.add(cliente3);
-		clientes.add(cliente4);
-		empresa.setClientes(clientes);
-		assertTrue(empresa.getClientes() == clientes);
-	}
-
-	@Before
-	public void deve_adicionar_os_produtos_e_verificar_o_armazenamento() {
-		List<Produto> produtos = new ArrayList<>();
-		produtos.add(produto1);
-		produtos.add(produto2);
-		empresa.setProdutos(produtos);
-		assertTrue(empresa.getProdutos() == produtos);
-
-	}
-
-	@After
-	public void finaliza_as_listas() {
-		empresa.setProdutos(null);
-		empresa.setClientes(null);
-		empresa.setFuncionarios(null);
-	}
-
 	@Test
 	public void deve_verificar_o_construtor() {
 
@@ -221,7 +281,6 @@ public class EmpresaTest {
 		assertEquals("pedra@hotmail.com", empresa1.getEmail());
 		assertEquals("12356272839283", empresa1.getCnpj());
 		assertEquals("989754875", empresa1.getTelefone());
-		assertTrue(empresa1.getLucros() == 520000.0);
 		assertEquals(endereco, empresa1.getEndereco());
 
 	}
@@ -285,6 +344,7 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
+		System.out.println(empresa1);
 		assertThat(empresa1, Matchers.is(empresa1));
 	}
 

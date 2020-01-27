@@ -1,11 +1,13 @@
 package br.com.contmatic.empresa;
 
+import java.math.BigDecimal;
+
 import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorNegativoException;
+import br.com.contmatic.exceptions.ValorException;
 
 public class Funcionario {
 
-	private double salario;
+	private BigDecimal salario;
 
 	private String pis;
 
@@ -17,7 +19,7 @@ public class Funcionario {
 
 	private Endereco endereco;
 
-	public Funcionario(String nome, String cpf, String pis, String telefone, double salario, Endereco endereco) {
+	public Funcionario(String nome, String cpf, String pis, String telefone, BigDecimal salario, Endereco endereco) {
 		super();
 		this.setSalario(salario);
 		this.setPis(pis);
@@ -31,10 +33,11 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+"))
+		if (nome.matches("[^\\d]+") && nome.length() >3 && nome.length() <= 40) {
 			this.nome = nome;
-		else
-			throw new CaracteresException("O nome deve conter apenas letras.");
+		} else {
+			throw new CaracteresException("O nome deve conter apenas letras, ter de três a quarenta digitos!");
+		}
 	}
 
 	public String getNome() {
@@ -61,32 +64,36 @@ public class Funcionario {
 	}
 
 	public void setTelefone(String tel) {
-		if (tel.matches("[\\d]+") && tel.length() == 9)
+		if (tel.matches("[\\d]+") && tel.length() == 9) {
 			this.telefone = tel;
-		else
+		} else {
 			throw new CaracteresException("Telefone invalido");
+		}
 	}
 
 	public String getTelefone() {
 		return telefone;
 	}
 
-	public double getSalario() {
+	public BigDecimal getSalario() {
 		return salario;
 	}
 
-	public void setSalario(double salario) {
-		if (salario > 0)
+	public void setSalario(BigDecimal salario) {
+		int d = salario.compareTo(new BigDecimal("0"));
+		if (d > 0) {
 			this.salario = salario;
-		else
-			throw new ValorNegativoException("Salario negativo!");
+		} else {
+			throw new ValorException("Valor invalido!");
+		}
 	}
 
 	public void setPis(String pis) {
-		if (pis.matches("[\\d]+") && pis.length() == 11)
+		if (pis.matches("[\\d]+") && pis.length() == 11) {
 			this.pis = pis;
-		else
+		} else {
 			throw new CaracteresException("PIS invalido!");
+		}
 	}
 
 	public String getPis() {

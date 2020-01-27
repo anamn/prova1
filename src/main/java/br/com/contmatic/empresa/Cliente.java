@@ -24,10 +24,12 @@ public class Cliente {
 	}
 
 	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+"))
+		if (nome.matches("[^\\d]+") && nome.length() <= 50 && nome.length() > 2) {
 			this.nome = nome;
-		else
-			throw new CaracteresException("O nome deve conter apenas letras.");
+		} else {
+			throw new CaracteresException(
+					"O nome deve conter apenas letras e ter no minimo dois digitos e no maximo cinquenta");
+		}
 	}
 
 	public String getNome() {
@@ -37,8 +39,9 @@ public class Cliente {
 	public void setCpf(String cpf) {
 		if (cpf.length() == 11 && cpf.matches("[\\d]+")) {
 			this.cpf = cpf;
-		} else
+		} else {
 			throw new CaracteresException("CPF INVALIDO!");
+		}
 	}
 
 	public String getCpf() {
@@ -58,10 +61,11 @@ public class Cliente {
 	}
 
 	public void setTelefone(String tel) {
-		if (tel.matches("[\\d]+") && tel.length() == 9)
+		if (tel.matches("[\\d]+") && tel.length() == 9) {
 			this.telefone = tel;
-		else
+		} else {
 			throw new CaracteresException("Telefone invalido");
+		}
 	}
 
 	@Override

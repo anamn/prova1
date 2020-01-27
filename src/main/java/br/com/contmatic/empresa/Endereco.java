@@ -26,10 +26,12 @@ public class Endereco {
 	}
 
 	public void setEndereco(String endereco) {
-		if (endereco.matches("[^\\d]+"))
+		if (endereco.matches("[^\\d]+") && endereco.length() <= 40 && endereco.length() > 5) {
 			this.endereco = endereco;
-		else
-			throw new CaracteresException("Endereco invalido! Digite apenas letras.");
+		} else {
+			throw new CaracteresException(
+					"Endereco deve ter apenas letras e ter no minimo cinco digitos e no maximo quarenta");
+		}
 	}
 
 	public String getNumero() {
@@ -37,7 +39,11 @@ public class Endereco {
 	}
 
 	public void setNumero(String numero) {
-		this.numero = numero;
+		if (numero.length() > 0 && numero.length() <= 20) {
+			this.numero = numero;
+		} else {
+			throw new CaracteresException("Numero deve ter no minimo um digito e no maximo vinte");
+		}
 	}
 
 	public String getCep() {
@@ -47,8 +53,9 @@ public class Endereco {
 	public void setCep(String cep) {
 		if (cep.length() == 8 && cep.matches("[\\d]+")) {
 			this.cep = cep;
-		} else
+		} else {
 			throw new CaracteresException("CEP INVALIDO!");
+		}
 	}
 
 	@Override

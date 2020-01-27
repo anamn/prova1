@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="31" failures="0" name="br.com.contmatic.empresa.FuncionarioTest" time="0.005" errors="0" skipped="0">
+<testsuite tests="31" failures="0" name="br.com.contmatic.empresa.FuncionarioTest" time="0.006" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,7 +27,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2115682737818030501.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf2532542611277334300.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\ana.nascimento\AppData\Local\Microsoft\WindowsApps;;C:\Users\ana.nascimento\Documents\sts-4.5.0.RELEASE;;."/>
@@ -64,7 +64,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_aceitar_apenas_numeros_no_pis" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_aceitar_apenas_numeros_no_pis" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_aceitar_cpf_com_onze_digitos_sem_letras" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_aceitar_nome_com_letras" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_aceitar_salario_positivo" time="0"/>
@@ -73,26 +73,26 @@
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_funcionario_nulo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_objetos_de_classes_diferentes" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_pis_comparado_nulo" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_pis_diferentes" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_pis_diferentes" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_false_para_pis_nulo" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_hashCode_diferentes_para_pis_diferentes" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_hashCode_diferentes_para_pis_diferentes" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_hashCode_iguais_para_pis_iguais" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_o_endereco_passado" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_os_valores_do_construtor" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_para_o_mesmo_funcionario" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_para_o_mesmo_funcionario" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_para_pis_iguais" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_para_pis_nulos" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_retornar_true_para_pis_nulos" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="deve_testar_hashcode_para_pis_nulo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_cpf_com_letras" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_cpf_com_mais_de_onze_digitos" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_cpf_com_menos_de_onze_digitos" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_cpf_com_menos_de_onze_digitos" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_letras" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_mais_de_onze_caracteres" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_mais_de_onze_caracteres" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_menos_de_onde_caracteres" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_nome_com_numeros" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_salario_igual_a_zero" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_salario_igual_a_zero" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_salario_menor_que_zero" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_telefone_com_letras" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_telefone_com_mais_de_nove_digitos" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_telefone_com_mais_de_nove_digitos" time="0"/>
   <testcase classname="br.com.contmatic.empresa.FuncionarioTest" name="nao_deve_aceitar_telefone_com_menos_de_nove_digitos" time="0"/>
 </testsuite>

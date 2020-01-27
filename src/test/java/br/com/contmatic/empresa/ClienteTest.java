@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
@@ -12,20 +14,40 @@ import br.com.contmatic.empresa.Cliente;
 import br.com.contmatic.empresa.Endereco;
 import br.com.contmatic.exceptions.CaracteresException;
 
-@FixMethodOrder(NAME_ASCENDING) 
+@FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
 
-	private Cliente cliente = new Cliente();
+	Cliente cliente = null;
+	
+	Cliente cliente1 = null;
+	
+	Cliente cliente2 = null;
+	
+	Cliente cliente3 = null;
+	
+	Cliente cliente4 = null;
+	
+	Endereco endereco = null;
 
-	private Cliente cliente4 = new Cliente();
-
-	private Endereco endereco = new Endereco("Rua pedra", "0", "91112120");
-
-	private Cliente cliente1 = new Cliente("Maria", "12898282726", "985985466", endereco);
-
-	private Cliente cliente2 = new Cliente("Maria", "12898282726", "985985875", endereco);
-
-	private Cliente cliente3 = new Cliente("Joao", "13213213214", "921216457", endereco);
+	@Before
+	public void incializacao() {
+		this.endereco = new Endereco("Rua pedra", "5", "91112120");
+		this.cliente = new Cliente();
+		this.cliente1 = new Cliente();
+		this.cliente2 = new Cliente("Maria", "12898282726", "985985466", endereco);
+		this.cliente3 = new Cliente("Maria", "12898282726", "985985875", endereco);
+		this.cliente4 = new Cliente("Joao", "13213213214", "921216457", endereco);
+		
+	}
+	
+	@After
+	public void finaliza() {
+		this.cliente=null;
+		this.cliente1=null;
+		this.cliente2=null;
+		this.cliente3=null;
+		this.cliente4=null;
+	}
 
 	@Test
 	public void deve_retornar_o_endereco_passado() {
@@ -44,6 +66,16 @@ public class ClienteTest {
 	public void deve_aceitar_apenas_letras() {
 		cliente.setNome("Joao Silva");
 		assertTrue(cliente.getNome().equals("Joao Silva"));
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_nome_com_menos_de_dois_digitos() {
+		cliente.setNome("p");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_nome_com_mais_de_cinquenta_digitos() {
+		cliente.setNome("anajskajdaiakajauanahanajaksldkfjsiajggeujdhaunshejd");
 	}
 
 	@Test
@@ -95,17 +127,11 @@ public class ClienteTest {
 
 	@Test
 	public void deve_retornar_valores_do_construtor() {
-		assertTrue(cliente3.getNome().equals("Joao"));
-
-		assertTrue(cliente3.getCpf().equals("13213213214"));
-
-		assertTrue(cliente3.getEndereco().getEndereco().equals("Rua pedra"));
-
-		assertTrue(cliente3.getEndereco().getNumero().equals("0"));
-
-		assertTrue(cliente3.getEndereco().getCep().equals("91112120"));
-
-		assertTrue(cliente3.getTel().equals("921216457"));
+		
+		assertTrue(cliente4.getNome().equals("Joao"));
+		assertTrue(cliente4.getCpf().equals("13213213214"));
+		assertTrue(cliente4.getTel().equals("921216457"));
+		assertTrue(cliente4.getEndereco().equals(endereco));
 	}
 
 	@Test
@@ -126,7 +152,8 @@ public class ClienteTest {
 
 	@Test
 	public void deve_retornar_true_para_cpf_iguais() {
-		assertTrue(cliente1.equals(cliente2));
+		assertTrue(cliente2.equals(cliente3));
+		System.out.println(cliente);
 	}
 
 	@Test
@@ -136,38 +163,39 @@ public class ClienteTest {
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_cliente_nulo() {
-		assertTrue(cliente.equals(cliente1));
+		assertTrue(cliente.equals(cliente2));
 	}
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(cliente1.equals(new Object()));
+		assertTrue(cliente2.equals(new Object()));
 	}
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_cpf_nulo() {
-		assertTrue(cliente.equals(cliente1));
+		assertTrue(cliente.equals(cliente2));
 
 	}
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_cpf_comparado_nulo() {
-		assertTrue(cliente1.equals(null));
+		assertTrue(cliente2.equals(null));
 	}
 
 	@Test
 	public void deve_retornar_true_para_cpf_nulos() {
-		assertTrue(cliente.equals(cliente4));
+		assertTrue(cliente.equals(cliente1));
 	}
 
 	@Test(expected = AssertionError.class)
 	public void deve_retornar_false_para_cpf_diferentes() {
-		assertTrue(cliente1.equals(cliente3));
+		assertTrue(cliente3.equals(cliente4));
 	}
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
-		assertThat(cliente1, Matchers.is(cliente1));
+		System.out.println(cliente2);
+		assertThat(cliente2, Matchers.is(cliente2));
 	}
 
 }

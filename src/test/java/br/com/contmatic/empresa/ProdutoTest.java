@@ -4,26 +4,48 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
+import java.math.BigDecimal;
+
 import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.Produto;
 import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorNegativoException;
+import br.com.contmatic.exceptions.ValorException;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
 
-	private Produto produto = new Produto();
+	Produto produto = null;
 
-	private Produto produto1 = new Produto("Blusa", 5, "13");
+	Produto produto1 = null;
 
-	private Produto produto2 = new Produto("Blusa", 5, "13");
+	Produto produto2 = null;
 
-	private Produto produto3 = new Produto("Calça", 15, "15");
+	Produto produto3 = null;
 
-	private Produto produto4 = new Produto();
+	Produto produto4 = null;
+
+	@Before
+	public void incializacao() {
+		this.produto = new Produto();
+		this.produto1 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("5"), "122523");
+		this.produto2 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("5"), "122523");
+		this.produto3 = new Produto("Calça", "Calça preta com botoes", new BigDecimal("15"), "154545");
+		this.produto4 = new Produto();
+	}
+	
+	@After
+	public void finalizacao() {
+		this.produto = null;
+		this.produto1 = null;
+		this.produto2 = null;
+		this.produto3 = null;
+		this.produto4 = null;
+	}
 
 	@Test
 	public void deve_aceitar_tipo_de_produto() {
@@ -31,22 +53,63 @@ public class ProdutoTest {
 		assertTrue(produto.getTipo().equals("Roupa"));
 	}
 
-	@Test(expected = ValorNegativoException.class)
-	public void nao_deve_aceitar_preco_negativo() {
-		produto.setPreco(-5);
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_tipo_de_produto_com_menos_de_um_digito() {
+		produto.setTipo("");
+	}
 
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_tipo_de_produto_com_mais_de_cinquenta_digitos() {
+		produto.setTipo("asdkfjieksjdkoeirororororororpritirjrirkrkrnrkrjrjrikmkhjjijkk");
 	}
 
 	@Test
-	public void deve_aceitar_preco_diferente_de_zero() {
-		produto.setPreco(14.99);
-		assertThat((Double) produto.getPreco(), Matchers.is((double) 14.99));
+	public void deve_aceitar_descricao_do_produto() {
+		produto.setDescricao("blusa com mangas e bla bla bla");
+		assertThat(produto.getDescricao(), Matchers.is("blusa com mangas e bla bla bla"));
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_descricao_com_menos_de_dez_digitos() {
+		produto.setDescricao("calca");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_descricao_com_mais_de_sessenta_digitos() {
+		produto.setDescricao("kajkjdjjjjjjjjjjjjjjjjjjjjjjshbdksljfffhhhhhhhhhhhhhhhhhhhhhhhhaljj");
+	}
+
+	@Test
+	public void deve_aceitar_preco_positivo() {
+		produto.setPreco(new BigDecimal("15"));
+		assertThat(produto.getPreco(), Matchers.is(new BigDecimal("15")));
+	}
+
+	@Test(expected = ValorException.class)
+	public void nao_deve_aceitar_preco_igual_a_zero() {
+		produto.setPreco(new BigDecimal("0"));
+	}
+
+	@Test(expected = ValorException.class)
+	public void nao_deve_aceitar_preco_negativo() {
+		produto.setPreco(new BigDecimal("0"));
+
 	}
 
 	@Test
 	public void deve_aceitar_numeros_no_codigo() {
-		produto.setCodigo("989");
-		assertThat(produto.getCodigo(), Matchers.is("989"));
+		produto.setCodigo("989545");
+		assertThat(produto.getCodigo(), Matchers.is("989545"));
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_menos_de_cinco_digitos_no_codigo() {
+		produto.setCodigo("12");
+	}
+
+	@Test(expected = CaracteresException.class)
+	public void nao_deve_aceitar_mais_de_trinta_digitos_no_codigo() {
+		produto.setCodigo("1234567891234567891234567891233");
 	}
 
 	@Test(expected = CaracteresException.class)
@@ -57,10 +120,11 @@ public class ProdutoTest {
 
 	@Test
 	public void deve_retornar_valores_do_construtor() {
+		assertTrue(produto2.getDescricao().equals("Blusa de maga,com estampas"));
 		assertTrue(produto2.getTipo().equals("Blusa"));
-		assertThat(produto2.getPreco(), Matchers.is(5.0));
-		assertTrue(produto2.getCodigo().equals("13"));
-		
+		assertThat(produto2.getPreco(), Matchers.is(new BigDecimal("5")));
+		assertTrue(produto2.getCodigo().equals("122523"));
+
 	}
 
 	@Test
@@ -122,6 +186,7 @@ public class ProdutoTest {
 
 	@Test
 	public void deve_retornar_a_toString_do_objeto() {
+		System.out.println(produto1);
 		assertThat(produto1, Matchers.is(produto1));
 	}
 }
