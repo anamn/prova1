@@ -85,7 +85,8 @@ public class Endereco {
 
 	@Override
 	public String toString() {
-		return "Endereco:" + endereco + ", nº:" + numero + ", CEP:" + cep;
+		return new StringBuffer("Endereco:").append(endereco).append(", nº:").append(numero).append(", CEP:")
+				.append(cep).toString();
 	}
 
 }

@@ -58,9 +58,15 @@ public class LucroTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_moeda_invalida() {
+	public void nao_deve_aceitar_moeda_invalida_no_ganho() {
 		lucro.setMoeda("ajhssa");
 		lucro.setGanho(new BigDecimal("50000"));
+	}
+	
+	@Test(expected = ValorException.class)
+	public void nao_deve_aceitar_valor_no_ganho(){
+		lucro.setMoeda("alkss");
+		lucro.setGanho(new BigDecimal("0"));
 	}
 
 	@Test(expected = ValorException.class)
@@ -74,6 +80,13 @@ public class LucroTest {
 		lucro.setMoeda("dollar");
 		lucro.setInvestimento(new BigDecimal("0"));
 	}
+	
+	@Test(expected = ValorException.class)
+	public void nao_deve_aceitar_valor_no_investimento(){
+		lucro.setMoeda("alkss");
+		lucro.setInvestimento(new BigDecimal("0"));
+	}
+
 
 	@Test
 	public void deve_guardar_investimento_da_empresa() {
@@ -83,7 +96,7 @@ public class LucroTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_outro_tipo_de_moeda_invalida() {
+	public void nao_deve_aceitar_moeda_invalida_no_investimento() {
 		lucro.setMoeda("alsl");
 		lucro.setInvestimento(new BigDecimal("50000"));
 	}

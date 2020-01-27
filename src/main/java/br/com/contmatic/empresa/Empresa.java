@@ -24,13 +24,13 @@ public class Empresa {
 
 	private Lucro lucro;
 
-	public Empresa(String nome, String cnpj, String telefone, String email, Endereco e) {
+	public Empresa(String nome, String cnpj, String telefone, String email, Endereco endereco) {
 		super();
 		this.setTelefone(telefone);
 		this.setNome(nome);
 		this.setCnpj(cnpj);
 		this.setEmail(email);
-		this.endereco = e;
+		this.endereco = endereco;
 
 	}
 
@@ -129,7 +129,8 @@ public class Empresa {
 
 	@Override
 	public String toString() {
-		return "Empresa:" + nome + ", CNPJ: " + cnpj + ", Telefone: " + telefone;
+		return new StringBuffer("Empresa:").append(nome).append(", CNPJ: ").append(cnpj).append(", Telefone: ")
+				.append(telefone).toString();
 	}
 
 	@Override

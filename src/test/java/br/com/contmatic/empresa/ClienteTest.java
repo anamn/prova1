@@ -153,7 +153,6 @@ public class ClienteTest {
 	@Test
 	public void deve_retornar_true_para_cpf_iguais() {
 		assertTrue(cliente2.equals(cliente3));
-		System.out.println(cliente);
 	}
 
 	@Test

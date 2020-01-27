@@ -33,7 +33,7 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+") && nome.length() >3 && nome.length() <= 40) {
+		if (nome.matches("[^\\d]+") && nome.length() > 3 && nome.length() <= 40) {
 			this.nome = nome;
 		} else {
 			throw new CaracteresException("O nome deve conter apenas letras, ter de três a quarenta digitos!");
@@ -47,8 +47,9 @@ public class Funcionario {
 	public void setCpf(String cpf) {
 		if (cpf.length() == 11 && cpf.matches("[\\d]+")) {
 			this.cpf = cpf;
-		} else
+		} else {
 			throw new CaracteresException("CPF INVALIDO!");
+		}
 	}
 
 	public String getCpf() {
@@ -80,8 +81,7 @@ public class Funcionario {
 	}
 
 	public void setSalario(BigDecimal salario) {
-		int d = salario.compareTo(new BigDecimal("0"));
-		if (d > 0) {
+		if (salario.compareTo(new BigDecimal("0")) > 0) {
 			this.salario = salario;
 		} else {
 			throw new ValorException("Valor invalido!");
@@ -102,7 +102,8 @@ public class Funcionario {
 
 	@Override
 	public String toString() {
-		return "Funcionario:" + "Nome:" + nome + ", CPF:" + cpf + ", nº: " + pis;
+		return new StringBuffer("Funcionario:").append("Nome:").append(nome).append(", CPF:").append(cpf)
+				.append(", nº: ").append(pis).toString();
 	}
 
 	@Override

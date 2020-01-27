@@ -29,8 +29,7 @@ public class Lucro {
 	}
 
 	public void setInvestimento(BigDecimal investimento) {
-		int d = investimento.compareTo(new BigDecimal("0"));
-		if (d > 0 && this.setMoeda(this.moeda)) {
+		if (investimento.compareTo(new BigDecimal("0")) > 0 && this.setMoeda(this.moeda)) {
 			this.investimento = investimento;
 		} else {
 			throw new ValorException("Valor invalido! Digite um valor maior que zero em real");
@@ -42,8 +41,7 @@ public class Lucro {
 	}
 
 	public void setGanho(BigDecimal ganho) {
-		int d = ganho.compareTo(new BigDecimal("0"));
-		if (d > 0 && this.setMoeda(this.moeda)) {
+		if (ganho.compareTo(new BigDecimal("0")) > 0 && this.setMoeda(this.moeda)) {
 			this.ganho = ganho;
 		} else {
 			throw new ValorException("Valor invalido! Digite um valor maior que zero em real");
@@ -54,8 +52,8 @@ public class Lucro {
 	public String toString() {
 		BigDecimal x = (this.getGanho().subtract(this.investimento)).multiply(new BigDecimal("100"))
 				.divide(this.getInvestimento());
-		String lucro = "" + x;
-		return lucro + "%";
+		StringBuilder lucro = new StringBuilder(x + "").append("%");
+		return lucro.toString();
 
 	}
 

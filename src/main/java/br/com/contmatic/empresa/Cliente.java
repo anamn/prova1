@@ -70,7 +70,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return " Nome:" + nome + " " + ", CPF:" + cpf;
+		return new StringBuffer("Nome:").append(nome).append(", CPF:").append(cpf).toString();
 	}
 
 	@Override
