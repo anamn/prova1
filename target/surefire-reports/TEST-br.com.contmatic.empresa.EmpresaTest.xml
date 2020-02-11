@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="35" failures="0" name="br.com.contmatic.empresa.EmpresaTest" time="0.017" errors="0" skipped="1">
+<testsuite tests="25" failures="0" name="br.com.contmatic.empresa.EmpresaTest" time="0.096" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_191\jre\bin"/>
@@ -27,10 +27,10 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 10"/>
-    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf5082689911708638827.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\ana.nascimento\Documents\workspace-spring-tool-suite-4-4.5.0.RELEASE\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf6925106969953162417.tmp"/>
     <property name="jansi.force" value="true"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\ana.nascimento\AppData\Local\Microsoft\WindowsApps;;C:\Users\ana.nascimento\Documents\sts-4.5.0.RELEASE;;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_191\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_191/bin/server;C:/Program Files/Java/jre1.8.0_191/bin;C:/Program Files/Java/jre1.8.0_191/lib/amd64;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Users\ana.nascimento\AppData\Local\Microsoft\WindowsApps;C:\Users\ana.nascimento\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ana.nascimento\AppData\Roaming\npm;C:\Users\ana.nascimento\AppData\Local\GitHubDesktop\bin;C:\Users\ana.nascimento\Documents\sts-4.5.0.RELEASE;;."/>
     <property name="jansi.passthrough" value="true"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
@@ -64,41 +64,29 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_aceitar_cnpj_com_quartorze_digitos_e_numeros" time="0.003"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_aceitar_email" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_aceitar_telefone_com_nove_digitos" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_aceitar_telefone_com_oito_digitos" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_adicionar_os_funcionarios_e_verificar_o_armazenamento" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_adicionar_os_clientes_e_verificar_o_armazenamento" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_adicionar_os_funcionarios_e_verificar_o_armazenamento" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_adicionar_os_produtos_e_verificar_o_armazenamento" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retonar_mensagem_de_erro_no_cnpj" time="0.027"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retonar_mensagem_de_erro_no_email" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retonar_mensagem_de_erro_no_nome" time="0.01"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retonar_mensagem_de_erro_no_site" time="0.009"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retonar_mensagem_de_erro_no_telefone" time="0.009"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_a_toString_do_objeto" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_cnpj_diferentes" time="0.001"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_cnpj_nulo" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_cpf_comparado_nulo" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_cpf_comparado_nulo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_empresa_nula" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_objetos_de_classes_diferentes" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_hashCode_diferentes_para_cnpj_diferentes" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_false_para_objetos_de_classes_diferentes" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_hashCode_diferentes_para_cnpj_diferentes" time="0.002"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_hashCode_iguais_para_cnpj_iguais" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_o_endereco_passado" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_mensagem_em_todos_os_campos" time="0.014"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_o_endereco_passado" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_o_lucro" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_para_a_mesma_empresa" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_para_cnpj_iguais" time="0.001"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_para_cnpj_iguais" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_retornar_true_para_cpf_nulos" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_testar_hashcode_para_cnpj_nulo" time="0"/>
   <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_verificar_o_construtor" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="deve_verificar_o_nome_da_empresa" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_dev_aceitar_email_sem_o_arroba" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_cnpj_com_mais_de_quartorze_digitos" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_email_com" time="0.002">
-    <skipped/>
-  </testcase>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_email_invalido" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_letras_no_cnpj" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_mais_de_cinquenta_caracteres_no_nome" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_mais_de_cinquenta_digitos_no_email" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_menos_de_oito_caracteres_no_email" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_menos_de_quartorze_digitos_no_cnpj" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_numeros_no_nome" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_telefone_com_mais_de_nove_digitos" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_telefone_com_menos_de_oito_digitos" time="0.001"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_aceitar_telefone_contendo_letras" time="0"/>
-  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nome_nao_deve_conter_menos_que_tres_caracteres" time="0"/>
+  <testcase classname="br.com.contmatic.empresa.EmpresaTest" name="nao_deve_retornar_erros" time="0.012"/>
 </testsuite>

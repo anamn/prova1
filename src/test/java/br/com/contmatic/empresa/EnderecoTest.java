@@ -1,192 +1,182 @@
 package br.com.contmatic.empresa;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contmatic.exceptions.CaracteresException;
+import br.com.contimatic.fixture.ValidadorEndereco;
+import br.com.contmatic.enums.EnderecoType;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class EnderecoTest {
 
-	Endereco endereco = null;
+    Endereco endereco = null;
 
-	Endereco endereco1 = null;
+    Endereco endereco1 = null;
 
-	Endereco endereco2 = null;
+    Endereco endereco2 = null;
 
-	Endereco endereco3 = null;
+    Endereco endereco3 = null;
 
-	Endereco endereco4 = null;
+    Endereco endereco4 = null;
 
-	@Before
-	public void incializa() {
-		this.endereco = new Endereco();
-		this.endereco1 = new Endereco("Rua tijuco", "452", "03564870");
-		this.endereco2 = new Endereco("Rua tijuco", "452", "03564870");
-		this.endereco3 = new Endereco("Rua tijuco", "452", "84574512");
-		this.endereco4 = new Endereco();
-	}
+    ValidadorEndereco validador = null;
 
-	@After
-	public void finaliza() {
-		this.endereco = null;
-		this.endereco1 = null;
-		this.endereco2 = null;
-		this.endereco3 = null;
-		this.endereco4 = null;
-	}
+    Set<String> teste = null;
 
-	@Test
-	public void deve_aceitar_endereco_com_letras_e_caracters() {
-		endereco.setEndereco("Av jacaranda");
-		assertThat(endereco.getEndereco(), Matchers.is("Av jacaranda"));
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+    }
 
-	}
+    @Before
+    public void incializa() {
+        this.endereco = new Endereco();
+        this.endereco1 = new Endereco("Rua tijuco", "452", "03564870", EnderecoType.APARTAMENTO);
+        this.endereco2 = new Endereco("Rua tijuco", "452", "03564870", EnderecoType.CASA);
+        this.endereco3 = new Endereco("Rua tijuco", "452", "84574512", EnderecoType.COMENCIAL);
+        this.endereco4 = new Endereco();
+        
+        this.validador = new ValidadorEndereco();
+        this.teste = new TreeSet<>();
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_endereco_com_menos_de_cinco_digitos() {
-		endereco.setEndereco("av. a");
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_mais_de_quarenta_digitos_no_endereco() {
-		endereco.setEndereco("avenida atuanhajaimalainatadlsksisnsohaja");
-	}
+    @After
+    public void finaliza() {
+        this.endereco = null;
+        this.endereco1 = null;
+        this.endereco2 = null;
+        this.endereco3 = null;
+        this.endereco4 = null;
+        
+        this.validador = null;
+        this.teste = null;
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_numeros_no_endereco() {
-		endereco.setEndereco("Rua 4546");
+    @Test
+    public void nao_deve_retornar_erros() {
+        assertThat(teste, Matchers.is(validador.validador("validos")));
+    }
 
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_em_todos_os_campos() {
+        teste.add("CEP invalido!");
+        teste.add("Endereço invalido!");
+        teste.add("Numero invalido!");
+        assertThat(teste, Matchers.is(validador.validador("invalidos")));
 
-	@Test
-	public void deve_retornar_o_valor_informado() {
-		endereco.setNumero("12");
-		assertTrue(endereco.getNumero().equals("12"));
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_menos_que_um_digito() {
-		endereco.setNumero("");
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_endereco() {
+        teste.add("Endereço invalido!");
+        assertThat(teste, Matchers.is(validador.validador("enderecoInvalido")));
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_mais_de_vinte_digitos() {
-		endereco.setNumero("123456789123456789003");
-	}
+    }
 
-	@Test
-	public void deve_aceitar_cep_com_oito_digitos_e_numeros() {
-		endereco.setCep("23228530");
-		assertTrue(endereco.getCep().equals("23228530"));
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_numero() {
+        teste.add("Numero invalido!");
+        assertThat(teste, Matchers.is(validador.validador("numeroInvalido")));
 
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_cep_com_mais_de_oito_digitos() {
-		endereco.setCep("1918171722");
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_cep() {
+        teste.add("CEP invalido!");
+        assertThat(teste, Matchers.is(validador.validador("cepInvalido")));
 
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_cep_com_menos_digitos() {
-		endereco.setCep("192838");
+    @Test
+    public void deve_retornar_os_valores() {
+        Endereco endereco3 = new Endereco();
+        endereco3.setEndereco("Av. ac");
+        assertThat(endereco3.getEndereco(), Matchers.is("Av. ac"));
+        endereco3.setCep("19263720");
+        assertThat(endereco3.getCep(), Matchers.is("19263720"));
+        endereco3.setNumero("187");
+        assertThat(endereco3.getNumero(), Matchers.is("187"));
+        endereco3.setEnderecoType(EnderecoType.APARTAMENTO);
+        assertThat(endereco3.getEnderecoType(), Matchers.is(EnderecoType.APARTAMENTO));
 
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_cep_com_letras() {
-		endereco.setCep("1827238a");
+    @Test
+    public void deve_retornar_hashCode_iguais_para_ceps_iguais() {
+        assertTrue(endereco1.hashCode() == endereco1.hashCode());
 
-	}
+    }
 
-	@Test(expected = CaracteresException.class)
-	public void nao_deve_aceitar_cep_com_caracteres_especiais() {
-		endereco.setCep("1232320/");
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_hashCode_diferentes_para_ceps_diferentes() {
+        assertTrue(endereco1.hashCode() == endereco3.hashCode());
+    }
 
-	}
+    @Test
+    public void deve_testar_hashcode_para_cep_nulo() {
+        assertThat(endereco.hashCode(), Matchers.is(629));
+    }
 
-	@Test
-	public void deve_retornar_os_valores_do_construtor() {
+    @Test
+    public void deve_retornar_true_para_ceps_iguais() {
+        assertTrue(endereco1.equals(endereco2));
+    }
 
-		Endereco endereco3 = new Endereco("Av. ac", "187", "19263720");
-		assertThat(endereco3.getEndereco(), Matchers.is("Av. ac"));
-		assertThat(endereco3.getCep(), Matchers.is("19263720"));
-		assertThat(endereco3.getNumero(), Matchers.is("187"));
+    @Test
+    public void deve_retornar_true_para_o_mesmo_cep() {
+        assertTrue(endereco1.equals(endereco1));
+    }
 
-	}
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_endereco_nulo() {
+        assertTrue(endereco.equals(endereco1));
+    }
 
-	@Test
-	public void deve_retornar_hashCode_iguais_para_ceps_iguais() {
-		assertTrue(endereco1.hashCode() == endereco1.hashCode());
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_objetos_de_classes_diferentes() {
+        assertTrue(endereco1.equals(new Object()));
+    }
 
-	}
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_cep_nulo() {
+        endereco.setEndereco("Rua nao sei");
+        endereco.setNumero("12");
+        assertTrue(endereco.equals(endereco1));
 
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_hashCode_diferentes_para_ceps_diferentes() {
-		assertTrue(endereco1.hashCode() == endereco3.hashCode());
-	}
+    }
 
-	@Test
-	public void deve_testar_hashcode_para_cep_nulo() {
-		assertThat(endereco.hashCode(), Matchers.is(30));
-	}
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_cep_comparado_nulo() {
+        assertTrue(endereco1.equals(null));
+    }
 
-	@Test
-	public void deve_retornar_true_para_ceps_iguais() {
-		assertTrue(endereco1.equals(endereco2));
-	}
+    @Test
+    public void deve_retornar_true_para_ceps_nulos() {
+        assertTrue(endereco.equals(endereco4));
+    }
 
-	@Test
-	public void deve_retornar_true_para_o_mesmo_cep() {
-		assertTrue(endereco1.equals(endereco1));
-	}
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_ceps_diferentes() {
+        assertTrue(endereco1.equals(endereco3));
+    }
 
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_endereco_nulo() {
-		assertTrue(endereco.equals(endereco1));
-	}
-
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-		assertTrue(endereco1.equals(new Object()));
-	}
-
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_cep_nulo() {
-		endereco.setEndereco("Rua nao sei");
-		endereco.setNumero("12");
-		assertTrue(endereco.equals(endereco1));
-
-	}
-
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_cep_comparado_nulo() {
-		assertTrue(endereco1.equals(null));
-	}
-
-	@Test
-	public void deve_retornar_true_para_ceps_nulos() {
-		assertTrue(endereco.equals(endereco4));
-	}
-
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_ceps_diferentes() {
-		assertTrue(endereco1.equals(endereco3));
-	}
-
-	@Test
-	public void deve_retornar_a_toString_do_objeto() {
-		System.out.println(endereco1);
-		assertThat(endereco1, Matchers.is(endereco1));
-	}
+    @Test
+    public void deve_retornar_a_toString_do_objeto() {
+        System.out.println(endereco1);
+        assertThat(endereco1, Matchers.is(endereco1));
+    }
 
 }

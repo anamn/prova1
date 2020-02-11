@@ -1,160 +1,178 @@
 package br.com.contmatic.empresa;
 
-import java.util.List;
+import java.util.Set;
 
-import br.com.contmatic.exceptions.CaracteresException;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.br.CNPJ;
+
+import com.google.common.base.Preconditions;
+
+@Valid
 public class Empresa {
 
-	private String nome;
+    @NotNull(message = "Nome invalido")
+    @Pattern(regexp = "[^\\d]{1,50}", message = "Nome invalido")
+    private String nome;
 
-	private String cnpj;
+    @NotNull(message = "CNPJ invalido")
+    @CNPJ(message = "CNPJ invalido")
+    private String cnpj;
 
-	private String telefone;
+    private Set<Telefone> telefones;
 
-	private String email;
+    @NotNull(message = "Email invalido")
+    @Email(message = "Email invalido")
+    private String email;
 
-	private Endereco endereco;
+    @Valid
+    private Set<Endereco> endereco;
 
-	private List<Cliente> clientes;
+    @Valid
+    private Set<Cliente> clientes;
 
-	private List<Funcionario> funcionarios;
+    @Valid
+    private Set<Funcionario> funcionarios;
 
-	private List<Produto> produtos;
+    @Valid
+    private Set<Produto> produtos;
 
-	private Lucro lucro;
+    @Valid
+    private Lucro lucro;
 
-	public Empresa(String nome, String cnpj, String telefone, String email, Endereco endereco) {
-		super();
-		this.setTelefone(telefone);
-		this.setNome(nome);
-		this.setCnpj(cnpj);
-		this.setEmail(email);
-		this.endereco = endereco;
+    @URL(message = "Site invalido")
+    private String site;
 
-	}
+    public Empresa(String nome, String cnpj, Set<Telefone> telefones, String email, Set<Endereco> endereco) {
+        super();
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.telefones = telefones;
+        this.email = email;
+        this.endereco = endereco;
+        
+    }
 
-	public Empresa() {
-		super();
-	}
+    public Empresa() {
+        super();
+    }
 
-	public Lucro getLucro() {
-		return lucro;
-	}
+    public boolean validaCliente(Cliente cliente) {
+        Preconditions.checkArgument(clientes.contains(cliente), new IllegalArgumentException("Cliente não encontrado"));
+        return true;
+    }
 
-	public void setLucro(Lucro lucro) {
-		this.lucro = lucro;
-	}
+    public boolean validaFuncionario(Funcionario funcionario) {
+        Preconditions.checkArgument(funcionarios.contains(funcionario), new IllegalArgumentException("Funcionario não encontrado"));
+        return true;
+    }
 
-	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+") && nome.length() <= 50 && nome.length() > 3) {
-			this.nome = nome;
-		} else {
-			throw new CaracteresException(
-					"O nome deve conter apenas letras e ter no minimo tres digitos e no maximo cinquenta");
-		}
-	}
+    public Lucro getLucro() {
+        return lucro;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setLucro(Lucro lucro) {
+        this.lucro = lucro;
+    }
 
-	public void setCnpj(String cnpj) {
-		if (cnpj.length() == 14 && cnpj.matches("[\\d]+")) {
-			this.cnpj = cnpj;
-		} else {
-			throw new CaracteresException("CNPJ INVALIDO!");
-		}
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
 
-	public String getCnpj() {
-		return cnpj;
-	}
+    }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public String getSite() {
+        return site;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public void setSite(String site) {
+        this.site = site;
+    }
 
-	public String getTelefone() {
-		return telefone;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setTelefone(String telefone) {
-		if (telefone.matches("[\\d]+") && telefone.length() <= 9 && telefone.length() >= 8) {
-			this.telefone = telefone;
-		} else {
-			throw new CaracteresException("Telefone invalido");
-		}
-	}
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	public void setEmail(String email) {
-		if (email.matches(".+@.+\\.[a-z]+") && email.length() <= 50 && email.length() > 14) {
-			this.email = email;
-		} else {
-			throw new CaracteresException("Email invalido");
-		}
-	}
+    public Set<Endereco> getEnderecos() {
+        return endereco;
+    }
 
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
+    public void setEnderecos(Set<Endereco> endereco) {
+        this.endereco = endereco;
+    }
 
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
 
-	public List<Funcionario> getFuncionarios() {
-		return funcionarios;
-	}
+    public void setTelefones(Set<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 
-	public void setFuncionarios(List<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
+    public Set<Cliente> getClientes() {
+        return clientes;
+    }
 
-	@Override
-	public String toString() {
-		return new StringBuilder("Empresa:").append(nome).append(", CNPJ: ").append(cnpj).append(", Telefone: ")
-				.append(telefone).toString();
-	}
+    public void setClientes(Set<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 30;
-		int result = 1;
-		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		return result;
-	}
+    public Set<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Empresa other = (Empresa) obj;
-		if (cnpj == null) {
-			if (other.cnpj != null)
-				return false;
-		} else if (!cnpj.equals(other.cnpj))
-			return false;
-		return true;
-	}
+    public void setFuncionarios(Set<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Empresa:").append(nome).append(", CNPJ: ").append(cnpj).append(", Telefone: ").append(telefones).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(cnpj).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Empresa other = (Empresa) obj;
+        return new EqualsBuilder().append(other.cnpj, cnpj).isEquals();
+    }
 }

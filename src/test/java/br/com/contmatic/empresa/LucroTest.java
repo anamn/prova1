@@ -1,133 +1,183 @@
 package br.com.contmatic.empresa;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.time.Month;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.hamcrest.Matchers;
+import org.joda.time.YearMonth;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.exceptions.ValorException;
+import br.com.contimatic.fixture.ValidadorLucro;
+import br.com.contmatic.enums.Moeda;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class LucroTest {
 
-	Lucro lucro = null;
-	Lucro lucro2 = null;
+    Lucro lucro = null;
 
-	@Before
-	public void inicializaçao() {
-		this.lucro = new Lucro();
-		this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), "Euro");
+    Lucro lucro1 = null;
 
-	}
+    Lucro lucro2 = null;
 
-	@After
-	public void finalizaçao() {
-		this.lucro = null;
-		this.lucro2 = null;
-	}
+    Lucro lucro3 = null;
 
-	@Test
-	public void testa_construtor() {
-		assertThat(lucro2.getInvestimento(), Matchers.is(new BigDecimal("30000")));
-		assertThat(lucro2.getGanho(), Matchers.is(new BigDecimal("33000")));
-		assertThat(lucro2.getMoeda(), Matchers.is("Euro"));
-	}
+    Lucro lucro4 = null;
 
-	@Test(expected = ValorException.class)
-	public void nao_deve_guardar_valor_menor_que_zero() {
-		lucro.setMoeda("dollar");
-		lucro.setGanho(new BigDecimal("-512"));
-	}
+    ValidadorLucro validador = null;
 
-	@Test(expected = ValorException.class)
-	public void nao_deve_guardar_valor_igual_que_zero() {
-		lucro.setMoeda("euro");
-		lucro.setGanho(new BigDecimal("0"));
-	}
+    Set<String> teste = null;
 
-	@Test
-	public void deve_guardar_ganho_da_empresa() {
-		lucro.setMoeda("real");
-		lucro.setGanho(new BigDecimal("50000"));
-		assertThat(lucro.getGanho(), Matchers.is(new BigDecimal("50000")));
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+    }
 
-	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_moeda_invalida_no_ganho() {
-		lucro.setMoeda("ajhssa");
-		lucro.setGanho(new BigDecimal("50000"));
-	}
-	
-	@Test(expected = ValorException.class)
-	public void nao_deve_aceitar_valor_no_ganho(){
-		lucro.setMoeda("alkss");
-		lucro.setGanho(new BigDecimal("0"));
-	}
+    @Before
+    public void inicializaçao() {
+        this.lucro = new Lucro();
+        this.lucro1 = new Lucro();
+        this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2020, Month.JANUARY.getValue()));
+        this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2020, Month.JANUARY.getValue()));
+        this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2019, Month.AUGUST.getValue()));
 
-	@Test(expected = ValorException.class)
-	public void nao_deve_guardar_valor_menor_que_zero_no_ivestimento() {
-		lucro.setMoeda("dollar");
-		lucro.setInvestimento(new BigDecimal("-51"));
-	}
+        this.validador = new ValidadorLucro();
+        this.teste = new TreeSet<>();
 
-	@Test(expected = ValorException.class)
-	public void nao_deve_guardar_valor_igual_que_zero_no_ivestimento() {
-		lucro.setMoeda("dollar");
-		lucro.setInvestimento(new BigDecimal("0"));
-	}
-	
-	@Test(expected = ValorException.class)
-	public void nao_deve_aceitar_valor_no_investimento(){
-		lucro.setMoeda("alkss");
-		lucro.setInvestimento(new BigDecimal("0"));
-	}
+    }
 
+    @After
+    public void finalizaçao() {
+        this.lucro = null;
+        this.lucro1 = null;
+        this.lucro2 = null;
+        this.lucro3 = null;
+        this.lucro4 = null;
 
-	@Test
-	public void deve_guardar_investimento_da_empresa() {
-		lucro.setMoeda("real");
-		lucro.setInvestimento(new BigDecimal("50000"));
-		assertThat(lucro.getInvestimento(), Matchers.is(new BigDecimal("50000")));
-	}
+        this.validador = null;
+        this.teste = null;
+    }
 
-	@Test(expected = NullPointerException.class)
-	public void nao_deve_aceitar_moeda_invalida_no_investimento() {
-		lucro.setMoeda("alsl");
-		lucro.setInvestimento(new BigDecimal("50000"));
-	}
+    @Test
+    public void nao_deve_retornar_erros() {
+        assertThat(teste, Matchers.is(validador.validador("validos")));
+    }
 
-	@Test
-	public void deve_retornar_true_para_dollar() {
-		assertTrue(lucro.setMoeda("Dollar"));
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_em_todos_os_campos() {
+        teste.add("Investimento menor que zero!");
+        teste.add("Renda menor que zero!");
+        teste.add("A data deve ser no presente!");
+        assertThat(teste, Matchers.is(validador.validador("invalidos")));
 
-	@Test
-	public void deve_retornar_true_para_euro() {
-		assertTrue(lucro.setMoeda("euro"));
-	}
+    }
 
-	@Test
-	public void deve_retornar_true_para_real() {
-		assertTrue(lucro.setMoeda("Real"));
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_investimento() {
+        teste.add("Investimento menor que zero!");
+        assertThat(teste, Matchers.is(validador.validador("investimentoInvalido")));
 
-	@Test(expected = AssertionError.class)
-	public void deve_retornar_false_para_qualquer_moeda_ivalida() {
-		assertTrue(lucro.setMoeda("bollar"));
-	}
+    }
 
-	@Test
-	public void testa_toString() {
-		lucro.setMoeda("real");
-		lucro.setInvestimento(new BigDecimal("50000"));
-		lucro.setGanho(new BigDecimal("55000"));
-		System.out.println(lucro);
-		assertThat(lucro, equalTo(lucro));
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_na_renda() {
+        teste.add("Renda menor que zero!");
+        assertThat(teste, Matchers.is(validador.validador("rendaInvalida")));
+
+    }
+
+    @Test
+    public void deve_calcular_o_lucro_da_empresa() {
+        Set<Endereco> endereco = new HashSet<>();
+        Set<Telefone> telefones = new HashSet<>();
+        Empresa empresa = new Empresa("Pedra", "12356272839283", telefones, "pedra@hotmail.com", endereco);
+        lucro2.setEmpresa(empresa);
+        empresa.setLucro(lucro2);
+        assertThat(lucro2.getEmpresa(), Matchers.is(empresa));
+        assertThat(lucro2.calculaLucro(), Matchers.is(empresa.getLucro().calculaLucro()));
+    }
+
+    @Test
+    public void deve_retornar_valores() {
+        lucro.setInvestimento(new BigDecimal("33000"));
+        assertTrue(lucro.getInvestimento().equals(new BigDecimal("33000")));
+        lucro.setRenda(new BigDecimal("33000"));
+        assertTrue(lucro4.getRenda().equals(new BigDecimal("33000")));
+        lucro.setMes(new YearMonth(2019, Month.AUGUST.getValue()));
+        assertTrue(lucro4.getMes().equals(new YearMonth(2019, Month.AUGUST.getValue())));
+        lucro.setMoeda(Moeda.DOLLAR);
+        assertTrue(lucro4.getMoeda().equals(Moeda.DOLLAR));
+    }
+
+    @Test
+    public void deve_retornar_hashCode_iguais_para_mes_igual() {
+        assertTrue(lucro2.hashCode() == lucro2.hashCode());
+
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_hashCode_diferentes_para_mes_diferente() {
+        assertTrue(lucro2.hashCode() == lucro4.hashCode());
+    }
+
+    @Test
+    public void deve_testar_hashcode_para_mes_nulo() {
+        assertThat(lucro.hashCode(), Matchers.is(23273));
+    }
+
+    @Test
+    public void deve_retornar_true_para_o_mesmo_obj() {
+        assertTrue(lucro2.equals(lucro2));
+    }
+
+    @Test
+    public void deve_retornar_true_para_o_mesmo_mes() {
+        assertTrue(lucro3.equals(lucro2));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_lucro_nulo() {
+        assertTrue(lucro.equals(lucro2));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_objetos_de_classes_diferentes() {
+        assertTrue(lucro2.equals(new Object()));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_mes_nulo() {
+        assertTrue(lucro.equals(lucro2));
+
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_mes_comparado_nulo() {
+        assertTrue(lucro2.equals(null));
+    }
+
+    @Test
+    public void deve_retornar_true_para_meses_nulos() {
+        assertTrue(lucro.equals(lucro1));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void deve_retornar_false_para_meses_diferentes() {
+        assertTrue(lucro3.equals(lucro4));
+    }
+
+    @Test
+    public void deve_retornar_a_toString_do_objeto() {
+        System.out.println(lucro2);
+        assertThat(lucro2, Matchers.is(lucro2));
+    }
 
 }

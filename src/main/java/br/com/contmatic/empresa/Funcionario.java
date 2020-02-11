@@ -1,134 +1,129 @@
 package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
-import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorException;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.br.CPF;
+
+@Valid
 public class Funcionario {
 
-	private BigDecimal salario;
+    @DecimalMin(value = "1.00", message = "Salario invalido")
+    private BigDecimal salario;
 
-	private String pis;
+    @NotEmpty(message = "Pis invalido")
+    @Pattern(regexp = "[\\d]{11}", message = "Pis invalido")
+    private String pis;
 
-	private String nome;
+    @NotEmpty(message = "Nome invalido")
+    @Pattern(regexp = "[^\\d]{1,50}", message = "Nome invalido")
+    private String nome;
 
-	private String cpf;
+    @NotNull(message = "CPF invalido")
+    @CPF(message = "CPF invalido")
+    private String cpf;
+    
+    private Set<Telefone> telefones;
 
-	private String telefone;
+    private Endereco endereco;
 
-	private Endereco endereco;
+    public Funcionario(String nome, String cpf, String pis, Set<Telefone> telefones, BigDecimal salario, Endereco endereco) {
+        super();
+        this.salario = salario;
+        this.pis = pis;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefones = telefones;
+        this.endereco = endereco;
+    }
 
-	public Funcionario(String nome, String cpf, String pis, String telefone, BigDecimal salario, Endereco endereco) {
-		super();
-		this.setSalario(salario);
-		this.setPis(pis);
-		this.setNome(nome);
-		this.setCpf(cpf);
-		this.setTelefone(telefone);
-		this.endereco = endereco;
-	}
+    public Funcionario() {
+    }
 
-	public Funcionario() {
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
 
-	public void setNome(String nome) {
-		if (nome.matches("[^\\d]+") && nome.length() > 3 && nome.length() <= 40) {
-			this.nome = nome;
-		} else {
-			throw new CaracteresException("O nome deve conter apenas letras, ter de três a quarenta digitos!");
-		}
-	}
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setCpf(String cpf) {
-		if (cpf.length() == 11 && cpf.matches("[\\d]+")) {
-			this.cpf = cpf;
-		} else {
-			throw new CaracteresException("CPF INVALIDO!");
-		}
-	}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
 
-	public String getCpf() {
-		return cpf;
-	}
+    }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public Endereco getEndereco() {
+        return endereco;
+    }
 
-	public void setTelefone(String tel) {
-		if (tel.matches("[\\d]+") && tel.length() == 9) {
-			this.telefone = tel;
-		} else {
-			throw new CaracteresException("Telefone invalido");
-		}
-	}
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
-	public String getTelefone() {
-		return telefone;
-	}
+    public void setTelefones(Set<Telefone> tel) {
+        this.telefones = tel;
 
-	public BigDecimal getSalario() {
-		return salario;
-	}
+    }
 
-	public void setSalario(BigDecimal salario) {
-		if (salario.compareTo(new BigDecimal("0")) > 0) {
-			this.salario = salario;
-		} else {
-			throw new ValorException("Valor invalido!");
-		}
-	}
+    public Set<Telefone> getTelefones() {
+        return telefones;
+    }
 
-	public void setPis(String pis) {
-		if (pis.matches("[\\d]+") && pis.length() == 11) {
-			this.pis = pis;
-		} else {
-			throw new CaracteresException("PIS invalido!");
-		}
-	}
+    public BigDecimal getSalario() {
+        return salario;
+    }
 
-	public String getPis() {
-		return pis;
-	}
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
 
-	@Override
-	public String toString() {
-		return new StringBuilder("Funcionario:").append("Nome:").append(nome).append(", CPF:").append(cpf)
-				.append(", nº: ").append(pis).toString();
-	}
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 30;
-		int result = 1;
-		result = prime * result + ((pis == null) ? 0 : pis.hashCode());
-		return result;
-	}
+    public void setPis(String pis) {
+        this.pis = pis;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (pis == null) {
-			if (other.pis != null)
-				return false;
-		} else if (!pis.equals(other.pis))
-			return false;
-		return true;
-	}
+    }
+
+    public String getPis() {
+        return pis;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(pis).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Funcionario other = (Funcionario) obj;
+        return new EqualsBuilder().append(other.pis, pis).isEquals();
+
+    }
 
 }

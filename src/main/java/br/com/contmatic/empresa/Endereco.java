@@ -1,92 +1,99 @@
 package br.com.contmatic.empresa;
 
-import br.com.contmatic.exceptions.CaracteresException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import br.com.contmatic.enums.EnderecoType;
+
+@Valid
 public class Endereco {
 
-	private String endereco;
+    @NotEmpty(message = "Endereço invalido!")
+    @Pattern(regexp = "[^\\d]{5,40}", message = "Endereço invalido!")
+    private String endereco;
 
-	private String numero;
+    @NotEmpty(message = "Numero invalido!")
+    @Pattern(regexp = "[aA-zZ,1-9]{1,20}", message = "Numero invalido!")
+    private String numero;
 
-	private String cep;
+    @NotEmpty(message = "CEP invalido!")
+    @Pattern(regexp = "[\\d]{8}", message = "CEP invalido!")
+    private String cep;
 
-	public Endereco(String endereco, String numero, String cep) {
-		super();
-		this.setEndereco(endereco);
-		this.setCep(cep);
-		this.numero = numero;
-	}
+    private EnderecoType enderecoType;
 
-	public Endereco() {
-		super();
-	}
+    public Endereco(String endereco, String numero, String cep, EnderecoType enderecoType) {
+        super();
+        this.endereco = endereco;
+        this.cep = cep;
+        this.numero = numero;
+        this.enderecoType = enderecoType;
+    }
 
-	public String getEndereco() {
-		return endereco;
-	}
+    public Endereco() {
+        super();
+    }
 
-	public void setEndereco(String endereco) {
-		if (endereco.matches("[^\\d]+") && endereco.length() <= 40 && endereco.length() > 5) {
-			this.endereco = endereco;
-		} else {
-			throw new CaracteresException(
-					"Endereco deve ter apenas letras e ter no minimo cinco digitos e no maximo quarenta");
-		}
-	}
+    public String getEndereco() {
+        return endereco;
+    }
 
-	public String getNumero() {
-		return numero;
-	}
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
-	public void setNumero(String numero) {
-		if (numero.length() > 0 && numero.length() <= 20) {
-			this.numero = numero;
-		} else {
-			throw new CaracteresException("Numero deve ter no minimo um digito e no maximo vinte");
-		}
-	}
+    public String getNumero() {
+        return numero;
+    }
 
-	public String getCep() {
-		return cep;
-	}
+    public void setNumero(String numero) {
+        this.numero = numero;
 
-	public void setCep(String cep) {
-		if (cep.length() == 8 && cep.matches("[\\d]+")) {
-			this.cep = cep;
-		} else {
-			throw new CaracteresException("CEP INVALIDO!");
-		}
-	}
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 30;
-		int result = 1;
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		return result;
-	}
+    public String getCep() {
+        return cep;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		return true;
-	}
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 
-	@Override
-	public String toString() {
-		return new StringBuilder("Endereco:").append(endereco).append(", nº:").append(numero).append(", CEP:")
-				.append(cep).toString();
-	}
+    public EnderecoType getEnderecoType() {
+        return enderecoType;
+    }
+
+    public void setEnderecoType(EnderecoType enderecoType) {
+        this.enderecoType = enderecoType;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(cep).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Endereco other = (Endereco) obj;
+        return new EqualsBuilder().append(other.cep, cep).isEquals();
+
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 
 }

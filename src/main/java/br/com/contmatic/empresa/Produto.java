@@ -2,109 +2,115 @@ package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
 
-import br.com.contmatic.exceptions.CaracteresException;
-import br.com.contmatic.exceptions.ValorException;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+@Valid
 public class Produto {
 
-	private String tipo;
+    @NotEmpty(message = "Tipo invalido")
+    @Length(min = 0, max = 50, message = "Tipo invalido")
+    private String tipo;
 
-	private BigDecimal preco;
+    @DecimalMin(value = "1.00", message = "Preço invalido")
+    private BigDecimal preco;
 
-	private String descricao;
+    @NotEmpty(message = "Descrição invalida")
+    @Size(min = 10, max = 60, message = "Descrição invalida")
+    private String descricao;
 
-	private String codigo;
+    @NotEmpty(message = "Codigo invalido")
+    @Pattern(regexp = "[\\d]{5,30}", message = "Codigo invalido")
+    private String codigo;
 
-	public Produto(String tipo, String descricao, BigDecimal preco, String codigo) {
-		super();
-		this.setTipo(tipo);
-		this.setDescricao(descricao);
-		this.setPreco(preco);
-		this.setCodigo(codigo);
-	}
+    @Range(min = 1, max = 50, message = "Quantidade menor que zero")
+    private Integer quantidade;
+    
+    public Produto(String tipo, String descricao, BigDecimal preco, String codigo, Integer quantidade) {
+        super();
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.codigo = codigo;
+        this.quantidade = quantidade;
+    }
 
-	public Produto() {
-		super();
-	}
+    public Produto() {
+        super();
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public void setDescricao(String descricao) {
-		if (descricao.length() > 10 && descricao.length() <= 60) {
-			this.descricao = descricao;
-		} else {
-			throw new CaracteresException("O descrição do produto deve conter de onze a sessenta digitos");
-		}
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setTipo(String tipo) {
-		if (tipo.length() > 0 && tipo.length() <= 50) {
-			this.tipo = tipo;
-		} else {
-			throw new CaracteresException("O tipo de produto deve conter de um a cinquenta caracteres");
-		}
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public BigDecimal getPreco() {
-		return preco;
-	}
+    public BigDecimal getPreco() {
+        return preco;
+    }
 
-	public void setPreco(BigDecimal preco) {
-		if (preco.compareTo(new BigDecimal("0")) > 0) {
-			this.preco = preco;
-		} else {
-			throw new ValorException("Valor invalido!");
-		}
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
 
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
 
-	public void setCodigo(String codigo) {
-		if (codigo.matches("[\\d]+") && codigo.length() <= 30 && codigo.length() > 5) {
-			this.codigo = codigo;
-		} else {
-			throw new CaracteresException("Codigo deve conter de cinco a trinta digitos e apenas letras!");
-		}
-	}
+    }
 
-	@Override
-	public String toString() {
-		return new StringBuilder("Produto:").append(tipo).append(", preço:").append(preco).append(", codigo:")
-				.append(codigo).toString();
-	}
+    public Integer getQuantidade() {
+        return quantidade;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 30;
-		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		return result;
-	}
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produto other = (Produto) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
-			return false;
-		return true;
-	}
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(codigo).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Produto other = (Produto) obj;
+        return new EqualsBuilder().append(other.codigo, codigo).isEquals();
+
+    }
 
 }
