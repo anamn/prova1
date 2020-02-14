@@ -1,4 +1,9 @@
-package br.com.contimatic.fixture;
+package br.com.contmatic.fixture;
+
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,35 +17,33 @@ import com.google.common.base.Preconditions;
 import br.com.contmatic.empresa.Empresa;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-public class ValidadorEmpresa implements TemplateLoader {
+public class ValidadorEmpresa {
 
-    @Override
-    public void load() {
+    public static Empresa empresa(String argumento) {
         Fixture.of(Empresa.class).addTemplate("validos", new Rule() {
             {
-                add("nome", random("Onix", "Nascimento", "Contmatic"));
-                add("cnpj", random("02828446000134", "72610132000146", "26159125000152"));
-                add("email", random("ana@gmail.com", "onix@hotmail.com", "nascimento@ig.com"));
-                add("site", random("http://onix.com.br", "http://nascimento.com.br", "http://contmatic.com.br"));
+                add("nome", firstName());
+                add("cnpj", cnpj());
+                add("email", "{nome}@gamil.com");
+                add("site", random("http://{nome}.com.br"));
             }
         });
 
         Fixture.of(Empresa.class).addTemplate("nomeInvalido").inherits("validos", new Rule() {
             {
-                add("nome", random("João23", "Makokhjkutrilohginimikiuhjkjhgtfrdeswa44qhyuijnbvgfcdria", "C12los"));
+                add("nome", random(randomAlphabetic(52), randomAscii(58)));
             }
         });
         Fixture.of(Empresa.class).addTemplate("cnpjInvalido").inherits("validos", new Rule() {
             {
-                add("cnpj", random("49022554256452", "321754859930125", "1234567:>45", "79745307624", "41023752loj3"));
+                add("cnpj", random(randomAlphanumeric(14), randomAscii(14), randomNumeric(5, 20), null));
             }
         });
 
         Fixture.of(Empresa.class).addTemplate("emailInvalido").inherits("validos", new Rule() {
             {
-                add("email", random("empresahotmail.com", "ajjisjw"));
+                add("email", random("empresahotmail.com", "ajjisjw", null));
             }
         });
 
@@ -52,17 +55,19 @@ public class ValidadorEmpresa implements TemplateLoader {
 
         Fixture.of(Empresa.class).addTemplate("invalidos").inherits("validos", new Rule() {
             {
-                add("nome", random("João23", "Makokhjkutrilohginimikiuhjkjhgtfrdeswa44qhyuijnbvgfcdria", "C12los"));
-                add("cnpj", random("49022554256452", "321754859930125", "1234567:>45", "79745307624", "41023752loj3"));
-                add("email", random("empresahotmail.com", "ajjisjw"));
+                add("nome", random(randomAlphabetic(1), randomAlphabetic(51), randomAscii(5), null));
+                add("cnpj", random(randomAlphanumeric(14), randomAscii(14), randomNumeric(5, 20), null));
+                add("email", random("empresahotmail.com", "ajjisjw", null));
                 add("site", random("onixbr", ".com.br"));
             }
         });
+        
+        return Fixture.from(Empresa.class).gimme(argumento);
 
     }
 
     public Set<String> validador(String argumento) {
-        Empresa empresa = Fixture.from(Empresa.class).gimme(argumento);
+        Empresa empresa = empresa(argumento);
         Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Empresa>> erros = validador.validate(empresa);
         Set<String> erros2 = new TreeSet<>();

@@ -1,6 +1,5 @@
 package br.com.contmatic.empresa;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -11,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import br.com.contmatic.enums.EnderecoType;
 
-@Valid
+
 public class Endereco {
 
     @NotEmpty(message = "Endereço invalido!")
@@ -19,7 +18,7 @@ public class Endereco {
     private String endereco;
 
     @NotEmpty(message = "Numero invalido!")
-    @Pattern(regexp = "[aA-zZ,1-9]{1,20}", message = "Numero invalido!")
+    @Pattern(regexp = "[aA-zZ,0-9]{1,20}", message = "Numero invalido!")
     private String numero;
 
     @NotEmpty(message = "CEP invalido!")

@@ -1,4 +1,8 @@
-package br.com.contimatic.fixture;
+package br.com.contmatic.fixture;
+
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -13,69 +17,65 @@ import com.google.common.base.Preconditions;
 import br.com.contmatic.empresa.Produto;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-public class ValidadorProduto implements TemplateLoader {
+public class ValidadorProduto {
 
-    @Override
-    public void load() {
-        
+    public static Produto produto(String argumento) {
         Fixture.of(Produto.class).addTemplate("validos", new Rule() {
             {
-                add("tipo", random("notbook", "celular 8", "tablet", "notbook 5c", "lkojghnuyrhtfvgtbnhyjhgfdeaswdcfvgbhnjunhtfghjk"));
-                add("descricao", random("Bateria interna, preto", "Camera frontal alta qualidade", "64g de memoria", "jshdjkelirgheurjaishebdnmjfkieutghytervgyqmjshdgtfghybnjui"));
-                add("codigo", random("989545", "098782736475893847589384756172"));
-                add("quantidade", random(1, 2, 3, 4, 5, 6, 7, 8));
-                add("preco", random(new BigDecimal("4500"), new BigDecimal("720"), new BigDecimal("1500"), new BigDecimal("2900")));
+                add("tipo", random(randomAlphabetic(1, 50), randomAscii(1, 50)));
+                add("descricao", random(randomAlphabetic(10, 60), randomAscii(10, 60)));
+                add("codigo", randomNumeric(5, 30));
+                add("preco", random(new BigDecimal(randomNumeric(1, 50))));
             }
 
         });
         Fixture.of(Produto.class).addTemplate("tipoInvalido").inherits("validos", new Rule() {
             {
-                add("tipo", random("", "asdkfjieksjdkoeirororororororpritirjrirkrkrnrkrjrjrikmkhjjijkk"));
+                add("tipo", random(randomAlphabetic(51, 100), randomAscii(51, 100)));
 
             }
         });
         Fixture.of(Produto.class).addTemplate("descricaoInvalido").inherits("validos", new Rule() {
             {
-                add("descricao", random("calca", "kajkjdjjjjjjjjjjjjjjjjjjjjjjshbdksljfffhhhhhhhhhhhhhhhhhhhhhhhhaljj"));
+                add("descricao", random(randomAlphabetic(61, 100), randomAscii(61, 100)));
 
             }
         });
 
         Fixture.of(Produto.class).addTemplate("codigoInvalido").inherits("validos", new Rule() {
             {
-                add("codigo", random("12", "1234567891234567891234567891233", "089as"));
+                add("codigo", random(randomNumeric(31, 100), randomNumeric(1, 4)));
 
             }
         });
 
         Fixture.of(Produto.class).addTemplate("quantidadeInvalida").inherits("validos", new Rule() {
             {
-                add("quantidade", random(0, -52));
+                add("quantidade", random(range(51, 1000), range(-10, 0)));
 
             }
         });
 
         Fixture.of(Produto.class).addTemplate("precoInvalido").inherits("validos", new Rule() {
             {
-                add("preco", random(new BigDecimal("-540"), new BigDecimal("0")));
+                add("preco", random(new BigDecimal("-" + randomNumeric(10))));
             }
         });
         Fixture.of(Produto.class).addTemplate("invalidos").inherits("validos", new Rule() {
             {
-                add("tipo", random("", "asdkfjieksjdkoeirororororororpritirjrirkrkrnrkrjrjrikmkhjjijkk"));
-                add("descricao", random("calca", "kajkjdjjjjjjjjjjjjjjjjjjjjjjshbdksljfffhhhhhhhhhhhhhhhhhhhhhhhhaljj"));
-                add("codigo", random("12", "1234567891234567891234567891233", "089as"));
-                add("quantidade", random(0,-52));
-                add("preco", random(new BigDecimal("-540.6"), new BigDecimal("0")));
+                add("tipo", random(randomAlphabetic(51, 100), randomAscii(51, 100)));
+                add("descricao", random(randomAlphabetic(61, 100), randomAscii(61, 100)));
+                add("codigo", random(randomNumeric(31, 100), randomNumeric(1, 4)));
+                add("quantidade", random(range(51, 1000), range(-10, 0)));
+                add("preco",random(new BigDecimal("-" + randomNumeric(10))));
             }
         });
-
+        return Fixture.from(Produto.class).gimme(argumento);
     }
 
     public Set<String> validador(String argumento) {
-        Produto produto= Fixture.from(Produto.class).gimme(argumento);
+        Produto produto = produto(argumento);
         Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Produto>> erros = validador.validate(produto);
         Set<String> erros2 = new TreeSet<>();

@@ -8,24 +8,36 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import br.com.contmatic.enums.Ddd;
 import br.com.contmatic.enums.TelefoneType;
 
 public class Telefone {
 
+    private Ddd ddd;
+
     @NotEmpty(message = "Numero invalido")
-    @Pattern(regexp = "([(]?)([1][1-9])([)]?)([0-9]{8,9})|([(]?)([2][1-2])([)]?)([0-9]{8,9})|([(]?)([2][4])([)]?)([0-9]{8,9})|([(]?)([2][7-8])([)]?)([0-9]{8,9})|([(]?)([3][1-5])([)]?)([0-9]{8,9})|([(]?)([3][7-8])([)]?)([0-9]{8,9})|([(]?)([4][1-9])([)]?)([0-9]{8,9})|([(]?)([5][1])([)]?)([0-9]{8,9})|([(]?)([5][3-5])([)]?)([0-9]{8,9})|([(]?)([6][1-9])([)]?)([0-9]{8,9})|([(]?)([7][1])([)]?)([0-9]{8,9})|([(]?)([7][3-5])([)]?)([0-9]{8,9})|([(]?)([7][7])([)]?)([0-9]{8,9})|([(]?)([7][9])([)]?)([0-9]{8,9})|([(]?)([8][1-9])([)]?)([0-9]{8,9})|([(]?)([9][1-9])([)]?)([0-9]{8,9})", message = "Numero invalido")
+    @Pattern(regexp = "([9]?[0-9]{4}-?[0-9]{4})", message = "Numero invalido")
     private String numero;
 
     private TelefoneType tipo;
 
-    public Telefone(String numero, TelefoneType tipo) {
+    public Telefone(Ddd ddd, String numero, TelefoneType tipo) {
         this.numero = numero;
         this.tipo = tipo;
+        this.ddd = ddd;
     }
 
     public Telefone() {
     }
     
+    public Ddd getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(Ddd ddd) {
+        this.ddd = ddd;
+    }
+
     public String getNumero() {
         return numero;
     }

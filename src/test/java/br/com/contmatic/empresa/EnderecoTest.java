@@ -1,22 +1,23 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.EnderecoType.APARTAMENTO;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorEndereco;
 import br.com.contmatic.enums.EnderecoType;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorEndereco;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class EnderecoTest {
@@ -37,7 +38,7 @@ public class EnderecoTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
@@ -49,7 +50,7 @@ public class EnderecoTest {
         this.endereco4 = new Endereco();
         
         this.validador = new ValidadorEndereco();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
 
     }
 
@@ -67,7 +68,7 @@ public class EnderecoTest {
 
     @Test
     public void nao_deve_retornar_erros() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+        assertThat(teste, is(validador.validador("validos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -75,28 +76,28 @@ public class EnderecoTest {
         teste.add("CEP invalido!");
         teste.add("Endereço invalido!");
         teste.add("Numero invalido!");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_endereco() {
         teste.add("Endereço invalido!");
-        assertThat(teste, Matchers.is(validador.validador("enderecoInvalido")));
+        assertThat(teste, is(validador.validador("enderecoInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_numero() {
         teste.add("Numero invalido!");
-        assertThat(teste, Matchers.is(validador.validador("numeroInvalido")));
+        assertThat(teste, is(validador.validador("numeroInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_cep() {
         teste.add("CEP invalido!");
-        assertThat(teste, Matchers.is(validador.validador("cepInvalido")));
+        assertThat(teste, is(validador.validador("cepInvalido")));
 
     }
 
@@ -104,13 +105,13 @@ public class EnderecoTest {
     public void deve_retornar_os_valores() {
         Endereco endereco3 = new Endereco();
         endereco3.setEndereco("Av. ac");
-        assertThat(endereco3.getEndereco(), Matchers.is("Av. ac"));
+        assertThat(endereco3.getEndereco(), is("Av. ac"));
         endereco3.setCep("19263720");
-        assertThat(endereco3.getCep(), Matchers.is("19263720"));
+        assertThat(endereco3.getCep(), is("19263720"));
         endereco3.setNumero("187");
-        assertThat(endereco3.getNumero(), Matchers.is("187"));
-        endereco3.setEnderecoType(EnderecoType.APARTAMENTO);
-        assertThat(endereco3.getEnderecoType(), Matchers.is(EnderecoType.APARTAMENTO));
+        assertThat(endereco3.getNumero(), is("187"));
+        endereco3.setEnderecoType(APARTAMENTO);
+        assertThat(endereco3.getEnderecoType(), is(APARTAMENTO));
 
     }
 
@@ -127,7 +128,7 @@ public class EnderecoTest {
 
     @Test
     public void deve_testar_hashcode_para_cep_nulo() {
-        assertThat(endereco.hashCode(), Matchers.is(629));
+        assertThat(endereco.hashCode(), is(629));
     }
 
     @Test
@@ -176,7 +177,7 @@ public class EnderecoTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(endereco1);
-        assertThat(endereco1, Matchers.is(endereco1));
+        assertThat(endereco1, is(endereco1));
     }
 
 }

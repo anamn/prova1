@@ -1,11 +1,14 @@
 package br.com.contmatic.empresa;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,25 +17,27 @@ import org.hibernate.validator.constraints.br.CNPJ;
 
 import com.google.common.base.Preconditions;
 
-@Valid
+
 public class Empresa {
 
-    @NotNull(message = "Nome invalido")
+    @NotEmpty(message = "Nome invalido")
     @Pattern(regexp = "[^\\d]{1,50}", message = "Nome invalido")
     private String nome;
 
-    @NotNull(message = "CNPJ invalido")
+    @NotEmpty(message = "CNPJ invalido")
     @CNPJ(message = "CNPJ invalido")
     private String cnpj;
 
+    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
     private Set<Telefone> telefones;
 
-    @NotNull(message = "Email invalido")
+    @NotEmpty(message = "Email invalido")
     @Email(message = "Email invalido")
     private String email;
 
     @Valid
-    private Set<Endereco> endereco;
+    @Size(min = 1, message = "É necessario ao menos um endereço no cadastro")
+    private Set<Endereco> enderecos;
 
     @Valid
     private Set<Cliente> clientes;
@@ -55,7 +60,7 @@ public class Empresa {
         this.cnpj = cnpj;
         this.telefones = telefones;
         this.email = email;
-        this.endereco = endereco;
+        this.enderecos = endereco;
         
     }
 
@@ -64,7 +69,7 @@ public class Empresa {
     }
 
     public boolean validaCliente(Cliente cliente) {
-        Preconditions.checkArgument(clientes.contains(cliente), new IllegalArgumentException("Cliente não encontrado"));
+        checkArgument(clientes.contains(cliente), new IllegalArgumentException("Cliente não encontrado"));
         return true;
     }
 
@@ -107,11 +112,11 @@ public class Empresa {
     }
 
     public Set<Endereco> getEnderecos() {
-        return endereco;
+        return enderecos;
     }
 
     public void setEnderecos(Set<Endereco> endereco) {
-        this.endereco = endereco;
+        this.enderecos = endereco;
     }
 
     public Set<Telefone> getTelefones() {

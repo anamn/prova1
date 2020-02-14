@@ -1,5 +1,8 @@
 package br.com.contmatic.empresa;
 
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -7,25 +10,25 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Valid
+
 public class Cliente {
 
     @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[^\\d]{1,50}", message = "Nome invalido")
+    @Pattern(regexp = "[aA-zZ,áÁ-úÚ]{2,50}", message = "Nome invalido")
     private String nome;
 
-    @NotEmpty(message = "Telefone invalido")
+    @NotEmpty(message = "Cpf invalido")
     @CPF(message = "CPF invalido")
     private String cpf;
 
-    @Valid
+    @Valid  
+    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
     private Set<Telefone> telefones;
 
     @NotNull(message = "Email invalido")
@@ -89,7 +92,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        return reflectionToString(this, JSON_STYLE);
     }
 
     @Override

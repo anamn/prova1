@@ -2,7 +2,6 @@ package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -15,11 +14,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
-@Valid
+
 public class Produto {
 
     @NotEmpty(message = "Tipo invalido")
-    @Length(min = 0, max = 50, message = "Tipo invalido")
+    @Length(min = 1, max = 50, message = "Tipo invalido")
     private String tipo;
 
     @DecimalMin(value = "1.00", message = "Preço invalido")

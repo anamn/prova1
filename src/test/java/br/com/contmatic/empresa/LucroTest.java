@@ -1,24 +1,25 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.Moeda.DOLLAR;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static java.time.Month.AUGUST;
+import static java.time.Month.JANUARY;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.time.Month;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hamcrest.Matchers;
 import org.joda.time.YearMonth;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorLucro;
-import br.com.contmatic.enums.Moeda;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorLucro;
 
 public class LucroTest {
 
@@ -38,19 +39,19 @@ public class LucroTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
     public void inicializaçao() {
         this.lucro = new Lucro();
         this.lucro1 = new Lucro();
-        this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2020, Month.JANUARY.getValue()));
-        this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2020, Month.JANUARY.getValue()));
-        this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2019, Month.AUGUST.getValue()));
+        this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
+        this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
+        this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2019, AUGUST.getValue()));
 
         this.validador = new ValidadorLucro();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
 
     }
 
@@ -68,7 +69,7 @@ public class LucroTest {
 
     @Test
     public void nao_deve_retornar_erros() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+        assertThat(teste, is(validador.validador("validos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -76,33 +77,33 @@ public class LucroTest {
         teste.add("Investimento menor que zero!");
         teste.add("Renda menor que zero!");
         teste.add("A data deve ser no presente!");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_investimento() {
         teste.add("Investimento menor que zero!");
-        assertThat(teste, Matchers.is(validador.validador("investimentoInvalido")));
+        assertThat(teste, is(validador.validador("investimentoInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_na_renda() {
         teste.add("Renda menor que zero!");
-        assertThat(teste, Matchers.is(validador.validador("rendaInvalida")));
+        assertThat(teste, is(validador.validador("rendaInvalida")));
 
     }
 
     @Test
     public void deve_calcular_o_lucro_da_empresa() {
-        Set<Endereco> endereco = new HashSet<>();
-        Set<Telefone> telefones = new HashSet<>();
+        Set<Endereco> endereco = new HashSet<Endereco>();
+        Set<Telefone> telefones = new HashSet<Telefone>();
         Empresa empresa = new Empresa("Pedra", "12356272839283", telefones, "pedra@hotmail.com", endereco);
         lucro2.setEmpresa(empresa);
         empresa.setLucro(lucro2);
-        assertThat(lucro2.getEmpresa(), Matchers.is(empresa));
-        assertThat(lucro2.calculaLucro(), Matchers.is(empresa.getLucro().calculaLucro()));
+        assertThat(lucro2.getEmpresa(), is(empresa));
+        assertThat(lucro2.calculaLucro(), is(empresa.getLucro().calculaLucro()));
     }
 
     @Test
@@ -111,10 +112,10 @@ public class LucroTest {
         assertTrue(lucro.getInvestimento().equals(new BigDecimal("33000")));
         lucro.setRenda(new BigDecimal("33000"));
         assertTrue(lucro4.getRenda().equals(new BigDecimal("33000")));
-        lucro.setMes(new YearMonth(2019, Month.AUGUST.getValue()));
-        assertTrue(lucro4.getMes().equals(new YearMonth(2019, Month.AUGUST.getValue())));
-        lucro.setMoeda(Moeda.DOLLAR);
-        assertTrue(lucro4.getMoeda().equals(Moeda.DOLLAR));
+        lucro.setMes(new YearMonth(2019, AUGUST.getValue()));
+        assertTrue(lucro4.getMes().equals(new YearMonth(2019, AUGUST.getValue())));
+        lucro.setMoeda(DOLLAR);
+        assertTrue(lucro4.getMoeda().equals(DOLLAR));
     }
 
     @Test
@@ -130,7 +131,7 @@ public class LucroTest {
 
     @Test
     public void deve_testar_hashcode_para_mes_nulo() {
-        assertThat(lucro.hashCode(), Matchers.is(23273));
+        assertThat(lucro.hashCode(), is(23273));
     }
 
     @Test
@@ -177,7 +178,7 @@ public class LucroTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(lucro2);
-        assertThat(lucro2, Matchers.is(lucro2));
+        assertThat(lucro2, is(lucro2));
     }
 
 }

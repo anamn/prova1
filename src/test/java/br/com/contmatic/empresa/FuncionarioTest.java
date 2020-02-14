@@ -1,6 +1,12 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.Ddd.AC68;
+import static br.com.contmatic.enums.Ddd.AM97;
+import static br.com.contmatic.enums.Ddd.BA73;
+import static br.com.contmatic.enums.TelefoneType.CELULAR;
+import static br.com.contmatic.enums.TelefoneType.FIXO;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
@@ -16,9 +22,8 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorFuncionario;
 import br.com.contmatic.enums.EnderecoType;
-import br.com.contmatic.enums.TelefoneType;
+import br.com.contmatic.fixture.ValidadorFuncionario;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @FixMethodOrder(NAME_ASCENDING)
@@ -48,7 +53,7 @@ public class FuncionarioTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        FixtureFactoryLoader.loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
@@ -63,7 +68,7 @@ public class FuncionarioTest {
         this.funcionario4 = new Funcionario("Juliana", "98675413154", "12121212125", telefones, new BigDecimal("5213"), endereco);
         
         this.validador = new ValidadorFuncionario();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
 
     }
 
@@ -94,38 +99,38 @@ public class FuncionarioTest {
         teste.add("Nome invalido");
         teste.add("Pis invalido");
         teste.add("Salario invalido");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_cpf() {
         teste.add("CPF invalido");
-        assertThat(teste, Matchers.is(validador.validador("cpfInvalido")));
+        assertThat(teste, is(validador.validador("cpfInvalido")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_nome() {
         teste.add("Nome invalido");
-        assertThat(teste, Matchers.is(validador.validador("nomeInvalido")));
+        assertThat(teste, is(validador.validador("nomeInvalido")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_pis() {
         teste.add("Pis invalido");
-        assertThat(teste, Matchers.is(validador.validador("pisInvalido")));
+        assertThat(teste, is(validador.validador("pisInvalido")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_salario() {
         teste.add("Salario invalido");
-        assertThat(teste, Matchers.is(validador.validador("salarioInvalido")));
+        assertThat(teste, is(validador.validador("salarioInvalido")));
     }
 
     @Test
     public void nao_deve_adicionar_o_mesmo_telefone() {
-        this.telefone = new Telefone("15986564582", TelefoneType.CELULAR);
-        this.telefone1 = new Telefone("2186564582", TelefoneType.FIXO);
-        this.telefone2 = new Telefone("2186564582", TelefoneType.FIXO);
+        this.telefone = new Telefone(AC68,"986564582", CELULAR);
+        this.telefone1 = new Telefone(BA73,"86564582", FIXO);
+        this.telefone2 = new Telefone(AM97,"86564582", FIXO);
         telefones.add(telefone);
         telefones.add(telefone1);
         telefones.add(telefone2);
@@ -162,7 +167,7 @@ public class FuncionarioTest {
 
     @Test
     public void deve_testar_hashcode_para_pis_nulo() {
-        assertThat(funcionario1.hashCode(), Matchers.is(629));
+        assertThat(funcionario1.hashCode(), is(629));
     }
 
     @Test
@@ -209,7 +214,7 @@ public class FuncionarioTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(funcionario2);
-        assertThat(funcionario2, Matchers.is(funcionario2));
+        assertThat(funcionario2, is(funcionario2));
     }
 
 }

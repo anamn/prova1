@@ -1,7 +1,14 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.Ddd.MA99;
+import static br.com.contmatic.enums.Ddd.RJ21;
+import static br.com.contmatic.enums.EnderecoType.APARTAMENTO;
+import static br.com.contmatic.enums.TelefoneType.CELULAR;
+import static br.com.contmatic.enums.TelefoneType.FIXO;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.util.HashSet;
@@ -15,12 +22,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorCliente;
-import br.com.contmatic.empresa.Cliente;
-import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.enums.EnderecoType;
-import br.com.contmatic.enums.TelefoneType;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorCliente;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
@@ -49,45 +51,46 @@ public class ClienteTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
     public void incializacao() {
-        this.endereco = new Endereco("Rua pedra", "5", "91112120", EnderecoType.APARTAMENTO);
-        this.telefones = new HashSet<>();
+        this.endereco = new Endereco("Rua pedra", "5", "91112120", APARTAMENTO);
+        this.telefones = new HashSet<Telefone>();
 
         this.cliente = new Cliente();
         this.cliente1 = new Cliente();
         this.cliente2 = new Cliente("Maria", "12898282726", telefones, "maria@hotmail.com", endereco);
         this.cliente3 = new Cliente("Maria", "12898282726", telefones, "maria@hotmail.com", endereco);
         this.cliente4 = new Cliente("Joao", "13213213214", telefones, "jao@gmail.com", endereco);
-        
+
         this.validador = new ValidadorCliente();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
+
     }
 
     @After
     public void finaliza() {
         this.endereco = null;
-        
+
         this.telefones = null;
-        
+
         this.cliente = null;
         this.cliente1 = null;
         this.cliente2 = null;
         this.cliente3 = null;
         this.cliente4 = null;
-        
+
         this.validador = null;
         this.teste = null;
     }
 
     @Test
     public void nao_deve_adicionar_o_mesmo_telefone() {
-        this.telefone = new Telefone("(11)986564582", TelefoneType.CELULAR);
-        this.telefone1 = new Telefone("1586564582", TelefoneType.FIXO);
-        this.telefone2 = new Telefone("1586564582", TelefoneType.FIXO);
+        this.telefone = new Telefone(MA99, "986564582", CELULAR);
+        this.telefone1 = new Telefone(RJ21, "8656-4582", FIXO);
+        this.telefone2 = new Telefone(RJ21, "8656-4582", FIXO);
         telefones.add(telefone);
         telefones.add(telefone1);
         telefones.add(telefone2);
@@ -97,35 +100,35 @@ public class ClienteTest {
 
     @Test
     public void nao_deve_retornar_erros() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+         assertThat(teste, is(validador.validador("validos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_em_todos_os_campos() {
         teste.add("CPF invalido");
         teste.add("Nome invalido");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_nome() {
         teste.add("Nome invalido");
-        assertThat(teste, Matchers.is(validador.validador("nomeInvalido")));
+        assertThat(teste, is(validador.validador("nomeInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_cpf() {
         teste.add("CPF invalido");
-        assertThat(teste, Matchers.is(validador.validador("cpfInvalido")));
+        assertThat(teste, is(validador.validador("cpfInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_email() {
         teste.add("Email invalido");
-        assertThat(teste, Matchers.is(validador.validador("emailInvalido")));
+        assertThat(teste, is(validador.validador("emailInvalido")));
 
     }
 
@@ -198,7 +201,7 @@ public class ClienteTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(cliente2);
-        assertThat(cliente2, Matchers.is(cliente2));
+        assertThat(cliente2, is(cliente2));
     }
 
 }

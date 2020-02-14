@@ -1,18 +1,25 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.Ddd.AM92;
+import static br.com.contmatic.enums.Ddd.SP11;
+import static br.com.contmatic.enums.EnderecoType.COMENCIAL;
+import static br.com.contmatic.enums.Moeda.DOLLAR;
+import static br.com.contmatic.enums.TelefoneType.CELULAR;
+import static br.com.contmatic.enums.TelefoneType.FIXO;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static java.time.Month.JANUARY;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.math.BigDecimal;
-import java.time.Month;
-import org.joda.time.YearMonth;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hamcrest.Matchers;
+import org.joda.time.YearMonth;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,11 +27,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorEmpresa;
-import br.com.contmatic.enums.EnderecoType;
-import br.com.contmatic.enums.Moeda;
-import br.com.contmatic.enums.TelefoneType;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorEmpresa;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class EmpresaTest {
@@ -75,7 +78,7 @@ public class EmpresaTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @AfterClass
@@ -85,9 +88,9 @@ public class EmpresaTest {
 
     @Before
     public void incializacao() {
-        this.telefones = new HashSet<>();
-        this.enderecos = new HashSet<>();
-        this.endereco = new Endereco("Rua alves", "165a", "12345420", EnderecoType.COMENCIAL);
+        this.telefones = new HashSet<Telefone>();
+        this.enderecos = new HashSet<Endereco>();
+        this.endereco = new Endereco("Rua alves", "165a", "12345420", COMENCIAL);
 
         this.empresa = new Empresa();
         this.empresa1 = new Empresa();
@@ -98,19 +101,19 @@ public class EmpresaTest {
         this.produto1 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("15"), "1545483", 2);
         this.produto2 = new Produto("Calça", "Calça preta com botoes", new BigDecimal("50"), "1845755", 5);
 
-        this.funcionarios = new HashSet<>();
+        this.funcionarios = new HashSet<Funcionario>();
         this.funcionario1 = new Funcionario("Maria", "18171121310", "45695123415", telefones, new BigDecimal("1542"), endereco);
         this.funcionario2 = new Funcionario("Paula", "18171121310", "14563158201", telefones, new BigDecimal("1542"), endereco);
 
-        this.clientes = new HashSet<>();
+        this.clientes = new HashSet<Cliente>();
         this.cliente = new Cliente();
         this.cliente1 = new Cliente("Felipe", "12546975554", telefones, "felipe@hig.com", new Endereco());
         this.cliente2 = new Cliente("Maria", "56487521975", telefones, "maria@hotmail.com", new Endereco());
 
         this.validador = new ValidadorEmpresa();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
 
-        this.lucro = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), Moeda.DOLLAR, new YearMonth(2020, Month.JANUARY.getValue()));
+        this.lucro = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
     }
 
     @After
@@ -143,9 +146,9 @@ public class EmpresaTest {
 
     @Test
     public void nao_deve_adicionar_o_mesmo_telefone() {
-        this.telefone = new Telefone("11986564582", TelefoneType.CELULAR);
-        this.telefone1 = new Telefone("(21)86564582", TelefoneType.FIXO);
-        this.telefone2 = new Telefone("2186564582", TelefoneType.FIXO);
+        this.telefone = new Telefone(SP11,"986564582", CELULAR);
+        this.telefone1 = new Telefone(AM92,"8656-4582", FIXO);
+        this.telefone2 = new Telefone(AM92,"8656-4582", FIXO);
         telefones.add(telefone);
         telefones.add(telefone1);
         telefones.add(telefone2);
@@ -172,7 +175,7 @@ public class EmpresaTest {
 
     @Test
     public void deve_adicionar_os_produtos_e_verificar_o_armazenamento() {
-        Set<Produto> produtos = new HashSet<>();
+        Set<Produto> produtos = new HashSet<Produto>();
         produtos.add(produto1);
         produtos.add(produto2);
         empresa.setProdutos(produtos);
@@ -206,7 +209,7 @@ public class EmpresaTest {
 
     @Test
     public void nao_deve_retornar_erros() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+        assertThat(teste, is(validador.validador("validos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -215,49 +218,48 @@ public class EmpresaTest {
         teste.add("Email invalido");
         teste.add("Nome invalido");
         teste.add("Site invalido");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_nome() {
         teste.add("Nome invalido");
-        assertThat(teste, Matchers.is(validador.validador("nomeInvalido")));
+        assertThat(teste, is(validador.validador("nomeInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_cnpj() {
         teste.add("CNPJ invalido");
-        assertThat(teste, Matchers.is(validador.validador("cnpjInvalido")));
+        assertThat(teste, is(validador.validador("cnpjInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_site() {
         teste.add("Site invalido");
-        assertThat(teste, Matchers.is(validador.validador("siteInvalido")));
+        assertThat(teste, is(validador.validador("siteInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_email() {
         teste.add("Email invalido");
-        assertThat(teste, Matchers.is(validador.validador("emailInvalido")));
+        assertThat(teste, is(validador.validador("emailInvalido")));
 
     }
 
     @Test
     public void deve_retornar_o_lucro() {
         empresa.setLucro(lucro);
-        assertThat(new BigDecimal(10), Matchers.is(empresa.getLucro().calculaLucro()));
-
+        assertThat(new BigDecimal(10), is(empresa.getLucro().calculaLucro()));
     }
 
     @Test
     public void deve_retornar_o_endereco_passado() {
         empresa.setEnderecos(enderecos);
-        assertThat(empresa.getEnderecos(), Matchers.is(enderecos));
+        assertThat(empresa.getEnderecos(), is(enderecos));
     }
 
     @Test
@@ -285,7 +287,7 @@ public class EmpresaTest {
 
     @Test
     public void deve_testar_hashcode_para_cnpj_nulo() {
-        assertThat(empresa.hashCode(), Matchers.is(629));
+        assertThat(empresa.hashCode(), is(629));
     }
 
     @Test(expected = AssertionError.class)
@@ -337,7 +339,7 @@ public class EmpresaTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(empresa2);
-        assertThat(empresa2, Matchers.is(empresa2));
+        assertThat(empresa2, is(empresa2));
     }
 
 }

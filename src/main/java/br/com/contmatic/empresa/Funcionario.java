@@ -3,11 +3,11 @@ package br.com.contmatic.empresa;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,24 +15,26 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Valid
+import br.com.contmatic.validador.PIS;
+
 public class Funcionario {
 
     @DecimalMin(value = "1.00", message = "Salario invalido")
     private BigDecimal salario;
 
     @NotEmpty(message = "Pis invalido")
-    @Pattern(regexp = "[\\d]{11}", message = "Pis invalido")
+    @PIS
     private String pis;
 
     @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[^\\d]{1,50}", message = "Nome invalido")
+    @Pattern(regexp = "[aA-zZ,áÁ-úÚ]{2,50}", message = "Nome invalido")
     private String nome;
-
+    
     @NotNull(message = "CPF invalido")
     @CPF(message = "CPF invalido")
     private String cpf;
-    
+
+    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
     private Set<Telefone> telefones;
 
     private Endereco endereco;

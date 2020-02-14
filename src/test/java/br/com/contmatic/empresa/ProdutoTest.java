@@ -1,23 +1,22 @@
 package br.com.contmatic.empresa;
 
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorProduto;
-import br.com.contmatic.empresa.Produto;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorProduto;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
@@ -38,7 +37,7 @@ public class ProdutoTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
@@ -50,7 +49,7 @@ public class ProdutoTest {
         this.produto4 = new Produto();
 
         this.validador = new ValidadorProduto();
-        this.teste = new TreeSet<>();
+        this.teste = new TreeSet<String>();
     }
 
     @After
@@ -67,7 +66,7 @@ public class ProdutoTest {
 
     @Test
     public void nao_deve_retornar_erros() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+        assertThat(teste, is(validador.validador("validos")));
 
     }
 
@@ -78,42 +77,42 @@ public class ProdutoTest {
         teste.add("Preço invalido");
         teste.add("Quantidade menor que zero");
         teste.add("Tipo invalido");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_codigo() {
         teste.add("Codigo invalido");
-        assertThat(teste, Matchers.is(validador.validador("codigoInvalido")));
+        assertThat(teste, is(validador.validador("codigoInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_na_descricao() {
         teste.add("Descrição invalida");
-        assertThat(teste, Matchers.is(validador.validador("descricaoInvalido")));
+        assertThat(teste, is(validador.validador("descricaoInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_preco() {
         teste.add("Preço invalido");
-        assertThat(teste, Matchers.is(validador.validador("precoInvalido")));
+        assertThat(teste, is(validador.validador("precoInvalido")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_na_quantidade() {
         teste.add("Quantidade menor que zero");
-        assertThat(teste, Matchers.is(validador.validador("quantidadeInvalida")));
+        assertThat(teste, is(validador.validador("quantidadeInvalida")));
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_tipo() {
         teste.add("Tipo invalido");
-        assertThat(teste, Matchers.is(validador.validador("tipoInvalido")));
+        assertThat(teste, is(validador.validador("tipoInvalido")));
 
     }
 
@@ -124,7 +123,7 @@ public class ProdutoTest {
         produto.setTipo("Blusa");
         assertTrue(produto.getTipo().equals("Blusa"));
         produto.setPreco(new BigDecimal("5"));
-        assertThat(produto.getPreco(), Matchers.is(new BigDecimal("5")));
+        assertThat(produto.getPreco(), is(new BigDecimal("5")));
         produto.setCodigo("122523");
         assertTrue(produto.getCodigo().equals("122523"));
         produto.setQuantidade(3);
@@ -145,7 +144,7 @@ public class ProdutoTest {
 
     @Test
     public void deve_testar_hashcode_para_codigo_nulo() {
-        assertThat(produto.hashCode(), Matchers.is(629));
+        assertThat(produto.hashCode(), is(629));
     }
 
     @Test
@@ -192,6 +191,6 @@ public class ProdutoTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(produto1);
-        assertThat(produto1, Matchers.is(produto1));
+        assertThat(produto1, is(produto1));
     }
 }

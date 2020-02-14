@@ -1,20 +1,24 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.enums.Ddd.AL82;
+import static br.com.contmatic.enums.Ddd.BA77;
+import static br.com.contmatic.enums.Ddd.PR44;
+import static br.com.contmatic.enums.TelefoneType.CELULAR;
+import static br.com.contmatic.enums.TelefoneType.FIXO;
+import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contimatic.fixture.ValidadorTelefone;
-import br.com.contmatic.enums.TelefoneType;
-import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import br.com.contmatic.fixture.ValidadorTelefone;
 
 public class TelefoneTest {
 
@@ -34,16 +38,16 @@ public class TelefoneTest {
 
     @BeforeClass
     public static void setUpBeforeClass() {
-        FixtureFactoryLoader.loadTemplates("br.com.contimatic.fixture");
+        loadTemplates("br.com.six2six.fixturefactory.loader");
     }
 
     @Before
     public void test() {
         this.telefone = new Telefone();
         this.telefone1 = new Telefone();
-        this.telefone2 = new Telefone("11 956875488", TelefoneType.CELULAR);
-        this.telefone3 = new Telefone("11 956875488", TelefoneType.CELULAR);
-        this.telefone4 = new Telefone("1565321442", TelefoneType.FIXO);
+        this.telefone2 = new Telefone(AL82,"956875488", CELULAR);
+        this.telefone3 = new Telefone(BA77,"956875488", CELULAR);
+        this.telefone4 = new Telefone(PR44,"1565321442", FIXO);
 
         this.validador = new ValidadorTelefone();
         
@@ -65,21 +69,23 @@ public class TelefoneTest {
 
     @Test
     public void nao_deve_retornar_mensagem_de_erro() {
-        assertThat(teste, Matchers.is(validador.validador("validos")));
+        assertThat(teste, is(validador.validador("validos")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_numero() {
         teste.add("Numero invalido");
-        assertThat(teste, Matchers.is(validador.validador("invalidos")));
+        assertThat(teste, is(validador.validador("invalidos")));
     }
 
     @Test
     public void deve_retornar_valores() {
         telefone.setNumero("21 965452344");
         assertTrue(telefone.getNumero().equals("21 965452344"));
-        telefone.setTipo(TelefoneType.CELULAR);
-        assertThat(telefone.getTipo(), Matchers.is(TelefoneType.CELULAR));
+        telefone.setTipo(CELULAR);
+        assertThat(telefone.getTipo(), is(CELULAR));
+        telefone.setDdd(PR44);
+        assertThat(telefone.getDdd(), is(PR44));
 
     }
 
@@ -96,7 +102,7 @@ public class TelefoneTest {
 
     @Test
     public void deve_testar_hashcode_para_telefone_nulo() {
-        assertThat(telefone.hashCode(), Matchers.is(629));
+        assertThat(telefone.hashCode(), is(629));
     }
 
     @Test
@@ -138,7 +144,7 @@ public class TelefoneTest {
     @Test
     public void deve_retornar_a_toString_do_objeto() {
         System.out.println(telefone2);
-        assertThat(telefone2, Matchers.is(telefone2));
+        assertThat(telefone2, is(telefone2));
     }
 
 }

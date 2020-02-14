@@ -1,4 +1,8 @@
-package br.com.contimatic.fixture;
+package br.com.contmatic.fixture;
+
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -11,63 +15,65 @@ import javax.validation.Validator;
 import com.google.common.base.Preconditions;
 
 import br.com.contmatic.empresa.Funcionario;
+import br.com.contmatic.randomicos.GeradorCpf;
+import br.com.contmatic.randomicos.GeradorDePis;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-public class ValidadorFuncionario implements TemplateLoader {
+public class ValidadorFuncionario {
 
-    @Override
-    public void load() {
-
+    public static Funcionario funcionario(String argumento) {
         Fixture.of(Funcionario.class).addTemplate("validos", new Rule() {
             {
-                add("nome", random("João", "Amelia", "Maria", "Zé", "Carlos", "Thaina"));
-                add("cpf", random("49022518841", "32179960387"));
-                add("pis", random("15487236597", "78945682135", "47596123588"));
-                add("salario", random(new BigDecimal("4500"), new BigDecimal("7200"), new BigDecimal("1500")));
+                add("nome", firstName());
+                GeradorCpf gerador = new GeradorCpf();
+                add("cpf", gerador.getCpf());
+                GeradorDePis pis=new GeradorDePis();
+                add("pis", pis.getPis());
+                add("salario", random(new BigDecimal(randomNumeric(7))));
             }
         });
 
         Fixture.of(Funcionario.class).addTemplate("nomeInvalido").inherits("validos", new Rule() {
             {
-                add("nome", random("João23", "Makokhjkutrilohginimikiuhjkjhgtfrdeswa44qhyuijnbvgfdcdria", "C12los"));
+                add("nome", random(randomAlphabetic(1), randomAlphabetic(52)));
 
             }
         });
-        
+
         Fixture.of(Funcionario.class).addTemplate("cpfInvalido").inherits("validos", new Rule() {
             {
-                add("cpf", random("49022554256", "32179930125", "1234567:>45", "79745307624", "41023752loj3"));
+                add("cpf", random(randomNumeric(1, 18), randomAscii(1, 11)));
             }
         });
 
         Fixture.of(Funcionario.class).addTemplate("pisInvalido").inherits("validos", new Rule() {
             {
-                add("pis", random(null, "789456821354555", "47596358"));
+                add("pis", random(randomNumeric(11, 100), randomNumeric(1, 10), randomAscii(1, 11)));
 
             }
         });
 
         Fixture.of(Funcionario.class).addTemplate("salarioInvalido").inherits("validos", new Rule() {
             {
-                add("salario", random(new BigDecimal("-540"), new BigDecimal("0")));
+                add("salario", random(new BigDecimal("-" + randomNumeric(10))));
             }
         });
 
         Fixture.of(Funcionario.class).addTemplate("invalidos").inherits("validos", new Rule() {
             {
-                add("nome", random("João23", "Makokhjkutrilohginimikiuhjkjhgtfrdeswa44qhyuijnbvgfcdria", "C12los"));
-                add("cpf", random("49022554256", "32179930125", "1234567:>45", "79745307624", "41023752loj3"));
-                add("pis", random(null, "789456821354555", "47596358"));
-                add("salario", random(new BigDecimal("-540"), new BigDecimal("0")));
+                add("nome", random(randomAlphabetic(1, 51), randomAscii(5, 58), null));
+                add("cpf", random(randomNumeric(1, 18), randomAscii(1, 11), null));
+                add("pis", random(randomNumeric(11, 100), randomNumeric(1, 10), randomAscii(1, 11), null));
+                add("salario", random(new BigDecimal("-" + randomNumeric(10))));
+
             }
         });
-
+        return Fixture.from(Funcionario.class).gimme(argumento);
     }
 
     public Set<String> validador(String argumento) {
-        Funcionario funcionario= Fixture.from(Funcionario.class).gimme(argumento);
+        Funcionario funcionario = funcionario(argumento);
         Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Funcionario>> erros = validador.validate(funcionario);
         Set<String> erros2 = new TreeSet<>();

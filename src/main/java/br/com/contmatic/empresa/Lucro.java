@@ -2,7 +2,6 @@ package br.com.contmatic.empresa;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -15,7 +14,7 @@ import org.joda.time.YearMonth;
 
 import br.com.contmatic.enums.Moeda;
 
-@Valid
+
 public class Lucro {
 
     private Empresa empresa;
