@@ -25,25 +25,56 @@ public class ValidadorEmpresa {
             {
                 add("nome", firstName());
                 add("cnpj", cnpj());
-                add("email", "{nome}@gamil.com");
+                add("email", random("empresa@gmail.com", "empre_sa@hotmail.com", "empresa3@ig.com.br", "empresa3@contmatic.com.br"));
                 add("site", random("http://{nome}.com.br"));
             }
         });
 
-        Fixture.of(Empresa.class).addTemplate("nomeInvalido").inherits("validos", new Rule() {
+        Fixture.of(Empresa.class).addTemplate("nomeValidoComEspaco").inherits("validos", new Rule() {
+            {
+                add("nome", name());
+            }
+        });
+
+        Fixture.of(Empresa.class).addTemplate("nomeValidoComNumero").inherits("validos", new Rule() {
+            {
+                add("nome", randomAlphabetic(5) + randomNumeric(2));
+            }
+        });
+
+        Fixture.of(Empresa.class).addTemplate("nomeInvalidoPeloTamanho").inherits("validos", new Rule() {
+            {
+                add("nome", random(randomAlphabetic(52, 100)));
+            }
+        });
+
+        Fixture.of(Empresa.class).addTemplate("nomeNull").inherits("validos", new Rule() {
             {
                 add("nome", random(randomAlphabetic(52), randomAscii(58)));
             }
         });
+
         Fixture.of(Empresa.class).addTemplate("cnpjInvalido").inherits("validos", new Rule() {
             {
-                add("cnpj", random(randomAlphanumeric(14), randomAscii(14), randomNumeric(5, 20), null));
+                add("cnpj", random(randomAlphanumeric(14), randomAscii(14), randomNumeric(5, 20)));
+            }
+        });
+
+        Fixture.of(Empresa.class).addTemplate("cnpjNull").inherits("validos", new Rule() {
+            {
+                add("cnpj", null);
             }
         });
 
         Fixture.of(Empresa.class).addTemplate("emailInvalido").inherits("validos", new Rule() {
             {
-                add("email", random("empresahotmail.com", "ajjisjw", null));
+                add("email", random("empresahotmail.com", "allep", "empresa.com", "empresa @hotmail.com", "EMPRESA@HOTMAIL.COM", "empresa@hotmail.", "empresa@3873.com.br"));
+            }
+        });
+
+        Fixture.of(Empresa.class).addTemplate("emailNull").inherits("validos", new Rule() {
+            {
+                add("email", null);
             }
         });
 
@@ -61,7 +92,7 @@ public class ValidadorEmpresa {
                 add("site", random("onixbr", ".com.br"));
             }
         });
-        
+
         return Fixture.from(Empresa.class).gimme(argumento);
 
     }

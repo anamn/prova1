@@ -14,8 +14,8 @@ import javax.validation.Validator;
 
 import com.google.common.base.Preconditions;
 
-import br.com.contmatic.empresa.Endereco;
-import br.com.contmatic.enums.EnderecoType;
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.endereco.EnderecoType;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
@@ -24,7 +24,7 @@ public class ValidadorEndereco {
     public static Endereco endereco(String argumento) {
         Fixture.of(Endereco.class).addTemplate("validos", new Rule() {
             {
-                add("endereco", name());
+                add("endereco", randomAlphabetic(5, 40));
                 add("numero", randomNumeric(2, 19));
                 add("cep", randomNumeric(8));
                 EnderecoType enderecoType = EnderecoType.values()[new Random().nextInt(EnderecoType.values().length)];
@@ -39,9 +39,54 @@ public class ValidadorEndereco {
             }
         });
 
+        Fixture.of(Endereco.class).addTemplate("enderecoNull").inherits("validos", new Rule() {
+            {
+                add("endereco", null);
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("enderecoValidoComEspaco").inherits("validos", new Rule() {
+            {
+                add("endereco", name());
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("enderecoInvalidoNumero").inherits("validos", new Rule() {
+            {
+                add("endereco", random(randomAlphabetic(9) + randomNumeric(5)));
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("enderecoInvalidoComEspeciais").inherits("validos", new Rule() {
+            {
+                add("endereco", randomAlphabetic(9) + random("?", ":", "&", "!", "@", "#", "$", "¨¨", "*"));
+            }
+        });
+
         Fixture.of(Endereco.class).addTemplate("numeroInvalido").inherits("validos", new Rule() {
             {
                 add("numero", randomNumeric(21, 40));
+
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("numeroValidoComLetra").inherits("validos", new Rule() {
+            {
+                add("numero", randomNumeric(21, 40) + randomAlphabetic(5));
+
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("numeroNull").inherits("validos", new Rule() {
+            {
+                add("numero", null);
+
+            }
+        });
+
+        Fixture.of(Endereco.class).addTemplate("cepValidoComTraco").inherits("validos", new Rule() {
+            {
+                add("cep", random(randomNumeric(5) + "-" + randomNumeric(3)));
 
             }
         });
@@ -56,7 +101,7 @@ public class ValidadorEndereco {
             {
                 add("endereco", random(randomAlphabetic(6, 42), randomAscii(5, 58)));
                 add("numero", randomNumeric(21, 40));
-                add("cep", random(randomNumeric(9, 50), randomAscii(1, 11)));
+                add("cep", random(randomNumeric(9, 50), randomNumeric(1, 8), randomAscii(1, 5)));
 
             }
         });

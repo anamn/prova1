@@ -46,9 +46,15 @@ public class GeradorCpf {
         }
     }
 
-    public String getCpf() {
+    public String getCpfValido() {
         String cpf;
         while (!isCPF(cpf = randomNumeric(11)));
+        return cpf;
+    }
+    
+    public String getCpfInvalido() {
+        String cpf;
+        while (isCPF(cpf = randomNumeric(11)));
         return cpf;
     }
 }

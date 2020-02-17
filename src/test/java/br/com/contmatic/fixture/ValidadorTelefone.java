@@ -12,9 +12,9 @@ import javax.validation.Validator;
 
 import com.google.common.base.Preconditions;
 
-import br.com.contmatic.empresa.Telefone;
-import br.com.contmatic.enums.Ddd;
-import br.com.contmatic.enums.TelefoneType;
+import br.com.contmatic.telefone.Ddd;
+import br.com.contmatic.telefone.Telefone;
+import br.com.contmatic.telefone.TelefoneType;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
@@ -31,9 +31,26 @@ public class ValidadorTelefone {
             }
         });
 
-        Fixture.of(Telefone.class).addTemplate("invalidos").inherits("validos", new Rule() {
+        Fixture.of(Telefone.class).addTemplate("numeroInvalidoTamanho").inherits("validos", new Rule() {
             {
                 add("numero", random(randomNumeric(0, 7), randomNumeric(10, 100)));
+            }
+        });
+        
+        Fixture.of(Telefone.class).addTemplate("numeroNull").inherits("validos", new Rule() {
+            {
+                add("numero", null);
+            }
+        });
+        Fixture.of(Telefone.class).addTemplate("dddNull").inherits("validos", new Rule() {
+            {
+                add("ddd", null);
+            }
+        });
+        
+        Fixture.of(Telefone.class).addTemplate("tipoNull").inherits("validos", new Rule() {
+            {
+                add("tipo", null);
             }
         });
        return Fixture.from(Telefone.class).gimme(argumento);

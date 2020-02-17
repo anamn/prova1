@@ -19,32 +19,74 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
 public class ValidadorCliente {
-    
+
+    static GeradorCpf gerador = new GeradorCpf();
+
     public static Cliente cliente(String argumento) {
         Fixture.of(Cliente.class).addTemplate("validos", new Rule() {
             {
                 add("nome", firstName());
-                add("email", "{nome}@gmail.com");
-                GeradorCpf gerador = new GeradorCpf();
-                add("cpf", gerador.getCpf());
+                add("email", random("cliente@gmail.com", "clien_te@hotmail.com", "cliente3@ig.com.br", "clinte3@contmatic.com.br"));
+                add("cpf", gerador.getCpfValido());
             }
         });
-        
+
         Fixture.of(Cliente.class).addTemplate("nomeInvalido").inherits("validos", new Rule() {
             {
                 add("nome", random(randomAlphabetic(1), randomAlphabetic(52)));
             }
         });
 
+        Fixture.of(Cliente.class).addTemplate("nomeNull").inherits("validos", new Rule() {
+            {
+                add("nome", null);
+            }
+        });
+
+        Fixture.of(Cliente.class).addTemplate("nomeValidoComEspaço").inherits("validos", new Rule() {
+            {
+                add("nome", name());
+            }
+        });
+
+        Fixture.of(Cliente.class).addTemplate("nomeInvalidoComNumero").inherits("validos", new Rule() {
+            {
+                add("nome", random(randomAlphabetic(9) + randomNumeric(5)));
+            }
+        });
+
+        Fixture.of(Cliente.class).addTemplate("nomeInvalidoComEspeciais").inherits("validos", new Rule() {
+            {
+                add("nome", randomAlphabetic(9) + random("?", ":", "&", "!", "@", "#", "$", "¨¨", "*"));
+            }
+        });
+
         Fixture.of(Cliente.class).addTemplate("cpfInvalido").inherits("validos", new Rule() {
             {
+                add("cpf", gerador.getCpfInvalido());
+            }
+        });
+
+        Fixture.of(Cliente.class).addTemplate("cpfTamanhoInvalido").inherits("validos", new Rule() {
+            {
                 add("cpf", random(randomNumeric(1, 18), randomAscii(1, 12)));
+            }
+        });
+        Fixture.of(Cliente.class).addTemplate("cpfNull").inherits("validos", new Rule() {
+            {
+                add("cpf", null);
             }
         });
 
         Fixture.of(Cliente.class).addTemplate("emailInvalido").inherits("validos", new Rule() {
             {
-                add("email", random("clientehotmail.com", "ajjisjw"));
+                add("email", random("clientehotmail.com", "allep", "cliente.com", "cliente @hotmail.com", "CLIENTE@HOTMAIL.COM", "cliente@hotmail.", "cliente@3873.com.br"));
+            }
+        });
+
+        Fixture.of(Cliente.class).addTemplate("emailNull").inherits("validos", new Rule() {
+            {
+                add("email", null);
             }
         });
 

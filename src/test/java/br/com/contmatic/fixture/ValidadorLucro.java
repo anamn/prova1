@@ -28,19 +28,19 @@ import org.joda.time.YearMonth;
 
 import com.google.common.base.Preconditions;
 
-import br.com.contmatic.empresa.Lucro;
-import br.com.contmatic.enums.Moeda;
+import br.com.contmatic.financeiro.Lucro;
+import br.com.contmatic.financeiro.Moeda;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
 public class ValidadorLucro {
-    
+
     public static Lucro lucro(String argumento) {
         Fixture.of(Lucro.class).addTemplate("validos", new Rule() {
             {
                 add("investimento", random(new BigDecimal(randomNumeric(1, 1000))));
                 add("renda", random(new BigDecimal(randomNumeric(1, 100))));
-                Moeda moeda= Moeda.values()[new Random().nextInt(Moeda.values().length)];
+                Moeda moeda = Moeda.values()[new Random().nextInt(Moeda.values().length)];
                 add("moeda", random(moeda));
                 add("mes", random(new YearMonth(2019, DECEMBER.getValue()), new YearMonth(2020, JANUARY.getValue()), new YearMonth(2020, FEBRUARY.getValue())));
             }
@@ -48,23 +48,46 @@ public class ValidadorLucro {
 
         Fixture.of(Lucro.class).addTemplate("investimentoInvalido").inherits("validos", new Rule() {
             {
-                add("investimento",random(new BigDecimal("-" + randomNumeric(10))));
+                add("investimento", random(new BigDecimal("-" + randomNumeric(5))));
+            }
+        });
+        
+        Fixture.of(Lucro.class).addTemplate("investimentoZero").inherits("validos", new Rule() {
+            {
+                add("investimento", new BigDecimal("0"));
+            }
+        });
+
+        Fixture.of(Lucro.class).addTemplate("investimentoNull").inherits("validos", new Rule() {
+            {
+                add("investimento", null);
             }
         });
 
         Fixture.of(Lucro.class).addTemplate("rendaInvalida").inherits("validos", new Rule() {
             {
-                add("renda",random(new BigDecimal("-" + randomNumeric(10))));
+                add("renda", random(new BigDecimal("-" + randomNumeric(5))));
+            }
+        });
+        
+        Fixture.of(Lucro.class).addTemplate("rendaNull").inherits("validos", new Rule() {
+            {
+                add("renda", null);
+            }
+        });
+        
+        Fixture.of(Lucro.class).addTemplate("rendaZero").inherits("validos", new Rule() {
+            {
+                add("renda", new BigDecimal("0"));
             }
         });
 
-        Fixture.of(Lucro.class).addTemplate("invalidos").inherits("validos", new Rule() {
+        Fixture.of(Lucro.class).addTemplate("mesInvalido").inherits("validos", new Rule() {
             {
                 add("mes",
-                    random(new YearMonth(2020, MARCH.getValue()), new YearMonth(2020, APRIL.getValue()), new YearMonth(2020, MAY.getValue()),
-                        new YearMonth(2020, JUNE.getValue()), new YearMonth(2020, JULY.getValue()), new YearMonth(2020, AUGUST.getValue()),
-                        new YearMonth(2020, SEPTEMBER.getValue()), new YearMonth(2020, OCTOBER.getValue()), new YearMonth(2020, NOVEMBER.getValue()),
-                        new YearMonth(2020, DECEMBER.getValue())));
+                    random(new YearMonth(2020, MARCH.getValue()), new YearMonth(2020, APRIL.getValue()), new YearMonth(2020, MAY.getValue()), new YearMonth(2020, JUNE.getValue()),
+                        new YearMonth(2020, JULY.getValue()), new YearMonth(2020, AUGUST.getValue()), new YearMonth(2020, SEPTEMBER.getValue()), new YearMonth(2020, OCTOBER.getValue()),
+                        new YearMonth(2020, NOVEMBER.getValue()), new YearMonth(2020, DECEMBER.getValue())));
             }
         });
 

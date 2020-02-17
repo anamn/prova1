@@ -1,6 +1,7 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.telefone;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -8,62 +9,123 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import br.com.contmatic.enums.Ddd;
-import br.com.contmatic.enums.TelefoneType;
-
+/**
+ * The Class Telefone.
+ */
 public class Telefone {
 
+    /** The ddd. */
+    @NotNull(message = "DDD nulo")
     private Ddd ddd;
 
+    /** The numero. */
     @NotEmpty(message = "Numero invalido")
     @Pattern(regexp = "([9]?[0-9]{4}-?[0-9]{4})", message = "Numero invalido")
     private String numero;
 
+    /** The tipo. */
+    @NotNull(message = "Tipo nulo")
     private TelefoneType tipo;
 
+    /**
+     * Instantiates a new telefone.
+     *
+     * @param ddd the ddd
+     * @param numero the numero
+     * @param tipo the tipo
+     */
     public Telefone(Ddd ddd, String numero, TelefoneType tipo) {
         this.numero = numero;
         this.tipo = tipo;
         this.ddd = ddd;
     }
 
+    /**
+     * Instantiates a new telefone.
+     */
     public Telefone() {
     }
     
+    /**
+     * Gets the ddd.
+     *
+     * @return the ddd
+     */
     public Ddd getDdd() {
         return ddd;
     }
 
+    /**
+     * Sets the ddd.
+     *
+     * @param ddd the new ddd
+     */
     public void setDdd(Ddd ddd) {
         this.ddd = ddd;
     }
 
+    /**
+     * Gets the numero.
+     *
+     * @return the numero
+     */
     public String getNumero() {
         return numero;
     }
 
+    /**
+     * Sets the numero.
+     *
+     * @param numero the new numero
+     */
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
+    /**
+     * Gets the tipo.
+     *
+     * @return the tipo
+     */
     public TelefoneType getTipo() {
         return tipo;
     }
 
+    /**
+     * Sets the tipo.
+     *
+     * @param tipo the new tipo
+     */
     public void setTipo(TelefoneType tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     * To string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(numero).toHashCode();
     }
 
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

@@ -21,19 +21,19 @@ import br.com.contmatic.fixture.ValidadorProduto;
 @FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
 
-    Produto produto = null;
+    private Produto produto = null;
 
-    Produto produto1 = null;
+    private Produto produto1 = null;
 
-    Produto produto2 = null;
+    private Produto produto2 = null;
 
-    Produto produto3 = null;
+    private Produto produto3 = null;
 
-    Produto produto4 = null;
+    private Produto produto4 = null;
 
-    ValidadorProduto validador = null;
+    private ValidadorProduto validador = null;
 
-    Set<String> teste = null;
+    private Set<String> teste = null;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -41,33 +41,31 @@ public class ProdutoTest {
     }
 
     @Before
-    public void incializacao() {
+    public void setUpBefore() {
         this.produto = new Produto();
         this.produto1 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("5"), "122523", 5);
         this.produto2 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("5"), "122523", 2);
         this.produto3 = new Produto("Calça", "Calça preta com botoes", new BigDecimal("15"), "154545", 2);
         this.produto4 = new Produto();
-
         this.validador = new ValidadorProduto();
         this.teste = new TreeSet<String>();
     }
 
     @After
-    public void finalizacao() {
+    public void setDownAfter() {
         this.produto = null;
         this.produto1 = null;
         this.produto2 = null;
         this.produto3 = null;
         this.produto4 = null;
-
         this.validador = null;
         this.teste = null;
     }
 
+    // Testes atributos
     @Test
-    public void nao_deve_retornar_erros() {
+    public void nao_deve_retornar_erros_da_validacao() {
         assertThat(teste, is(validador.validador("validos")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -78,44 +76,75 @@ public class ProdutoTest {
         teste.add("Quantidade menor que zero");
         teste.add("Tipo invalido");
         assertThat(teste, is(validador.validador("invalidos")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_codigo() {
         teste.add("Codigo invalido");
         assertThat(teste, is(validador.validador("codigoInvalido")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_retornar_mensagem_de_erro_na_descricao() {
-        teste.add("Descrição invalida");
-        assertThat(teste, is(validador.validador("descricaoInvalido")));
+    public void deve_retornar_mensagem_de_erro_no_codigo_nulo() {
+        teste.add("Codigo invalido");
+        assertThat(teste, is(validador.validador("codigoNull")));
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_na_descricao_tamanho_menor() {
+        teste.add("Descrição invalida");
+        assertThat(teste, is(validador.validador("descricaoInvalidoPeloTamanhoMenor")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_na_descricao_tamanho_maior() {
+        teste.add("Descrição invalida");
+        assertThat(teste, is(validador.validador("descricaoInvalidoPeloTamanhoMaior")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_na_descricao_nula() {
+        teste.add("Descrição invalida");
+        assertThat(teste, is(validador.validador("descricaoNull")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_preco() {
         teste.add("Preço invalido");
         assertThat(teste, is(validador.validador("precoInvalido")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_na_quantidade() {
         teste.add("Quantidade menor que zero");
         assertThat(teste, is(validador.validador("quantidadeInvalida")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_retornar_mensagem_de_erro_no_tipo() {
-        teste.add("Tipo invalido");
-        assertThat(teste, is(validador.validador("tipoInvalido")));
-
+    public void deve_retornar_mensagem_de_erro_na_quantidade_nula() {
+        teste.add("Quantidade menor que zero");
+        assertThat(teste, is(validador.validador("quantidadeNula")));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_no_tipo_tamanho_menor() {
+        teste.add("Tipo invalido");
+        assertThat(teste, is(validador.validador("tipoInvalidoPeloTamanhoMenor")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_no_tipo_tamanho_maior() {
+        teste.add("Tipo invalido");
+        assertThat(teste, is(validador.validador("tipoInvalidoPeloTamanhoMaior")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_mensagem_de_erro_no_tipo_nulo() {
+        teste.add("Tipo invalido");
+        assertThat(teste, is(validador.validador("tipoNull")));
+    }
+
+    // Teste Construtor
     @Test
     public void deve_retornar_valores() {
         produto.setDescricao("Blusa de maga,com estampas");
@@ -128,13 +157,12 @@ public class ProdutoTest {
         assertTrue(produto.getCodigo().equals("122523"));
         produto.setQuantidade(3);
         assertTrue(produto.getQuantidade().equals(3));
-
     }
 
+    // Testes HashCode, Equals e toString
     @Test
     public void deve_retornar_hashCode_iguais_para_codigo_iguais() {
         assertTrue(produto1.hashCode() == produto2.hashCode());
-
     }
 
     @Test(expected = AssertionError.class)
@@ -170,7 +198,6 @@ public class ProdutoTest {
     @Test(expected = AssertionError.class)
     public void deve_retornar_false_para_codigo_nulo() {
         assertTrue(produto.equals(produto1));
-
     }
 
     @Test(expected = AssertionError.class)
@@ -189,8 +216,27 @@ public class ProdutoTest {
     }
 
     @Test
-    public void deve_retornar_a_toString_do_objeto() {
-        System.out.println(produto1);
-        assertThat(produto1, is(produto1));
+    public void deve_verificar_se_toString_contem_tipo() {
+        assertTrue(produto1.toString().contains("Blusa"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_preco() {
+        assertTrue(produto1.toString().contains("5"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_descricao() {
+        assertTrue(produto1.toString().contains("Blusa de maga,com estampas"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_codigo() {
+        assertTrue(produto1.toString().contains("122523"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_quantidade() {
+        assertTrue(produto1.toString().contains("5"));
     }
 }

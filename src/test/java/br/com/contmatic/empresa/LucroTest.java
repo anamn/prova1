@@ -1,6 +1,6 @@
 package br.com.contmatic.empresa;
 
-import static br.com.contmatic.enums.Moeda.DOLLAR;
+import static br.com.contmatic.financeiro.Moeda.DOLLAR;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static java.time.Month.AUGUST;
 import static java.time.Month.JANUARY;
@@ -19,23 +19,26 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.financeiro.Lucro;
 import br.com.contmatic.fixture.ValidadorLucro;
+import br.com.contmatic.telefone.Telefone;
 
 public class LucroTest {
 
-    Lucro lucro = null;
+    private Lucro lucro = null;
 
-    Lucro lucro1 = null;
+    private Lucro lucro1 = null;
 
-    Lucro lucro2 = null;
+    private Lucro lucro2 = null;
 
-    Lucro lucro3 = null;
+    private Lucro lucro3 = null;
 
-    Lucro lucro4 = null;
+    private Lucro lucro4 = null;
 
-    ValidadorLucro validador = null;
+    private ValidadorLucro validador = null;
 
-    Set<String> teste = null;
+    private Set<String> teste = null;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -43,32 +46,30 @@ public class LucroTest {
     }
 
     @Before
-    public void inicializaçao() {
+    public void setUpBefore() {
         this.lucro = new Lucro();
         this.lucro1 = new Lucro();
         this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2019, AUGUST.getValue()));
-
         this.validador = new ValidadorLucro();
         this.teste = new TreeSet<String>();
-
     }
 
     @After
-    public void finalizaçao() {
+    public void setDownAfter() {
         this.lucro = null;
         this.lucro1 = null;
         this.lucro2 = null;
         this.lucro3 = null;
         this.lucro4 = null;
-
         this.validador = null;
         this.teste = null;
     }
 
+    //Testes atributos
     @Test
-    public void nao_deve_retornar_erros() {
+    public void nao_deve_retornar_erros_de_validacao() {
         assertThat(teste, is(validador.validador("validos")));
     }
 
@@ -78,23 +79,51 @@ public class LucroTest {
         teste.add("Renda menor que zero!");
         teste.add("A data deve ser no presente!");
         assertThat(teste, is(validador.validador("invalidos")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_retonar_mensagem_de_erro_no_investimento() {
-        teste.add("Investimento menor que zero!");
+    public void deve_retonar_mensagem_de_erro_no_investimento_menor_que_zero() {
+        teste.add("Investimento menor ou igual a zero!");
         assertThat(teste, is(validador.validador("investimentoInvalido")));
-
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_retonar_mensagem_de_erro_na_renda() {
+    public void deve_retonar_mensagem_de_erro_no_investimento_igual_a_zero() {
+        teste.add("Investimento menor ou igual a zero!");
+        assertThat(teste, is(validador.validador("investimentoZero")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_investimento_nulo() {
+        teste.add("Investimento Nulo!");
+        assertThat(teste, is(validador.validador("investimentoZero")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_na_renda_menor_que_zero() {
         teste.add("Renda menor que zero!");
         assertThat(teste, is(validador.validador("rendaInvalida")));
-
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_na_renda_igual_a_zero() {
+        teste.add("Renda menor que zero!");
+        assertThat(teste, is(validador.validador("rendaZero")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_na_renda_nula() {
+        teste.add("Renda menor que zero!");
+        assertThat(teste, is(validador.validador("rendaNull")));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retonar_mensagem_de_erro_no_mes_futuro() {
+        teste.add("A data deve ser no presente!");
+        assertThat(teste, is(validador.validador("mesInvalido")));
+    }
+
+    //Teste metodo
     @Test
     public void deve_calcular_o_lucro_da_empresa() {
         Set<Endereco> endereco = new HashSet<Endereco>();
@@ -106,6 +135,7 @@ public class LucroTest {
         assertThat(lucro2.calculaLucro(), is(empresa.getLucro().calculaLucro()));
     }
 
+    //Teste Construtor
     @Test
     public void deve_retornar_valores() {
         lucro.setInvestimento(new BigDecimal("33000"));
@@ -118,10 +148,10 @@ public class LucroTest {
         assertTrue(lucro4.getMoeda().equals(DOLLAR));
     }
 
+    // Teste hashCode, Equals e toString
     @Test
     public void deve_retornar_hashCode_iguais_para_mes_igual() {
         assertTrue(lucro2.hashCode() == lucro2.hashCode());
-
     }
 
     @Test(expected = AssertionError.class)
@@ -157,7 +187,6 @@ public class LucroTest {
     @Test(expected = AssertionError.class)
     public void deve_retornar_false_para_mes_nulo() {
         assertTrue(lucro.equals(lucro2));
-
     }
 
     @Test(expected = AssertionError.class)
@@ -176,9 +205,27 @@ public class LucroTest {
     }
 
     @Test
-    public void deve_retornar_a_toString_do_objeto() {
-        System.out.println(lucro2);
-        assertThat(lucro2, is(lucro2));
+    public void deve_verificar_se_toString_contem_investimento() {
+        assertTrue(lucro2.toString().contains("30000"));
     }
 
+    @Test
+    public void deve_verificar_se_toString_contem_renda() {
+        assertTrue(lucro2.toString().contains("33000"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_moeda() {
+        assertTrue(lucro2.toString().contains("Dollar"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_mes() {
+        assertTrue(lucro2.toString().contains("2020-01"));
+    }
+
+    @Test
+    public void deve_verificar_se_toString_contem_empresa() {
+        assertTrue(lucro2.toString().contains("empresa"));
+    }
 }

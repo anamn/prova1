@@ -30,15 +30,44 @@ public class ValidadorProduto {
             }
 
         });
-        Fixture.of(Produto.class).addTemplate("tipoInvalido").inherits("validos", new Rule() {
+
+        Fixture.of(Produto.class).addTemplate("tipoInvalidoPeloTamanhoMenor").inherits("validos", new Rule() {
             {
-                add("tipo", random(randomAlphabetic(51, 100), randomAscii(51, 100)));
+                add("tipo", randomAlphabetic(1));
 
             }
         });
-        Fixture.of(Produto.class).addTemplate("descricaoInvalido").inherits("validos", new Rule() {
+
+        Fixture.of(Produto.class).addTemplate("tipoInvalidoPeloTamanhoMaior").inherits("validos", new Rule() {
             {
-                add("descricao", random(randomAlphabetic(61, 100), randomAscii(61, 100)));
+                add("tipo", randomAlphabetic(51, 100));
+
+            }
+        });
+
+        Fixture.of(Produto.class).addTemplate("tipoNull").inherits("validos", new Rule() {
+            {
+                add("tipo", null);
+
+            }
+        });
+        Fixture.of(Produto.class).addTemplate("descricaoInvalidoPeloTamanhoMenor").inherits("validos", new Rule() {
+            {
+                add("descricao", randomAlphabetic(1, 9));
+
+            }
+        });
+
+        Fixture.of(Produto.class).addTemplate("descricaoInvalidoPeloTamanhoMaior").inherits("validos", new Rule() {
+            {
+                add("descricao", randomAlphabetic(61, 100));
+
+            }
+        });
+
+        Fixture.of(Produto.class).addTemplate("descricaoNull").inherits("validos", new Rule() {
+            {
+                add("descricao", null);
 
             }
         });
@@ -50,9 +79,23 @@ public class ValidadorProduto {
             }
         });
 
+        Fixture.of(Produto.class).addTemplate("codigoNull").inherits("validos", new Rule() {
+            {
+                add("codigo", null);
+
+            }
+        });
+
         Fixture.of(Produto.class).addTemplate("quantidadeInvalida").inherits("validos", new Rule() {
             {
                 add("quantidade", random(range(51, 1000), range(-10, 0)));
+
+            }
+        });
+
+        Fixture.of(Produto.class).addTemplate("quantidadeNull").inherits("validos", new Rule() {
+            {
+                add("quantidade", null);
 
             }
         });
@@ -62,13 +105,19 @@ public class ValidadorProduto {
                 add("preco", random(new BigDecimal("-" + randomNumeric(10))));
             }
         });
+        
+        Fixture.of(Produto.class).addTemplate("precoNull").inherits("validos", new Rule() {
+            {
+                add("preco", null);
+            }
+        });
         Fixture.of(Produto.class).addTemplate("invalidos").inherits("validos", new Rule() {
             {
                 add("tipo", random(randomAlphabetic(51, 100), randomAscii(51, 100)));
                 add("descricao", random(randomAlphabetic(61, 100), randomAscii(61, 100)));
                 add("codigo", random(randomNumeric(31, 100), randomNumeric(1, 4)));
                 add("quantidade", random(range(51, 1000), range(-10, 0)));
-                add("preco",random(new BigDecimal("-" + randomNumeric(10))));
+                add("preco", random(new BigDecimal("-" + randomNumeric(10))));
             }
         });
         return Fixture.from(Produto.class).gimme(argumento);

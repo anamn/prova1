@@ -1,4 +1,4 @@
-package br.com.contmatic.enums;
+package br.com.contmatic.telefone;
 
 public enum Ddd {
 
@@ -13,6 +13,7 @@ public enum Ddd {
                  SP15(15, "São Paulo, Sorocaba/Itapetininga/Itapeva"),
 
                  SP16(16, "São Paulo, Ribeirão Preto/Franca/São Carlos/Araraquara"),
+
                  SP17(17, "São Paulo, São José do Rio Preto/Catanduva/Barretos/Votuporanga"),
 
                  SP18(18, "São Paulo, Presidente Prudente/Araçatuba/Birigui/Assis"),
@@ -138,7 +139,7 @@ public enum Ddd {
     private String regiao;
     private int ddd;
 
-    Ddd(int ddd, String regiao) {
+    private Ddd(int ddd, String regiao) {
         this.ddd = ddd;
         this.regiao = regiao;
     }
@@ -147,18 +148,9 @@ public enum Ddd {
         return regiao;
     }
 
-    public void setRegiao(String regiao) {
-        this.regiao = regiao;
-    }
-
     public int getDdd() {
         return ddd;
     }
 
-    public void setDdd(int ddd) {
-        this.ddd = ddd;
-    }
-    
-    
 
 }

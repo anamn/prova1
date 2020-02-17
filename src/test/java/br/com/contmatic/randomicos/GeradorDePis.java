@@ -15,36 +15,37 @@ public class GeradorDePis {
         int liMultiplicador = 0;
         boolean lbRetorno = true;
         int liDigito;
-
         lsAux = new StringBuilder().append(Pis);
         liTamanho = lsAux.length();
-
         if (liTamanho != 11) {
             lbRetorno = false;
         }
-
         if (lbRetorno) {
             for(int i = 0 ; i < 10 ; i++) {
-
                 liMultiplicando = Integer.parseInt(lsAux.substring(i, i + 1));
                 liMultiplicador = Integer.parseInt(lsMultiplicador.substring(i, i + 1));
                 liTotalizador += liMultiplicando * liMultiplicador;
             }
-
             liResto = 11 - liTotalizador % 11;
             liResto = liResto == 10 || liResto == 11 ? 0 : liResto;
 
             liDigito = Integer.parseInt("" + lsAux.charAt(10));
             lbRetorno = liResto == liDigito;
         }
-
         return lbRetorno;
-
     }
 
-    public String getPis() {
+    public String getPisValido() {
         String pis;
-        while (!isPIS(pis = randomNumeric(11)));
+        while (!isPIS(pis = randomNumeric(11)))
+            ;
+        return pis;
+    }
+    
+    public String getPisInvalido() {
+        String pis;
+        while (isPIS(pis = randomNumeric(11)))
+            ;
         return pis;
     }
 }
