@@ -152,5 +152,9 @@ public enum Ddd {
         return ddd;
     }
 
+    @Override
+    public String toString() {
+        return (regiao + ", " + ddd);
+    }
 
 }

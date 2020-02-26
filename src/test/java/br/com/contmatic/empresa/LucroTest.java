@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.financeiro.Lucro;
-import br.com.contmatic.fixture.ValidadorLucro;
+import br.com.contmatic.fixture.LucroMetodosParaTest;
 import br.com.contmatic.telefone.Telefone;
 
 public class LucroTest {
@@ -36,7 +36,7 @@ public class LucroTest {
 
     private Lucro lucro4 = null;
 
-    private ValidadorLucro validador = null;
+    private LucroMetodosParaTest validador = null;
 
     private Set<String> teste = null;
 
@@ -47,12 +47,11 @@ public class LucroTest {
 
     @Before
     public void setUpBefore() {
-        this.lucro = new Lucro();
         this.lucro1 = new Lucro();
         this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2019, AUGUST.getValue()));
-        this.validador = new ValidadorLucro();
+        this.validador = new LucroMetodosParaTest();
         this.teste = new TreeSet<String>();
     }
 
@@ -84,6 +83,7 @@ public class LucroTest {
     @Test(expected = IllegalArgumentException.class)
     public void deve_retonar_mensagem_de_erro_no_investimento_menor_que_zero() {
         teste.add("Investimento menor ou igual a zero!");
+        lucro.
         assertThat(teste, is(validador.validador("investimentoInvalido")));
     }
 

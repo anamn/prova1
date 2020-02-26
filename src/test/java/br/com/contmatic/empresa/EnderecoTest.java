@@ -18,7 +18,7 @@ import org.junit.Test;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.endereco.EnderecoType;
-import br.com.contmatic.fixture.ValidadorEndereco;
+import br.com.contmatic.fixture.EnderecoMetodosParaTest;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class EnderecoTest {
@@ -33,7 +33,7 @@ public class EnderecoTest {
 
     private Endereco endereco4 = null;
 
-    private ValidadorEndereco validador = null;
+    private EnderecoMetodosParaTest validador = null;
 
     private Set<String> teste = null;
 
@@ -47,10 +47,10 @@ public class EnderecoTest {
         this.endereco = new Endereco();
         this.endereco1 = new Endereco("Rua tijuco", "452", "03564870", EnderecoType.APARTAMENTO);
         this.endereco2 = new Endereco("Rua tijuco", "452", "03564870", EnderecoType.CASA);
-        this.endereco3 = new Endereco("Rua tijuco", "452", "84574512", EnderecoType.COMENCIAL);
+        this.endereco3 = new Endereco("Rua tijuco", "452", "84574512", EnderecoType.COMERCIAL);
         this.endereco4 = new Endereco();
 
-        this.validador = new ValidadorEndereco();
+        this.validador = new EnderecoMetodosParaTest();
         this.teste = new TreeSet<String>();
 
     }

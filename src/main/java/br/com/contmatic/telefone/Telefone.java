@@ -117,7 +117,7 @@ public class Telefone {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(numero).toHashCode();
+        return new HashCodeBuilder().append(numero).append(ddd).toHashCode();
     }
 
     /**
@@ -135,7 +135,7 @@ public class Telefone {
         if (getClass() != obj.getClass())
             return false;
         Telefone other = (Telefone) obj;
-        return new EqualsBuilder().append(other.numero, numero).isEquals();
+        return new EqualsBuilder().append(other.numero, numero).append(other.ddd, ddd).isEquals();
 
     }
 

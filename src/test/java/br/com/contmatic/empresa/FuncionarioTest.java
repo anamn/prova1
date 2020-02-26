@@ -1,7 +1,6 @@
 package br.com.contmatic.empresa;
 
 import static br.com.contmatic.telefone.Ddd.AC68;
-import static br.com.contmatic.telefone.Ddd.AM97;
 import static br.com.contmatic.telefone.Ddd.BA73;
 import static br.com.contmatic.telefone.TelefoneType.CELULAR;
 import static br.com.contmatic.telefone.TelefoneType.FIXO;
@@ -24,7 +23,7 @@ import org.junit.Test;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.endereco.EnderecoType;
-import br.com.contmatic.fixture.ValidadorFuncionario;
+import br.com.contmatic.fixture.FuncionarioMetodosParaTest;
 import br.com.contmatic.telefone.Telefone;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
@@ -43,18 +42,11 @@ public class FuncionarioTest {
 
     private Endereco endereco = null;
 
-    private ValidadorFuncionario validador = null;
+    private FuncionarioMetodosParaTest validador = null;
 
     private Set<String> teste = null;
 
     private Set<Telefone> telefones = null;
-
-    private Telefone telefone = null;
-
-    private Telefone telefone1 = null;
-
-    private Telefone telefone2 = null;
-
     @BeforeClass
     public static void setUpBeforeClass() {
         FixtureFactoryLoader.loadTemplates("br.com.six2six.fixturefactory.loader");
@@ -69,7 +61,7 @@ public class FuncionarioTest {
         this.funcionario2 = new Funcionario("Julia", "12131213131", "14587526645", telefones, new BigDecimal("5213"), endereco);
         this.funcionario3 = new Funcionario("Julia", "12131213131", "14587526645", telefones, new BigDecimal("5213"), endereco);
         this.funcionario4 = new Funcionario("Juliana", "98675413154", "12121212125", telefones, new BigDecimal("5213"), endereco);
-        this.validador = new ValidadorFuncionario();
+        this.validador = new FuncionarioMetodosParaTest();
         this.teste = new TreeSet<String>();
 
     }
@@ -182,12 +174,9 @@ public class FuncionarioTest {
     // Testa lista de telefone
     @Test
     public void nao_deve_adicionar_o_mesmo_telefone() {
-        this.telefone = new Telefone(AC68, "986564582", CELULAR);
-        this.telefone1 = new Telefone(BA73, "86564582", FIXO);
-        this.telefone2 = new Telefone(AM97, "86564582", FIXO);
-        telefones.add(telefone);
-        telefones.add(telefone1);
-        telefones.add(telefone2);
+        telefones.add(new Telefone(AC68, "986564582", CELULAR));
+        telefones.add(new Telefone(BA73, "86564582", FIXO));
+        telefones.add(new Telefone(BA73, "86564582", FIXO));
         assertTrue(telefones.size() == 2);
     }
 

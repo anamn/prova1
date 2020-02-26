@@ -18,7 +18,7 @@ import br.com.contmatic.empresa.Produto;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-public class ValidadorProduto {
+public class ProdutoMetodosParaTest {
 
     public static Produto produto(String argumento) {
         Fixture.of(Produto.class).addTemplate("validos", new Rule() {

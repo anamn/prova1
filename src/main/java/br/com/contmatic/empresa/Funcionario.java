@@ -37,7 +37,7 @@ public class Funcionario {
 
     /** The nome. */
     @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[aA-zZ,áÁ-úÚ, \\s]{2,50}", message = "Nome invalido")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{2,50}", message = "Nome invalido")
     private String nome;
     
     /** The cpf. */

@@ -29,7 +29,7 @@ public class Empresa {
 
     /** The nome. */
     @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[aA-zZ,áÁ-úÚ,0-9,\\s]{2,50}", message = "Nome invalido")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ0-9\\s]{2,50}", message = "Nome invalido")
     private String nome;
 
     /** The cnpj. */

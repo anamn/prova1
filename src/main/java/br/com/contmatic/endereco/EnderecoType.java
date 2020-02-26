@@ -1,28 +1,23 @@
 package br.com.contmatic.endereco;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 public enum EnderecoType {
 
-                          CASA("casa"),
-                          APARTAMENTO("apartamento"),
-                          COMENCIAL("comencial");
+                          CASA("Casa"),
+                          APARTAMENTO("Apartamento"),
+                          COMERCIAL("Comercial");
 
-    private String nome;
+    private String tipo;
 
-    private EnderecoType(String nome) {
-        this.nome = nome;
+    private EnderecoType(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTipo() {
+        return tipo;
     }
 
     @Override
     public String toString() {
-      
-        return ToStringBuilder.reflectionToString(this, JSON_STYLE);
+        return this.getTipo();
     }
 }

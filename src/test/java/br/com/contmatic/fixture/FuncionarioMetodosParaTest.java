@@ -20,7 +20,7 @@ import br.com.contmatic.randomicos.GeradorDePis;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-public class ValidadorFuncionario {
+public class FuncionarioMetodosParaTest {
 
     static GeradorDePis pis = new GeradorDePis();
     static GeradorCpf cpf = new GeradorCpf();

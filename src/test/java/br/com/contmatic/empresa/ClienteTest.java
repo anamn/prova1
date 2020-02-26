@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.hamcrest.Matchers;
+import org.jeasy.random.EasyRandom;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -25,9 +26,12 @@ import org.junit.Test;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.fixture.ValidadorCliente;
 import br.com.contmatic.telefone.Telefone;
+import br.com.six2six.fixturefactory.Fixture;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ClienteTest {
+    
+    EasyRandom easy= new EasyRandom();
 
     private Cliente cliente = null;
 
@@ -41,15 +45,8 @@ public class ClienteTest {
 
     private Endereco endereco = null;
 
-    private ValidadorCliente validador = null;
 
     private Set<String> teste = null;
-
-    private Telefone telefone = null;
-
-    private Telefone telefone1 = null;
-
-    private Telefone telefone2 = null;
 
     private Set<Telefone> telefones = null;
 
@@ -67,7 +64,6 @@ public class ClienteTest {
         this.cliente2 = new Cliente("Maria", "12898282726", telefones, "maria@hotmail.com", endereco);
         this.cliente3 = new Cliente("Maria", "12898282726", telefones, "maria@hotmail.com", endereco);
         this.cliente4 = new Cliente("Joao", "13213213214", telefones, "jao@gmail.com", endereco);
-        this.validador = new ValidadorCliente();
         this.teste = new TreeSet<String>();
     }
 
@@ -80,19 +76,15 @@ public class ClienteTest {
         this.cliente2 = null;
         this.cliente3 = null;
         this.cliente4 = null;
-        this.validador = null;
         this.teste = null;
     }
 
     // Testa lista de telefone
     @Test
     public void nao_deve_adicionar_o_mesmo_telefone() {
-        this.telefone = new Telefone(MA99, "986564582", CELULAR);
-        this.telefone1 = new Telefone(RJ21, "8656-4582", FIXO);
-        this.telefone2 = new Telefone(RJ21, "8656-4582", FIXO);
-        telefones.add(telefone);
-        telefones.add(telefone1);
-        telefones.add(telefone2);
+        telefones.add(new Telefone(MA99, "986564582", CELULAR));
+        telefones.add(new Telefone(RJ21, "8656-4582", FIXO));
+        telefones.add(new Telefone(RJ21, "8656-4582", FIXO));
         cliente.setTelefones(telefones);
         assertTrue(cliente.getTelefones().size() == 2);
     }
@@ -264,4 +256,5 @@ public class ClienteTest {
     public void deve_verificar_se_toString_contem_endereco() {
         assertTrue(cliente2.toString().contains("endereco"));
     }
+    
 }

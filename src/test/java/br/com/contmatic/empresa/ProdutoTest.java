@@ -16,7 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
-import br.com.contmatic.fixture.ValidadorProduto;
+import br.com.contmatic.fixture.ProdutoMetodosParaTest;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
@@ -31,7 +31,7 @@ public class ProdutoTest {
 
     private Produto produto4 = null;
 
-    private ValidadorProduto validador = null;
+    private ProdutoMetodosParaTest validador = null;
 
     private Set<String> teste = null;
 
@@ -47,7 +47,7 @@ public class ProdutoTest {
         this.produto2 = new Produto("Blusa", "Blusa de maga,com estampas", new BigDecimal("5"), "122523", 2);
         this.produto3 = new Produto("Calça", "Calça preta com botoes", new BigDecimal("15"), "154545", 2);
         this.produto4 = new Produto();
-        this.validador = new ValidadorProduto();
+        this.validador = new ProdutoMetodosParaTest();
         this.teste = new TreeSet<String>();
     }
 

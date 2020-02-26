@@ -1,7 +1,8 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.fixture.TelefoneMetodosParaTest.telefone;
+import static br.com.contmatic.fixture.TelefoneMetodosParaTest.validador;
 import static br.com.contmatic.telefone.Ddd.AL82;
-import static br.com.contmatic.telefone.Ddd.BA77;
 import static br.com.contmatic.telefone.Ddd.PR44;
 import static br.com.contmatic.telefone.TelefoneType.CELULAR;
 import static br.com.contmatic.telefone.TelefoneType.FIXO;
@@ -13,13 +14,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.jeasy.random.EasyRandom;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.fixture.ValidadorTelefone;
 import br.com.contmatic.telefone.Telefone;
+import nl.flotsam.xeger.Xeger;
 
 public class TelefoneTest {
 
@@ -33,8 +35,6 @@ public class TelefoneTest {
 
     private Telefone telefone4 = null;
 
-    private ValidadorTelefone validador = null;
-
     private Set<String> teste = null;
 
     @BeforeClass
@@ -47,9 +47,8 @@ public class TelefoneTest {
         this.telefone = new Telefone();
         this.telefone1 = new Telefone();
         this.telefone2 = new Telefone(AL82, "956875488", CELULAR);
-        this.telefone3 = new Telefone(BA77, "956875488", CELULAR);
+        this.telefone3 = new Telefone(AL82, "956875488", CELULAR);
         this.telefone4 = new Telefone(PR44, "1565321442", FIXO);
-        this.validador = new ValidadorTelefone();
         this.teste = new TreeSet<String>();
     }
 
@@ -60,38 +59,53 @@ public class TelefoneTest {
         this.telefone2 = null;
         this.telefone3 = null;
         this.telefone4 = null;
-        this.validador = null;
         this.teste = null;
     }
 
     // Testes atributos
     @Test
-    public void nao_deve_retornar_mensagem_de_erro() {
-        assertThat(teste, is(validador.validador("validos")));
+    public void nao_deve_retornar_mensagem_de_erro() { 
+        Telefone easyTel= telefone("([9]?[0-9]{4}-?[0-9]{4})");
+        assertThat(teste, is(validador(easyTel)));
+        
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void deve_retornar_mensagem_de_erro_no_numero() {
+    public void deve_retornar_mensagem_de_erro_no_numero_pelo_tamanho() {
         teste.add("Numero invalido");
-        assertThat(teste, is(validador.validador("numeroInvalidoTamanho")));
+        Telefone easyTel=telefone("([9]?[0-9]{4}-?[0-9]{6})");
+        assertThat(teste, is(validador(easyTel)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_numero_nulo() {
         teste.add("Numero invalido");
-        assertThat(teste, is(validador.validador("numeroNull")));
+        EasyRandom easy= new EasyRandom();
+        Telefone easyTel = easy.nextObject(Telefone.class);
+        easyTel.setNumero(null);
+        assertThat(teste, is(validador(easyTel)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_ddd_nulo() {
         teste.add("DDD nulo");
-        assertThat(teste, is(validador.validador("dddNull")));
+        EasyRandom easy= new EasyRandom();
+        Telefone easyTel = easy.nextObject(Telefone.class);
+        Xeger geradorNumero= new Xeger("([9]?[0-9]{4}-?[0-9]{4})");
+        easyTel.setNumero(geradorNumero.generate());
+        easyTel.setDdd(null);
+        assertThat(teste, is(validador(easyTel)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deve_retornar_mensagem_de_erro_no_tipo_nulo() {
         teste.add("Tipo nulo");
-        assertThat(teste, is(validador.validador("tipoNull")));
+        EasyRandom easy= new EasyRandom();
+        Telefone easyTel = easy.nextObject(Telefone.class);
+        Xeger geradorNumero= new Xeger("([9]?[0-9]{4}-?[0-9]{4})");
+        easyTel.setNumero(geradorNumero.generate());
+        easyTel.setTipo(null);
+        assertThat(teste, is(validador(easyTel)));
     }
 
     // Teste Construtor
@@ -119,14 +133,14 @@ public class TelefoneTest {
 
     @Test
     public void deve_testar_hashcode_para_telefone_nulo() {
-        assertThat(telefone.hashCode(), is(629));
+        assertThat(telefone.hashCode(), is(23273));
     }
 
     @Test
     public void deve_retornar_true_para_numero_iguais() {
         assertTrue(telefone2.equals(telefone3));
     }
-    
+
     @Test
     public void deve_retornar_true_para_o_mesmo_numero() {
         assertTrue(telefone3.equals(telefone3));

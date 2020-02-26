@@ -16,12 +16,12 @@ public class Endereco {
 
     /** The endereco. */
     @NotEmpty(message = "Endereço invalido!")
-    @Pattern(regexp = "[aA-zZ,áÁ-úÚ,\\s]{5,40}", message = "Endereço invalido!")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{5,40}", message = "Endereço invalido!")
     private String endereco;
 
     /** The numero. */
     @NotEmpty(message = "Numero invalido!")
-    @Pattern(regexp = "[aA-zZ,0-9]{1,20}", message = "Numero invalido!")
+    @Pattern(regexp = "[aA-zZ0-9]{1,20}", message = "Numero invalido!")
     private String numero;
 
     /** The cep. */
