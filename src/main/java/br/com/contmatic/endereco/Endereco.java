@@ -17,11 +17,15 @@ public class Endereco {
     /** The endereco. */
     @NotEmpty(message = "Endereço invalido!")
     @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{5,40}", message = "Endereço invalido!")
-    private String endereco;
+    private String logradouro;
+
+    @NotEmpty(message = "Bairro invalido!")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{3,40}", message = "Bairro invalido!")
+    private String bairro;
 
     /** The numero. */
     @NotEmpty(message = "Numero invalido!")
-    @Pattern(regexp = "[aA-zZ0-9]{1,20}", message = "Numero invalido!")
+    @Pattern(regexp = "[1-9]{1}[0-9]{0,5}[aA-zZ]{1,5}", message = "Numero invalido!")
     private String numero;
 
     /** The cep. */
@@ -35,15 +39,16 @@ public class Endereco {
     /**
      * Instantiates a new endereco.
      *
-     * @param endereco the endereco
+     * @param logradouro the endereco
      * @param numero the numero
      * @param cep the cep
      * @param enderecoType the endereco type
      */
-    public Endereco(String endereco, String numero, String cep, EnderecoType enderecoType) {
+    public Endereco(String logradouro, String bairro, String numero, String cep, EnderecoType enderecoType) {
         super();
-        this.endereco = endereco;
+        this.logradouro = logradouro;
         this.cep = cep;
+        this.bairro = bairro;
         this.numero = numero;
         this.enderecoType = enderecoType;
     }
@@ -60,17 +65,25 @@ public class Endereco {
      *
      * @return the endereco
      */
-    public String getEndereco() {
-        return endereco;
+    public String getLogradouro() {
+        return logradouro;
     }
 
     /**
      * Sets the endereco.
      *
-     * @param endereco the new endereco
+     * @param logradouro the new endereco
      */
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
     /**

@@ -33,7 +33,7 @@ import br.com.contmatic.financeiro.Moeda;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 
-public class LucroMetodosParaTest {
+public class ValidadorLucro {
 
     public static Lucro lucro(String argumento) {
         Fixture.of(Lucro.class).addTemplate("validos", new Rule() {

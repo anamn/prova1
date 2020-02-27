@@ -1,4 +1,4 @@
-package br.com.contmatic.easy.random;
+package br.com.contmatic.easy.random.atributos;
 
 import org.jeasy.random.api.Randomizer;
 

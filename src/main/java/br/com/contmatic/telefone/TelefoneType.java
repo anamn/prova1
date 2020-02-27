@@ -11,13 +11,12 @@ public enum TelefoneType {
         this.tipo = tipo;
     }
 
-    @Override
-    public String toString() {
-
+    public String getTipo() {
         return tipo;
     }
 
-    public String getTipo() {
-        return tipo;
+    @Override
+    public String toString() {
+        return this.getTipo();
     }
 }

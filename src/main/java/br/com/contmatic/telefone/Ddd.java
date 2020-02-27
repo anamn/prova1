@@ -154,7 +154,7 @@ public enum Ddd {
 
     @Override
     public String toString() {
-        return (regiao + ", " + ddd);
+        return (this.getDdd() + "");
     }
 
 }

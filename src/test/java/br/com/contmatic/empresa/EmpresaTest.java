@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.financeiro.Lucro;
-import br.com.contmatic.fixture.EmpresaMetodosParaTest;
+import br.com.contmatic.fixture.ValidadorEmpresa;
 import br.com.contmatic.telefone.Telefone;
 
 @FixMethodOrder(NAME_ASCENDING)
@@ -69,7 +69,7 @@ public class EmpresaTest {
 
     private Lucro lucro = null;
 
-    private EmpresaMetodosParaTest validador = null;
+    private ValidadorEmpresa validador = null;
 
     private Set<String> teste = null;
 
@@ -94,7 +94,7 @@ public class EmpresaTest {
         initProduto();
         initFuncionario();
         initCliente();
-        this.validador = new EmpresaMetodosParaTest();
+        this.validador = new ValidadorEmpresa();
         this.teste = new TreeSet<String>();
         this.lucro = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
     }

@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.financeiro.Lucro;
-import br.com.contmatic.fixture.LucroMetodosParaTest;
+import br.com.contmatic.fixture.ValidadorLucro;
 import br.com.contmatic.telefone.Telefone;
 
 public class LucroTest {
@@ -36,7 +36,7 @@ public class LucroTest {
 
     private Lucro lucro4 = null;
 
-    private LucroMetodosParaTest validador = null;
+    private ValidadorLucro validador = null;
 
     private Set<String> teste = null;
 
@@ -51,7 +51,7 @@ public class LucroTest {
         this.lucro2 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro3 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2020, JANUARY.getValue()));
         this.lucro4 = new Lucro(new BigDecimal("30000"), new BigDecimal("33000"), DOLLAR, new YearMonth(2019, AUGUST.getValue()));
-        this.validador = new LucroMetodosParaTest();
+        this.validador = new ValidadorLucro();
         this.teste = new TreeSet<String>();
     }
 
