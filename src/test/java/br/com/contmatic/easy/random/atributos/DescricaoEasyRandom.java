@@ -8,7 +8,7 @@ public class DescricaoEasyRandom implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return new Xeger("[aA-zZáÁ-úÚ0-9]{2,60}").generate();
+        return new Xeger("[aA-zZáÁ-úÚ0-9]{11,60}").generate();
     }
 
 }

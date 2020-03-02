@@ -40,7 +40,7 @@ public class Cliente {
 
     /** The email. */
     @NotNull(message = "Email invalido")
-    @Pattern(regexp = "^([0-9a-z]+([_.-]?[0-9a-z]+)*@[a-z]+[a-z,.,-]*(.){1}[a-z]{2,4})+$", message = "Email invalido")
+    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido")
     private String email;
 
     /** The endereco. */

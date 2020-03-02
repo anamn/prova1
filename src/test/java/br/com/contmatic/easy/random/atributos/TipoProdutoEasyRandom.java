@@ -8,6 +8,6 @@ public class TipoProdutoEasyRandom implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return new Xeger("[aA-zZáÁ-úÚ0-9]{2,50}").generate();
+        return new Xeger("[aA-zZáÁ-úÚ0-9]{3,50}").generate();
     }
 }

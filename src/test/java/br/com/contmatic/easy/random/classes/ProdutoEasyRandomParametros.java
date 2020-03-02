@@ -17,7 +17,7 @@ import br.com.contmatic.empresa.Produto;
 
 public class ProdutoEasyRandomParametros {
 
-    public static EasyRandomParameters produto() {
+    public static EasyRandomParameters parametrosProduto() {
         return new EasyRandomParameters().randomize(named("tipo").and(ofType(String.class)).and(inClass(Produto.class)), new TipoProdutoEasyRandom())
                 .randomize(named("descricao").and(ofType(String.class)).and(inClass(Produto.class)), new DescricaoEasyRandom())
                 .randomize(named("preco").and(ofType(BigDecimal.class)).and(inClass(Produto.class)), new ValoresEasyRandom())

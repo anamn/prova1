@@ -11,7 +11,7 @@ import br.com.contmatic.telefone.Telefone;
 
 public class TelefoneEasyRandomParametros {
 
-    public static EasyRandomParameters telefone() {
+    public static EasyRandomParameters parametrosTelefone() {
         return new EasyRandomParameters().randomize(named("numero").and(ofType(String.class)).and(inClass(Telefone.class)), new NumeroTelefoneEasyRandom());
     }
 }

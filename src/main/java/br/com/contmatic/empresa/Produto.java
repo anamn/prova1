@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -26,6 +27,7 @@ public class Produto {
     private String tipo;
 
     /** The preco. */
+    @NotNull(message = "Preço invalido")
     @DecimalMin(value = "1.00", message = "Preço invalido")
     private BigDecimal preco;
 
@@ -40,6 +42,7 @@ public class Produto {
     private String codigo;
 
     /** The quantidade. */
+    @NotNull(message = "Quantidade menor que zero")
     @Range(min = 1, max = 50, message = "Quantidade menor que zero")
     private Integer quantidade;
     

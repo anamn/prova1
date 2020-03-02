@@ -16,7 +16,7 @@ import br.com.contmatic.empresa.Funcionario;
 
 public class FuncionarioEasyRandomParametros {
 
-    public static EasyRandomParameters funcionario() {
+    public static EasyRandomParameters parametrosFuncionario() {
         return new EasyRandomParameters().randomize(named("salario").and(ofType(BigDecimal.class)).and(inClass(Funcionario.class)), new ValoresEasyRandom())
                 .randomize(named("nome").and(ofType(String.class)).and(inClass(Funcionario.class)), new NomePessoaEasyRandom())
                 .randomize(named("cpf").and(ofType(String.class)).and(inClass(Funcionario.class)), new CpfEasyRandom())

@@ -13,7 +13,7 @@ import br.com.contmatic.empresa.Cliente;
 
 public class ClienteEasyRandomParametros {
 
-    public static EasyRandomParameters cliente() {
+    public static EasyRandomParameters parametrosCliente() {
         return new EasyRandomParameters().randomize(named("nome").and(ofType(String.class)).and(inClass(Cliente.class)), new NomePessoaEasyRandom())
                 .randomize(named("email").and(ofType(String.class)).and(inClass(Cliente.class)), new EmailEasyRandom())
                 .randomize(named("cpf").and(ofType(String.class)).and(inClass(Cliente.class)), new CpfEasyRandom());

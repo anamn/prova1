@@ -1,9 +1,5 @@
 package br.com.contmatic.financeiro;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 public enum Moeda {
     
     REAL("Real"),
@@ -19,7 +15,7 @@ public enum Moeda {
     @Override
     public String toString() {
 
-        return ToStringBuilder.reflectionToString(this, JSON_STYLE);
+        return this.getTipo();
     }
 
     public String getTipo() {

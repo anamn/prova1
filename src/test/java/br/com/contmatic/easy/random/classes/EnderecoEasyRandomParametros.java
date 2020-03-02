@@ -14,7 +14,7 @@ import br.com.contmatic.endereco.Endereco;
 
 public class EnderecoEasyRandomParametros {
 
-    public static EasyRandomParameters endereco() {
+    public static EasyRandomParameters parametrosEndereco() {
         return new EasyRandomParameters().randomize(named("logradouro").and(ofType(String.class)).and(inClass(Endereco.class)), new LogradouroEasyRandom())
                 .randomize(named("bairro").and(ofType(String.class)).and(inClass(Endereco.class)), new BairroEasyRandom())
                 .randomize(named("numero").and(ofType(String.class)).and(inClass(Endereco.class)), new NumeroEnderecoEasyRandom())

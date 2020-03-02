@@ -15,7 +15,7 @@ import br.com.contmatic.financeiro.Lucro;
 
 public class LucroEasyRandomParametros {
 
-    public static EasyRandomParameters lucro() {
+    public static EasyRandomParameters parametrosLucro() {
         return new EasyRandomParameters().randomize(named("investimento").and(ofType(BigDecimal.class)).and(inClass(Lucro.class)), new ValoresEasyRandom())
                 .randomize(named("renda").and(ofType(BigDecimal.class).and(inClass(Lucro.class))), new ValoresEasyRandom())
                 .randomize(named("mes").and(ofType(YearMonth.class)).and(inClass(Lucro.class)), new MesEasyRandom());

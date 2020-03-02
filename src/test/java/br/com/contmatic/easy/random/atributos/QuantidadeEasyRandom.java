@@ -4,11 +4,11 @@ import java.util.Random;
 
 import org.jeasy.random.api.Randomizer;
 
-public class QuantidadeEasyRandom implements Randomizer<Integer>{
+public class QuantidadeEasyRandom implements Randomizer<Integer> {
 
     @Override
     public Integer getRandomValue() {
-        return new Random().nextInt(20);
+        return new Random().nextInt(10) + 1;
     }
 
 }

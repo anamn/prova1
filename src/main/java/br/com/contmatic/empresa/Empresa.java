@@ -1,12 +1,12 @@
 package br.com.contmatic.empresa;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,8 +15,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.br.CNPJ;
-
-import com.google.common.base.Preconditions;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.financeiro.Lucro;
@@ -38,12 +36,13 @@ public class Empresa {
     private String cnpj;
 
     /** The telefones. */
+    @NotNull(message = "Favor cadastrar um telefone")
     @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
     private Set<Telefone> telefones;
 
     /** The email. */
     @NotEmpty(message = "Email invalido")
-    @Pattern(regexp = "^([0-9a-z]+([_.-]?[0-9a-z]+)*@[a-z]+[a-z,.,-]*(.){1}[a-z]{2,4})+$", message = "Email invalido")
+    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido")
     private String email;
 
     /** The enderecos. */
@@ -52,19 +51,15 @@ public class Empresa {
     private Set<Endereco> enderecos;
 
     /** The clientes. */
-    @Valid
     private Set<Cliente> clientes;
 
     /** The funcionarios. */
-    @Valid
     private Set<Funcionario> funcionarios;
 
     /** The produtos. */
-    @Valid
     private Set<Produto> produtos;
 
     /** The lucro. */
-    @Valid
     private Lucro lucro;
 
     /** The site. */
@@ -95,28 +90,6 @@ public class Empresa {
      */
     public Empresa() {
         super();
-    }
-
-    /**
-     * Valida cliente.
-     *
-     * @param cliente the cliente
-     * @return true, if successful
-     */
-    public boolean validaCliente(Cliente cliente) {
-        checkArgument(clientes.contains(cliente), new IllegalArgumentException("Cliente não encontrado"));
-        return true;
-    }
-
-    /**
-     * Valida funcionario.
-     *
-     * @param funcionario the funcionario
-     * @return true, if successful
-     */
-    public boolean validaFuncionario(Funcionario funcionario) {
-        Preconditions.checkArgument(funcionarios.contains(funcionario), new IllegalArgumentException("Funcionario não encontrado"));
-        return true;
     }
 
     /**

@@ -12,15 +12,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.YearMonth;
 
-import br.com.contmatic.empresa.Empresa;
-
 /**
  * The Class Lucro.
  */
 public class Lucro {
-
-    /** The empresa. */
-    private Empresa empresa;
 
     /** The investimento. */
     @NotNull(message = "Investimento Nulo!")
@@ -129,24 +124,6 @@ public class Lucro {
     }
 
     /**
-     * Gets the empresa.
-     *
-     * @return the empresa
-     */
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    /**
-     * Sets the empresa.
-     *
-     * @param empresa the new empresa
-     */
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    /**
      * Gets the mes.
      *
      * @return the mes
@@ -181,7 +158,7 @@ public class Lucro {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(empresa).append(mes).toHashCode();
+        return new HashCodeBuilder().append(mes).toHashCode();
     }
 
     /**
@@ -199,7 +176,7 @@ public class Lucro {
         if (getClass() != obj.getClass())
             return false;
         Lucro other = (Lucro) obj;
-        return new EqualsBuilder().append(other.empresa, empresa).append(other.mes, mes).isEquals();
+        return new EqualsBuilder().append(other.mes, mes).isEquals();
 
     }
 

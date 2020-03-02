@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.testes;
 
 
 import org.junit.runner.RunWith;

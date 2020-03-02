@@ -15,8 +15,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Endereco {
 
     /** The endereco. */
-    @NotEmpty(message = "Endereço invalido!")
-    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{5,40}", message = "Endereço invalido!")
+    @NotEmpty(message = "Logradouro invalido!")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{5,40}", message = "Logradouro invalido!")
     private String logradouro;
 
     @NotEmpty(message = "Bairro invalido!")
@@ -25,7 +25,7 @@ public class Endereco {
 
     /** The numero. */
     @NotEmpty(message = "Numero invalido!")
-    @Pattern(regexp = "[1-9]{1}[0-9]{0,5}[aA-zZ]{1,5}", message = "Numero invalido!")
+    @Pattern(regexp = "[1-9]{1}+[0-9]{0,5}[aA-zZ]{0,2}", message = "Numero invalido!")
     private String numero;
 
     /** The cep. */
