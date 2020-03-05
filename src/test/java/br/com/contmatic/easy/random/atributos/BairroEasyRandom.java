@@ -8,6 +8,6 @@ public class BairroEasyRandom implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return new Faker().gameOfThrones().city();
+        return new Faker().pokemon().name();
     }
 }

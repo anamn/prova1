@@ -23,7 +23,7 @@ import br.com.contmatic.telefone.Telefone;
 /**
  * The Class Empresa.
  */
-public class Empresa {
+public final class Empresa {
 
     /** The nome. */
     @NotEmpty(message = "Nome invalido")
@@ -45,10 +45,17 @@ public class Empresa {
     @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido")
     private String email;
 
+    /** The site. */
+    @URL(message = "Site invalido")
+    private String site;
+
     /** The enderecos. */
     @Valid
     @Size(min = 1, message = "É necessario ao menos um endereço no cadastro")
     private Set<Endereco> enderecos;
+
+    /** The lucro. */
+    private Lucro lucro;
 
     /** The clientes. */
     private Set<Cliente> clientes;
@@ -58,13 +65,6 @@ public class Empresa {
 
     /** The produtos. */
     private Set<Produto> produtos;
-
-    /** The lucro. */
-    private Lucro lucro;
-
-    /** The site. */
-    @URL(message = "Site invalido")
-    private String site;
 
     /**
      * Instantiates a new empresa.
@@ -82,7 +82,7 @@ public class Empresa {
         this.telefones = telefones;
         this.email = email;
         this.enderecos = endereco;
-        
+
     }
 
     /**

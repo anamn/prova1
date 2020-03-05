@@ -3,6 +3,7 @@ package br.com.contmatic.testes;
 import static br.com.contmatic.beanValidation.ValidationProduto.validador;
 import static br.com.contmatic.easy.random.classes.ProdutoEasyRandomParametros.parametrosProduto;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomNumeric;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,6 +23,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import br.com.contmatic.empresa.Produto;
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 @FixMethodOrder(NAME_ASCENDING)
 public class ProdutoTest {
@@ -161,67 +163,9 @@ public class ProdutoTest {
 
     // Testes HashCode, Equals e toString
     @Test
-    public void deve_retornar_hashCode_iguais_para_codigo_iguais() {
-        produto.setCodigo("55956833");
-        produto1.setCodigo("55956833");
-        assertTrue(produto.hashCode() == produto1.hashCode());
+    public void deve_testar_equals_e_hashCode() {
+        EqualsVerifier.forClass(Produto.class).suppress(NONFINAL_FIELDS).withIgnoredFields("descricao").withIgnoredFields("tipo").withIgnoredFields("preco").withIgnoredFields("quantidade").verify();
     }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_hashCode_diferentes_para_codigo_diferentes() {
-        produto.setCodigo("55956833");
-        produto1.setCodigo("56361822");
-        assertTrue(produto.hashCode() == produto1.hashCode());
-    }
-
-    @Test
-    public void deve_testar_hashcode_para_codigo_nulo() {
-        produto.setCodigo(null);
-        assertThat(produto.hashCode(), is(629));
-    }
-
-    @Test
-    public void deve_retornar_true_para_codigo_iguais() {
-        produto.setCodigo("55956833");
-        produto1.setCodigo("55956833");
-        assertTrue(produto.equals(produto1));
-    }
-
-    @Test
-    public void deve_retornar_true_para_o_mesmo_codigo() {
-        assertTrue(produto.equals(produto));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-        assertTrue(produto1.equals(new Object()));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_codigo_nulo() {
-        produto.setCodigo(null);
-        assertTrue(produto.equals(produto1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_codigo_comparado_nulo() {
-        assertTrue(produto1.equals(null));
-    }
-
-    @Test
-    public void deve_retornar_true_para_codigo_nulos() {
-        produto.setCodigo(null);
-        produto1.setCodigo(null);
-        assertTrue(produto.equals(produto1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_codigo_diferentes() {
-        produto.setCodigo("55956833");
-        produto1.setCodigo("56361822");
-        assertTrue(produto.equals(produto1));
-    }
-
     @Test
     public void deve_verificar_se_toString_contem_tipo() {
         assertTrue(produto1.toString().contains("tipo"));

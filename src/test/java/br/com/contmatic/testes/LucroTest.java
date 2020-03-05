@@ -6,6 +6,7 @@ import static br.com.contmatic.financeiro.Moeda.DOLLAR;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
 import static java.time.Month.AUGUST;
 import static java.time.Month.DECEMBER;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
@@ -22,12 +23,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.financeiro.Lucro;
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 public class LucroTest {
 
     private Lucro lucro = null;
-
-    private Lucro lucro1 = null;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -37,13 +37,11 @@ public class LucroTest {
     @Before
     public void setUpBefore() {
         this.lucro = new EasyRandom(parametrosLucro()).nextObject(Lucro.class);
-        this.lucro1 = new EasyRandom(parametrosLucro()).nextObject(Lucro.class);
     }
 
     @After
     public void setDownAfter() {
         this.lucro = null;
-        this.lucro1 = null;
     }
 
     // Testes atributos
@@ -95,11 +93,11 @@ public class LucroTest {
         ;
         validador(lucro);
     }
-    
-    //Testa metodo
+
+    // Testa metodo
     @Test
     public void deve_retornar_o_lucro_calculado() {
-        BigDecimal bg=lucro.calculaLucro();
+        BigDecimal bg = lucro.calculaLucro();
         System.out.println(bg);
     }
 
@@ -118,71 +116,8 @@ public class LucroTest {
 
     // Teste hashCode, Equals e toString
     @Test
-    public void deve_retornar_hashCode_iguais_para_mes_igual() {
-        lucro.setMes(new YearMonth(2019, AUGUST.getValue()));
-        lucro1.setMes(new YearMonth(2019, AUGUST.getValue()));
-        assertTrue(lucro.hashCode() == lucro1.hashCode());
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_hashCode_diferentes_para_mes_diferente() {
-        lucro.setMes(new YearMonth(2019, AUGUST.getValue()));
-        lucro1.setMes(new YearMonth(2019, DECEMBER.getValue()));
-        assertTrue(lucro.hashCode() == lucro1.hashCode());
-    }
-
-    @Test
-    public void deve_testar_hashcode_para_mes_nulo() {
-        lucro.setMes(null);
-        assertThat(lucro.hashCode(), is(629));
-    }
-
-    @Test
-    public void deve_retornar_true_para_o_mesmo_obj() {
-        assertTrue(lucro.equals(lucro));
-    }
-
-    @Test
-    public void deve_retornar_true_para_o_mesmo_mes() {
-        lucro.setMes(new YearMonth(2019, AUGUST.getValue()));
-        lucro1.setMes(new YearMonth(2019, AUGUST.getValue()));
-        assertTrue(lucro.equals(lucro1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_lucro_nulo() {
-        lucro.setMes(null);
-        assertTrue(lucro.equals(lucro1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-        assertTrue(lucro.equals(new Object()));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_mes_nulo() {
-        lucro.setMes(null);
-        assertTrue(lucro.equals(lucro1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_mes_comparado_nulo() {
-        assertTrue(lucro.equals(null));
-    }
-
-    @Test
-    public void deve_retornar_true_para_meses_nulos() {
-        lucro.setMes(null);
-        lucro1.setMes(null);
-        assertTrue(lucro.equals(lucro1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_meses_diferentes() {
-        lucro.setMes(new YearMonth(2019, AUGUST.getValue()));
-        lucro1.setMes(new YearMonth(2019, DECEMBER.getValue()));
-        assertTrue(lucro.equals(lucro1));
+    public void deve_testar_equals_e_hashCode() {
+        EqualsVerifier.forClass(Lucro.class).suppress(NONFINAL_FIELDS).withIgnoredFields("investimento").withIgnoredFields("renda").withIgnoredFields("moeda").verify();
     }
 
     @Test

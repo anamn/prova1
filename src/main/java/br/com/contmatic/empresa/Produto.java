@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Range;
 /**
  * The Class Produto.
  */
-public class Produto {
+public final class Produto {
 
     /** The tipo. */
     @NotEmpty(message = "Tipo invalido")

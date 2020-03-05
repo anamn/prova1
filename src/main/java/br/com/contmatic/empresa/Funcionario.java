@@ -23,7 +23,7 @@ import br.com.contmatic.validador.PIS;
 /**
  * The Class Funcionario.
  */
-public class Funcionario {
+public final class Funcionario {
 
     /** The salario. */
     @NotNull( message = "Salario invalido")

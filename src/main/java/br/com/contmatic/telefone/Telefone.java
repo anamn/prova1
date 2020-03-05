@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * The Class Telefone.
  */
-public class Telefone {
+public final class Telefone {
 
     /** The ddd. */
     @NotNull(message = "DDD nulo")

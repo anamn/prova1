@@ -15,7 +15,7 @@ import org.joda.time.YearMonth;
 /**
  * The Class Lucro.
  */
-public class Lucro {
+public final class Lucro {
 
     /** The investimento. */
     @NotNull(message = "Investimento Nulo!")

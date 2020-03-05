@@ -21,7 +21,7 @@ import br.com.contmatic.telefone.Telefone;
 /**
  * The Class Cliente.
  */
-public class Cliente {
+public final class Cliente {
 
     /** The nome. */
     @NotEmpty(message = "Nome invalido")

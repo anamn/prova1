@@ -12,11 +12,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * The Class Endereco.
  */
-public class Endereco {
+public final class Endereco {
 
     /** The endereco. */
     @NotEmpty(message = "Logradouro invalido!")
-    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{5,40}", message = "Logradouro invalido!")
+    @Pattern(regexp = "[aA-zZáÁ-úÚ\\s]{2,40}", message = "Logradouro invalido!")
     private String logradouro;
 
     @NotEmpty(message = "Bairro invalido!")
@@ -148,7 +148,7 @@ public class Endereco {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(cep).toHashCode();
+        return new HashCodeBuilder().append(cep).append(logradouro).append(numero).append(bairro).toHashCode();
     }
 
     /**
@@ -166,7 +166,7 @@ public class Endereco {
         if (getClass() != obj.getClass())
             return false;
         Endereco other = (Endereco) obj;
-        return new EqualsBuilder().append(other.cep, cep).isEquals();
+        return new EqualsBuilder().append(other.cep, cep).append(other.logradouro, logradouro).append(other.numero, numero).append(other.bairro, bairro).isEquals();
 
     }
 

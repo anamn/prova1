@@ -5,6 +5,7 @@ import static br.com.contmatic.easy.random.classes.TelefoneEasyRandomParametros.
 import static br.com.contmatic.telefone.Ddd.PR44;
 import static br.com.contmatic.telefone.TelefoneType.CELULAR;
 import static br.com.six2six.fixturefactory.loader.FixtureFactoryLoader.loadTemplates;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 import static org.apache.commons.lang.RandomStringUtils.randomNumeric;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -20,12 +21,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.telefone.Telefone;
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 public class TelefoneTest {
 
     private Telefone telefone;
-
-    private Telefone telefone1;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -35,13 +35,11 @@ public class TelefoneTest {
     @Before
     public void setUpBefore() {
         this.telefone = new EasyRandom(parametrosTelefone()).nextObject(Telefone.class);
-        this.telefone1 = new EasyRandom(parametrosTelefone()).nextObject(Telefone.class);
     }
 
     @After
     public void setDownAfter() {
         this.telefone = null;
-        this.telefone1 = null;
     }
 
     // Testes atributos
@@ -113,67 +111,8 @@ public class TelefoneTest {
 
     // Testes HashCode, Equals e toString
     @Test
-    public void deve_retornar_hashCode_iguais_para_telefones_iguais() {
-        telefone.setNumero("989768566");
-        telefone1.setNumero("989768566");
-        assertTrue(telefone.hashCode() == telefone1.hashCode());
-
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_hashCode_diferentes_para_telefones_diferentes() {
-        telefone.setNumero("989768566");
-        telefone1.setNumero("989768234");
-        assertTrue(telefone.hashCode() == telefone1.hashCode());
-    }
-
-    @Test
-    public void deve_testar_hashcode_para_telefone_nulo() {
-        telefone.setNumero(null);
-        telefone.setDdd(null);
-        assertThat(telefone.hashCode(), is(23273));
-    }
-
-    @Test
-    public void deve_retornar_true_para_numero_iguais() {
-        telefone.setNumero("989768566");
-        telefone1.setNumero("989768566");
-        assertTrue(telefone.equals(telefone1));
-    }
-
-    @Test
-    public void deve_retornar_true_para_o_mesmo_numero() {
-        assertTrue(telefone.equals(telefone));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_objetos_de_classes_diferentes() {
-        assertTrue(telefone.equals(new Object()));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_telefone_nulo() {
-        telefone.setNumero(null);
-        assertTrue(telefone.equals(telefone1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_telefones_comparado_nulo() {
-        assertTrue(telefone.equals(null));
-    }
-
-    @Test
-    public void deve_retornar_true_para_telefones_nulos() {
-        telefone.setNumero(null);
-        telefone1.setNumero(null);
-        assertTrue(telefone.equals(telefone1));
-    }
-
-    @Test(expected = AssertionError.class)
-    public void deve_retornar_false_para_telefones_diferentes() {
-        telefone.setNumero("989768566");
-        telefone1.setNumero("989768654");
-        assertTrue(telefone.equals(telefone1));
+    public void deve_testar_equals_e_hashCode() {
+        EqualsVerifier.forClass(Telefone.class).suppress(NONFINAL_FIELDS).withIgnoredFields("tipo").verify();
     }
 
     @Test
