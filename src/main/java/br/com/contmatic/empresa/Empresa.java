@@ -18,6 +18,9 @@ import org.hibernate.validator.constraints.br.CNPJ;
 
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.financeiro.Lucro;
+import br.com.contmatic.grupos.GrupoIdentificacao;
+import br.com.contmatic.grupos.GrupoLocalizacao;
+import br.com.contmatic.grupos.GrupoParaContato;
 import br.com.contmatic.telefone.Telefone;
 
 /**
@@ -26,32 +29,32 @@ import br.com.contmatic.telefone.Telefone;
 public final class Empresa {
 
     /** The nome. */
-    @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[aA-zZáÁ-úÚ0-9\\s]{2,50}", message = "Nome invalido")
+    @NotEmpty(message = "Nome invalido", groups = GrupoIdentificacao.class)
+    @Pattern(regexp = "[aA-zZáÁ-úÚ0-9\\s]{2,50}", message = "Nome invalido", groups = GrupoIdentificacao.class)
     private String nome;
 
     /** The cnpj. */
-    @CNPJ(message = "CNPJ invalido")
-    @NotEmpty(message = "CNPJ invalido")
+    @CNPJ(message = "CNPJ invalido", groups = GrupoIdentificacao.class)
+    @NotEmpty(message = "CNPJ invalido", groups = GrupoIdentificacao.class)
     private String cnpj;
 
     /** The telefones. */
-    @NotNull(message = "Favor cadastrar um telefone")
-    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
+    @NotNull(message = "Favor cadastrar um telefone", groups = GrupoParaContato.class)
+    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco", groups = GrupoParaContato.class)
     private Set<Telefone> telefones;
 
     /** The email. */
-    @NotEmpty(message = "Email invalido")
-    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido")
+    @NotEmpty(message = "Email invalido", groups = GrupoParaContato.class)
+    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido", groups = GrupoParaContato.class)
     private String email;
 
     /** The site. */
-    @URL(message = "Site invalido")
+    @URL(message = "Site invalido", groups = GrupoParaContato.class)
     private String site;
 
     /** The enderecos. */
     @Valid
-    @Size(min = 1, message = "É necessario ao menos um endereço no cadastro")
+    @Size(min = 1, message = "É necessario ao menos um endereço no cadastro", groups = GrupoLocalizacao.class)
     private Set<Endereco> enderecos;
 
     /** The lucro. */

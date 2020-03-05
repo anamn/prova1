@@ -16,6 +16,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.grupos.GrupoIdentificacao;
+import br.com.contmatic.grupos.GrupoLocalizacao;
+import br.com.contmatic.grupos.GrupoParaContato;
 import br.com.contmatic.telefone.Telefone;
 
 /**
@@ -24,27 +27,29 @@ import br.com.contmatic.telefone.Telefone;
 public final class Cliente {
 
     /** The nome. */
-    @NotEmpty(message = "Nome invalido")
-    @Pattern(regexp = "[A-Z]{1}[aA-zZáÁ-úÚ\\s]{2,50}", message = "Nome invalido")
+    @NotEmpty(message = "Nome invalido", groups = GrupoIdentificacao.class)
+    @Pattern(regexp = "[A-Z]{1}[aA-zZáÁ-úÚ\\s]{2,50}", message = "Nome invalido", groups = GrupoIdentificacao.class)
     private String nome;
 
     /** The cpf. */
-    @NotEmpty(message = "Cpf invalido")
-    @CPF(message = "CPF invalido")
+    @NotEmpty(message = "Cpf invalido", groups = GrupoIdentificacao.class)
+    @CPF(message = "CPF invalido", groups = GrupoIdentificacao.class)
     private String cpf;
 
     /** The telefones. */
     @Valid
-    @Size(min = 1, max = 5, message = "É necessario ao menos {min} telefone no cadastro e no maximo {max}")
+    @NotNull(message = "Favor cadastrar telefone", groups = GrupoParaContato.class)
+    @Size(min = 1, max = 5, message = "É necessario ao menos {min} telefone no cadastro e no maximo {max}", groups = GrupoParaContato.class)
     private Set<Telefone> telefones;
 
     /** The email. */
-    @NotNull(message = "Email invalido")
-    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido")
+    @NotNull(message = "Email invalido", groups = GrupoParaContato.class)
+    @Pattern(regexp = "[a-z]+[0-9.-_]*[a-z0-9.-_]+@[a-z]+[.]{1}[a-z]{2,5}[.a-z]{3}?", message = "Email invalido", groups = GrupoParaContato.class)
     private String email;
 
     /** The endereco. */
     @Valid
+    @NotNull (message = "Favor cadastrar endereco", groups = GrupoParaContato.class)
     private Endereco endereco;
 
     /**

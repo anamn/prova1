@@ -17,6 +17,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.contmatic.endereco.Endereco;
+import br.com.contmatic.grupos.GrupoLocalizacao;
+import br.com.contmatic.grupos.GrupoParaContato;
 import br.com.contmatic.telefone.Telefone;
 import br.com.contmatic.validador.PIS;
 
@@ -46,10 +48,12 @@ public final class Funcionario {
     private String cpf;
 
     /** The telefones. */
-    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco")
+    @NotNull(message = "Favor cadastrar ao menos um telefone", groups = GrupoParaContato.class)
+    @Size(min = 1, max = 5, message = "É necessario ao menos um telefone no cadastro e no maximo cinco", groups = GrupoParaContato.class)
     private Set<Telefone> telefones;
 
     /** The endereco. */
+    @NotNull(message = "Favor cadastrar ao menos um endereco", groups = GrupoLocalizacao.class)
     private Endereco endereco;
 
     /**
